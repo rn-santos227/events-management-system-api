@@ -1,0 +1,95 @@
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.log
+hs_err_pid*
+replay_pid*
+*.hprof
+
+### Gradle ###
+.gradle/
+build/
+out/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle/
+**/build/
+**/out/
+
+# Gradle local settings
+.gradle/
+.gradle-cache/
+!gradle-wrapper.jar
+!gradlew
+!gradlew.bat
+
+# Ignore Gradle caches
+.gradle/
+build/
+.gradle-cache/
+.gradle-local/
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.ipr
+*.iml
+.idea_modules/
+out/
+
+### VS Code ###
+.vscode/
+.history/
+.settings/
+bin/
+
+### OS ###
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+### Logs & temp files ###
+logs/
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+*.old
+
+### Test reports ###
+test-output/
+surefire-reports/
+jacoco/
+build/reports/
+build/test-results/
+
+### Coverage ###
+*.exec
+*.ec
+*.coverage
+*.coverage.xml
+
+### Environment / credentials ###
+.env
+*.local
+application-local.yml
+application-local.properties
+application-secrets.yml
+application-secrets.properties
+
+### Docker ###
+/docker-compose.override.yml
+*.pid
+
+### Other tools ###
+node_modules/
+dist/
