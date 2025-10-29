@@ -6,8 +6,8 @@ import java.util.Map;
 
 @RestController
 public class TestController {
-    @GetMapping("/test")
-    public Map<String, String> test() {
-        return Map.of("message", "this is a test");
-    }  
+  @GetMapping("/test")
+  public Map<String, String> test() {
+    return Map.of("message", "this is a test");
+  }  
 }

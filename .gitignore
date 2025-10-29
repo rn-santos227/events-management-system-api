@@ -27,7 +27,7 @@ out/
 
 # Ignore Gradle caches
 .gradle/
-build/
+build/~
 .gradle-cache/
 .gradle-local/
 
