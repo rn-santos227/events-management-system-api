@@ -9,8 +9,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ManyToMany;
 import java.util.Set;
 
+import com.mgnt.events.libraries.Tables;
+
 @Entity
-@Table(name = "privileges")
+@Table(name = Tables.PRIVILEGES)
 public class Privilege {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +21,7 @@ public class Privilege {
   @Column(unique = true, nullable = false)
   private String name;
 
-  @ManyToMany(mappedBy = "privileges")
+  @ManyToMany(mappedBy = Tables.PRIVILEGES)
   private Set<Role> roles;
 
   public Privilege() {}
