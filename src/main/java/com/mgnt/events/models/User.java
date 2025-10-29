@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.constants.Tables;
 
@@ -24,16 +25,28 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, unique = true, length = Defaults.DEFAULT_EMAIL_LENGTH)
+  @Column(
+    nullable = false,
+    unique = true,
+    length = Defaults.DEFAULT_EMAIL_LENGTH
+  )
   private String email;
 
   @Column(nullable = false)
   private String password;
 
-  @Column(nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
+  @Column(
+    name = Attributes.FIRST_NAME,
+    nullable = false,
+    length = Defaults.DEFAULT_MID_STRING_LENGTH
+  )
   private String firstName;
 
-  @Column(nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
+  @Column(
+    name = Attributes.LAST_NAME,
+    nullable = false,
+    length = Defaults.DEFAULT_MID_STRING_LENGTH
+  )
   private String lastName;
 
   @Column(nullable = false)
