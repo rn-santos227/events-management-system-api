@@ -12,8 +12,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import java.util.Set;
 
-import com.mgnt.events.libraries.Tables;
-import com.mgnt.events.libraries.Attributes;
+import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.constants.Joins;
+import com.mgnt.events.constants.Tables;
 
 @Entity
 @Table(name = Tables.ROLES)
@@ -27,7 +28,7 @@ public class Role {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-    name = "roles_privileges",
+    name = Joins.ROLES_PRIVELEGES,
     joinColumns = @JoinColumn(name = Attributes.ROLE_ID),
     inverseJoinColumns = @JoinColumn(name = Attributes.PRIVILEGE_ID)
   )
