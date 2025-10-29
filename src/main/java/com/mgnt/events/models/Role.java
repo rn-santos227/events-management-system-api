@@ -7,13 +7,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import java.util.Set;
 
 import com.mgnt.events.constants.Attributes;
-import com.mgnt.events.constants.Joins;
 import com.mgnt.events.constants.Tables;
 
 @Entity
@@ -28,13 +28,13 @@ public class Role {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-    name = Joins.ROLES_PRIVELEGES,
+    name = Tables.ROLES_PRIVELEGES,
     joinColumns = @JoinColumn(name = Attributes.ROLE_ID),
     inverseJoinColumns = @JoinColumn(name = Attributes.PRIVILEGE_ID)
   )
   private Set<Privilege> privileges;
 
-  @ManyToMany(mappedBy = Tables.ROLES)
+  @OneToMany(mappedBy = Tables.ROLES)
   private Set<User> users;
 
   public Role() {}
@@ -45,4 +45,6 @@ public class Role {
   public void setName(String name) { this.name = name; }
   public Set<Privilege> getPrivileges() { return privileges; }
   public void setPrivileges(Set<Privilege> privileges) { this.privileges = privileges; }
+  public Set<User> getUsers() { return users; }
+  public void setUsers(Set<User> users) { this.users = users; }
 }

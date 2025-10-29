@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -51,6 +52,13 @@ public class User {
 
   @Column(nullable = false)
   private boolean active = true;
+
+  @Column(
+    name = Attributes.CREATED_AT,
+    nullable = false,
+    updatable = false
+  )
+  private LocalDateTime createdAt = LocalDateTime.now();
 
   public User() {}
 }
