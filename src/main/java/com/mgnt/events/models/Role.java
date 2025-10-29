@@ -12,8 +12,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import java.util.Set;
 
+import com.mgnt.events.libraries.Tables;
+import com.mgnt.events.libraries.Attributes;
+
 @Entity
-@Table(name = "roles")
+@Table(name = Tables.ROLES)
 public class Role {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +28,12 @@ public class Role {
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "roles_privileges",
-    joinColumns = @JoinColumn(name = "role_id"),
-    inverseJoinColumns = @JoinColumn(name = "privilege_id")
+    joinColumns = @JoinColumn(name = Attributes.ROLE_ID),
+    inverseJoinColumns = @JoinColumn(name = Attributes.PRIVILEGE_ID)
   )
   private Set<Privilege> privileges;
 
-  @ManyToMany(mappedBy = "roles")
+  @ManyToMany(mappedBy = Tables.ROLES)
   private Set<User> users;
 
   public Role() {}
