@@ -56,6 +56,18 @@ public class Privilege {
     this.table = table;
   }
 
+  public Long getId() { return id; }
+  public String getName() { return name; }
+  public void setName(String name) { this.name = name; }
+  public String getAction() { return action; }
+  public void setAction(String action) { this.action = action; }
+  public String getTable() { return table; }
+  public void setTable(String table) { this.table = table; }
+  public LocalDateTime getCreatedAt() { return createdAt; }
+  public LocalDateTime getUpdatedAt() { return updatedAt; }
+  public LocalDateTime getDeletedAt() { return deletedAt; }
+  public void setDeletedAt(LocalDateTime deletedAt) { this.deletedAt = deletedAt; }
+
   @PrePersist
   protected void onCreate() {
     LocalDateTime now = LocalDateTime.now();
@@ -68,15 +80,11 @@ public class Privilege {
     updatedAt = LocalDateTime.now();
   }
 
-  public Long getId() { return id; }
-  public String getName() { return name; }
-  public void setName(String name) { this.name = name; }
-  public String getAction() { return action; }
-  public void setAction(String action) { this.action = action; }
-  public String getTable() { return table; }
-  public void setTable(String table) { this.table = table; }
-  public LocalDateTime getCreatedAt() { return createdAt; }
-  public LocalDateTime getUpdatedAt() { return updatedAt; }
-  public LocalDateTime getDeletedAt() { return deletedAt; }
-  public void setDeletedAt(LocalDateTime deletedAt) { this.deletedAt = deletedAt; }
+  @PreRemove
+  protected void onDelete() {
+    if (roles != null && roles.stream().anyMatch(role -> role.getDeletedAt() == null)) {
+      throw new IllegalStateException("Cannot delete privilege that is still assigned to active roles.");
+    }
+    deletedAt = LocalDateTime.now();
+  }
 }
