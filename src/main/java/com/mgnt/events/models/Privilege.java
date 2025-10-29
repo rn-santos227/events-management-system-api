@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.JoinColumn;
 import java.util.Set;
 
 @Entity
@@ -19,6 +18,9 @@ public class Privilege {
 
   @Column(unique = true, nullable = false)
   private String name;
+
+  @ManyToMany(mappedBy = "privileges")
+  private Set<Role> roles;
 
   public Privilege() {}
   public Privilege(String name) { this.name = name; }
