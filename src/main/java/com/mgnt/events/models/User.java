@@ -2,18 +2,13 @@ package com.mgnt.events.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Defaults;
@@ -50,6 +45,10 @@ public class User {
   )
   private String lastName;
 
+  @ManyToOne
+  @JoinColumn(name = Attributes.ROLE_ID, nullable = false)
+  private Role role;
+
   @Column(nullable = false)
   private boolean active = true;
 
@@ -61,4 +60,13 @@ public class User {
   private LocalDateTime createdAt = LocalDateTime.now();
 
   public User() {}
+  public User(String email, String password, String firstName, String lastName, Role role) {
+    this.email = email;
+    this.password = password;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.role = role;
+    this.active = true;
+    this.createdAt = LocalDateTime.now();
+  }
 }
