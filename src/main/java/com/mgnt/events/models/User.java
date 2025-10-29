@@ -18,4 +18,13 @@ public class User {
 
   @Column(nullable = false, length = 50)
   private String lastName;
+
+  @Column(length = 20)
+  private String role = "USER";
+
+  @Column(nullable = false)
+  private boolean active = true;
+
+  @Column(nullable = false, updatable = false)
+  private LocalDateTime createdAt = LocalDateTime.now();
 }
