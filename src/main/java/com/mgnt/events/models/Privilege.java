@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.util.Set;
 
@@ -50,7 +51,7 @@ public class Privilege extends AuditableEntity {
   public String getTable() { return table; }
   public void setTable(String table) { this.table = table; }
 
-
+  @PreRemove
   @Override
   protected void onDelete() {
     if (roles != null && roles.stream().anyMatch(role -> role.getDeletedAt() == null)) {
