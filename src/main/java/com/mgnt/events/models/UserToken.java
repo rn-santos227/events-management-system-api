@@ -34,7 +34,7 @@ public class UserToken {
   private TokenType tokenType = TokenType.BEARER;
 
   @Column(nullable = false)
-  private boolean revoke;
+  private boolean revoked;
 
   @Column(nullable = false)
   private boolean expired;
@@ -45,4 +45,19 @@ public class UserToken {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = Attributes.USER_ID, nullable = false)
   private User user;
+
+
+  public Long getId() { return id; }
+  public String getToken() { return token; }
+  public void setToken(String token) { this.token = token; }
+  public TokenType getTokenType() { return tokenType; }
+  public void setTokenType(TokenType tokenType) { this.tokenType = tokenType; }
+  public boolean isRevoked() { return revoked; }
+  public void setRevoked(boolean revoked) { this.revoked = revoked; }
+  public boolean isExpired() { return expired; }
+  public void setExpired(boolean expired) { this.expired = expired; }
+  public LocalDateTime getExpiresAt() { return expiresAt; }
+  public void setExpiresAt(LocalDateTime expiresAt) { this.expiresAt = expiresAt; }
+  public User getUser() { return user; }
+  public void setUser(User user) { this.user = user; }
 }
