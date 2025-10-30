@@ -9,6 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.time.LocalDateTime;
+
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.constants.Tables;
@@ -27,4 +29,13 @@ public class UserToken {
   @Enumerated(EnumType.STRING)
   @Column(name = Attributes.TOKEN_TYPE, nullable = false)
   private TokenType tokenType = TokenType.BEARER;
+
+  @Column(nullable = false)
+  private boolean revoke;
+
+  @Column(nullable = false)
+  private boolean expired;
+
+  @Column(name = Attributes.EXPIRES_AT)
+  private LocalDateTime expiresAt;
 }
