@@ -7,25 +7,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreRemove;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import com.mgnt.events.constants.Attributes;
-import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Defaults;
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
 
 @Entity
 @Table(name = Tables.USERS)
 @SQLDelete(sql = Queries.DELETE_TIMESTAMP)
 @SQLRestriction(Queries.DELETE_RESTRICTION)
-public class User {
+public class User extends AuditableEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -61,15 +57,6 @@ public class User {
   @Column(nullable = false)
   private boolean active = true;
 
-  @Column(name = Attributes.CREATED_AT, nullable = false, updatable = false)
-  private LocalDateTime createdAt;
-
-  @Column(name = Attributes.UPDATED_AT, nullable = false)
-  private LocalDateTime updatedAt;
-
-  @Column(name = Attributes.DELETED_AT)
-  private LocalDateTime deletedAt;
-
   public User() {}
   public User(String email, String password, String firstName, String lastName, Role role) {
     this.email = email;
@@ -99,25 +86,4 @@ public class User {
   public void setActive(boolean active) { this.active = active; }
   public Role getRole() { return role; }
   public void setRole(Role role) { this.role = role; }
-  public LocalDateTime getCreatedAt() { return createdAt; }
-  public LocalDateTime getUpdatedAt() { return updatedAt; }
-  public LocalDateTime getDeletedAt() { return deletedAt; }
-  public void setDeletedAt(LocalDateTime deletedAt) { this.deletedAt = deletedAt; }
-
-  @PrePersist
-  protected void onCreate() {
-    LocalDateTime now = LocalDateTime.now();
-    createdAt = now;
-    updatedAt = now;
-  }
-
-  @PreUpdate
-  protected void onUpdate() {
-    updatedAt = LocalDateTime.now();
-  }
-
-  @PreRemove
-  protected void onDelete() {
-    deletedAt = LocalDateTime.now();
-  }
 }
