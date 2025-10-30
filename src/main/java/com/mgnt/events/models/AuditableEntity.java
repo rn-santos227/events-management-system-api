@@ -47,4 +47,13 @@ public abstract class AuditableEntity {
   private void preUpdate() {
     updatedAt = LocalDateTime.now();
   }
+
+  @PreRemove
+  private void preRemove() {
+    onDelete();
+  }
+
+  protected void onDelete() {
+    deletedAt = LocalDateTime.now();
+  }
 }
