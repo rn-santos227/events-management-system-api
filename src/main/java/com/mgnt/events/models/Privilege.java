@@ -13,9 +13,9 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import com.mgnt.events.constants.Tables;
-import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.constants.Queries;
+import com.mgnt.events.constants.Tables;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 

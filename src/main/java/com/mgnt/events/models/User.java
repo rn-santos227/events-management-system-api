@@ -72,16 +72,18 @@ public class User {
 
   public User() {}
   public User(String email, String password, String firstName, String lastName, Role role) {
-    LocalDateTime now = LocalDateTime.now();
-
     this.email = email;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
     this.role = role;
-    this.active = true;
-    this.createdAt = now;
-    this.updatedAt = now;
+  }
+
+  public String getFullName() {
+    return String.format("%s %s", 
+      firstName != null ? firstName.trim() : "", 
+      lastName != null ? lastName.trim() : ""
+    ).trim();
   }
 
   public Long getId() { return id; }
