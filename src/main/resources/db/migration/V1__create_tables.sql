@@ -30,3 +30,11 @@ CREATE TABLE users (
   deleted_at TIMESTAMP,
   CONSTRAINT fk_users_role_id FOREIGN KEY (role_id) REFERENCES roles (id)
 );
+
+CREATE TABLE roles_priveleges (
+  role_id BIGINT NOT NULL,
+  privilege_id BIGINT NOT NULL,
+  PRIMARY KEY (role_id, privilege_id),
+  CONSTRAINT fk_roles_privileges_role FOREIGN KEY (role_id) REFERENCES roles (id),
+  CONSTRAINT fk_roles_privileges_privilege FOREIGN KEY (privilege_id) REFERENCES privileges (id)
+);
