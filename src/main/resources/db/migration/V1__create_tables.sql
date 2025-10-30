@@ -16,7 +16,6 @@ CREATE TABLE roles (
   deleted_at TIMESTAMP
 );
 
-
 CREATE TABLE users (
   id BIGSERIAL PRIMARY KEY,
   email VARCHAR(100) NOT NULL UNIQUE,
