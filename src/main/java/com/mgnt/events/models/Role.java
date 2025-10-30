@@ -40,7 +40,7 @@ public class Role extends AuditableEntity {
   )
   private Set<Privilege> privileges;
 
-  @OneToMany(mappedBy = Tables.ROLES)
+  @OneToMany(mappedBy = Attributes.ROLE)
   private Set<User> users;
 
   public Role() {}

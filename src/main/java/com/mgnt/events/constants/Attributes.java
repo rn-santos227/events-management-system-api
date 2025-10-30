@@ -8,6 +8,7 @@ public class Attributes {
 
   public static final String FIRST_NAME = "first_name";
   public static final String LAST_NAME = "last_name";
+  public static final String ROLE = "role";
 
   public static final String CREATED_AT = "created_at";
   public static final String DELETED_AT = "deleted_at";
