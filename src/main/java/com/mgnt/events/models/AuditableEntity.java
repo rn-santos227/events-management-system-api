@@ -42,4 +42,9 @@ public abstract class AuditableEntity {
     createdAt = now;
     updatedAt = now;
   }
+
+  @PreUpdate
+  private void preUpdate() {
+    updatedAt = LocalDateTime.now();
+  }
 }
