@@ -13,4 +13,7 @@ import com.mgnt.events.constants.Attributes;
 public abstract class AuditableEntity {
   @Column(name = Attributes.CREATED_AT, nullable = false, updatable = false)
   private LocalDateTime createdAt;
+
+  @Column(name = Attributes.UPDATED_AT, nullable = false)
+  private LocalDateTime updatedAt;
 }
