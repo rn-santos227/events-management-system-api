@@ -9,6 +9,8 @@ import jakarta.persistence.PreUpdate;
 import java.time.LocalDateTime;
 import com.mgnt.events.constants.Attributes;
 
+@MappedSuperclass
 public abstract class AuditableEntity {
-    
+  @Column(name = Attributes.CREATED_AT, nullable = false, updatable = false)
+  private LocalDateTime createdAt;
 }
