@@ -6,14 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreRemove;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import java.util.Set;
 
-import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
 import org.hibernate.annotations.SQLDelete;
@@ -23,7 +18,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(name = Tables.PRIVILEGES)
 @SQLDelete(sql = Queries.DELETE_TIMESTAMP)
 @SQLRestriction(Queries.DELETE_RESTRICTION)
-public class Privilege {
+public class Privilege extends AuditableEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -40,15 +35,6 @@ public class Privilege {
   @ManyToMany(mappedBy = Tables.PRIVILEGES)
   private Set<Role> roles;
 
-  @Column(name = Attributes.CREATED_AT, nullable = false, updatable = false)
-  private LocalDateTime createdAt;
-
-  @Column(name = Attributes.UPDATED_AT, nullable = false)
-  private LocalDateTime updatedAt;
-
-  @Column(name = Attributes.DELETED_AT)
-  private LocalDateTime deletedAt;
-
   public Privilege() {}
   public Privilege(String name, String action, String table) {
     this.name = name;
@@ -63,28 +49,13 @@ public class Privilege {
   public void setAction(String action) { this.action = action; }
   public String getTable() { return table; }
   public void setTable(String table) { this.table = table; }
-  public LocalDateTime getCreatedAt() { return createdAt; }
-  public LocalDateTime getUpdatedAt() { return updatedAt; }
-  public LocalDateTime getDeletedAt() { return deletedAt; }
-  public void setDeletedAt(LocalDateTime deletedAt) { this.deletedAt = deletedAt; }
 
-  @PrePersist
-  protected void onCreate() {
-    LocalDateTime now = LocalDateTime.now();
-    createdAt = now;
-    updatedAt = now;
-  }
 
-  @PreUpdate
-  protected void onUpdate() {
-    updatedAt = LocalDateTime.now();
-  }
-
-  @PreRemove
+  @Override
   protected void onDelete() {
     if (roles != null && roles.stream().anyMatch(role -> role.getDeletedAt() == null)) {
       throw new IllegalStateException("Cannot delete privilege that is still assigned to active roles.");
     }
-    deletedAt = LocalDateTime.now();
+    super.onDelete();
   }
 }
