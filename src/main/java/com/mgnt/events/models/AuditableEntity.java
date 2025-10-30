@@ -19,4 +19,16 @@ public abstract class AuditableEntity {
 
   @Column(name = Attributes.DELETED_AT)
   private LocalDateTime deletedAt;
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public LocalDateTime getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public LocalDateTime getDeletedAt() {
+    return deletedAt;
+  }
 }
