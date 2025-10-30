@@ -22,6 +22,7 @@ CREATE TABLE users (
   password VARCHAR(255) NOT NULL,
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(50) NOT NULL,
+  contact_number VARCHAR(20) NOT NULL,
   role_id BIGINT NOT NULL,
   active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -36,4 +37,18 @@ CREATE TABLE roles_priveleges (
   PRIMARY KEY (role_id, privilege_id),
   CONSTRAINT fk_roles_privileges_role FOREIGN KEY (role_id) REFERENCES roles (id),
   CONSTRAINT fk_roles_privileges_privilege FOREIGN KEY (privilege_id) REFERENCES privileges (id)
+);
+
+CREATE TABLE user_tokens (
+  id BIGSERIAL PRIMARY KEY,
+  user_id BIGINT NOT NULL,
+  token VARCHAR(512) NOT NULL UNIQUE,
+  token_type VARCHAR(50) NOT NULL,
+  revoked BOOLEAN NOT NULL DEFAULT FALSE,
+  expired BOOLEAN NOT NULL DEFAULT FALSE,
+  expires_at TIMESTAMP,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  deleted_at TIMESTAMP,
+  CONSTRAINT fk_user_tokens_user FOREIGN KEY (user_id) REFERENCES users (id)
 );
