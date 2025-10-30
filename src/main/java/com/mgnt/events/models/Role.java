@@ -34,7 +34,7 @@ public class Role extends AuditableEntity {
 
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
-    name = Tables.ROLES_PRIVELEGES,
+    name = Tables.ROLES_PRIVILEGES,
     joinColumns = @JoinColumn(name = Attributes.ROLE_ID),
     inverseJoinColumns = @JoinColumn(name = Attributes.PRIVILEGE_ID)
   )
