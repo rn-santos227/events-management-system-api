@@ -8,4 +8,5 @@ public class Routes {
 
   public static final String BASE_PATH = API_BASE + API_VERSION;
   public static final String TEST = BASE_PATH + "/test";
+  public static final String AUTH = BASE_PATH + "/auth";
 }
