@@ -35,4 +35,11 @@ public abstract class AuditableEntity {
   public void setDeletedAt(LocalDateTime deletedAt) {
     this.deletedAt = deletedAt;
   }
+
+  @PrePersist
+  private void prePersist() {
+    LocalDateTime now = LocalDateTime.now();
+    createdAt = now;
+    updatedAt = now;
+  }
 }
