@@ -16,4 +16,7 @@ public abstract class AuditableEntity {
 
   @Column(name = Attributes.UPDATED_AT, nullable = false)
   private LocalDateTime updatedAt;
+
+  @Column(name = Attributes.DELETED_AT)
+  private LocalDateTime deletedAt;
 }
