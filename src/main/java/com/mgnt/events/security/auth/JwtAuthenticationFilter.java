@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -50,6 +51,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+      boolean isTokenValid = tokenRepository
+        .findByToken(jwt)
+        .map(token -> !token.isExpired() && !token.isRevoked())
+        .orElse(false);
+
+      
+      if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+          userDetails,
+          null,
+          userDetails.getAuthorities()
+        );
+      }
     }
   }
 }
