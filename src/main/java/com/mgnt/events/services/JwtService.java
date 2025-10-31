@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
+import java.time.Instant;
 import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class JwtService {
 
   public String extractUsername(String token) {
     return extractClaim(token, verifier -> verifier.getSubject());
+  }
+
+  public Instant extractExpiration(String token) {
+    return extractClaim(token, verifier -> verifier.getExpiresAt().toInstant());
   }
 
   private <T> T extractClaim(String token, Function<com.auth0.jwt.interfaces.DecodedJWT, T> resolver) {
