@@ -5,6 +5,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -34,6 +36,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     HttpServletResponse response,
     FilterChain filterChain
   ) throws ServletException, IOException {
-
+    final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+      filterChain.doFilter(request, response);
+      return;
+    }
   }
 }
