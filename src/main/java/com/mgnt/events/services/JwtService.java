@@ -4,10 +4,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.Optional;
 import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,7 +42,12 @@ public class JwtService {
       return null;
     }
   }
+  
   private JWTVerifier getVerifier() {
     return JWT.require(algorithm).build();
+  }
+
+  public Optional<Long> getExpirationMillis() {
+    return expirationMillis <= 0 ? Optional.empty() : Optional.of(expirationMillis);
   }
 }
