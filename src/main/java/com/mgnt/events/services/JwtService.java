@@ -34,6 +34,11 @@ public class JwtService {
     return extractClaim(token, verifier -> verifier.getExpiresAt().toInstant());
   }
 
+  public String generateToken(UserDetails userDetails) {
+    Instant now = Instant.now();
+    Instant expiration = now.plus(expirationMillis, ChronoUnit.MILLIS);
+  }
+
   public boolean isTokenValid(String token, UserDetails userDetails) {
     String username = extractUsername(token);
     if (username == null || !username.equals(userDetails.getUsername())) {
