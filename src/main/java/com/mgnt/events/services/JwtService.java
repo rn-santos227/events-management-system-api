@@ -37,6 +37,13 @@ public class JwtService {
   public String generateToken(UserDetails userDetails) {
     Instant now = Instant.now();
     Instant expiration = now.plus(expirationMillis, ChronoUnit.MILLIS);
+
+    return JWT
+      .create()
+      .withSubject(userDetails.getUsername())
+      .withIssuedAt(Date.from(now))
+      .withExpiresAt(Date.from(expiration))
+      .sign(algorithm);
   }
 
   public boolean isTokenValid(String token, UserDetails userDetails) {
