@@ -34,6 +34,10 @@ public class JwtService {
     return extractClaim(token, verifier -> verifier.getExpiresAt().toInstant());
   }
 
+  public boolean isTokenValid(String token, UserDetails userDetails) {
+    String username = extractUsername(token);
+  }
+
   private <T> T extractClaim(String token, Function<com.auth0.jwt.interfaces.DecodedJWT, T> resolver) {
     try {
       com.auth0.jwt.interfaces.DecodedJWT decodedJWT = getVerifier().verify(token);
