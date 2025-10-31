@@ -36,6 +36,9 @@ public class JwtService {
 
   public boolean isTokenValid(String token, UserDetails userDetails) {
     String username = extractUsername(token);
+    if (username == null || !username.equals(userDetails.getUsername())) {
+      return false;
+    }
   }
 
   private <T> T extractClaim(String token, Function<com.auth0.jwt.interfaces.DecodedJWT, T> resolver) {
