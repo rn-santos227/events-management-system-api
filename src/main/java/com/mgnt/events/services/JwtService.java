@@ -1,5 +1,7 @@
 package com.mgnt.events.services;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -15,4 +17,7 @@ public class JwtService {
     this.expirationMillis = expirationMillis;
   }
 
+  private JWTVerifier getVerifier() {
+    return JWT.require(algorithm).build();
+  }
 }
