@@ -100,7 +100,10 @@ public class User extends AuditableEntity implements UserDetails {
   public String getPassword() { return password; }
   public void setPassword(String password) { this.password = password; }
 
- @Override
+  @Override
+  public String getUsername() { return email; }
+
+  @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     if (role == null) {
       return Collections.emptySet();
