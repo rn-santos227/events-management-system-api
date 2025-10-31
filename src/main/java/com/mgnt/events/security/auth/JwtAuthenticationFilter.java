@@ -7,10 +7,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.repositories.UserTokenRepository;
 import com.mgnt.events.services.JwtService;
 
@@ -40,6 +43,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     if (authHeader == null || !authHeader.startsWith("Bearer ")) {
       filterChain.doFilter(request, response);
       return;
+    }
+
+    final String jwt = authHeader.substring(Defaults.DEFAULT_JWT_SUBSTRING);
+    final String userEmail = jwtService.extractUsername(jwt);
+
+    if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+      UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
     }
   }
 }
