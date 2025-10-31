@@ -1,4 +1,4 @@
-package com.mgnt.events.web;
+package com.mgnt.events.controllers;
 
 import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
