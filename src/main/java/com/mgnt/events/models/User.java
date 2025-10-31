@@ -113,6 +113,9 @@ public class User extends AuditableEntity implements UserDetails {
   public boolean isCredentialsNonExpired() { return active; }
 
   @Override
+  public boolean isEnabled() { return active; }
+
+  @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     if (role == null) {
       return Collections.emptySet();
