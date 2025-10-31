@@ -104,6 +104,9 @@ public class User extends AuditableEntity implements UserDetails {
   public String getUsername() { return email; }
 
   @Override
+  public boolean isAccountNonExpired() { return active; }
+
+  @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     if (role == null) {
       return Collections.emptySet();
