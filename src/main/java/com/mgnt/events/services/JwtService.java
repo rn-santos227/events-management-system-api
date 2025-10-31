@@ -39,6 +39,13 @@ public class JwtService {
     if (username == null || !username.equals(userDetails.getUsername())) {
       return false;
     }
+
+    try {
+      getVerifier().verify(token);
+      return true;
+    } catch (JWTVerificationException ex) {
+      return false;
+    }
   }
 
   private <T> T extractClaim(String token, Function<com.auth0.jwt.interfaces.DecodedJWT, T> resolver) {
