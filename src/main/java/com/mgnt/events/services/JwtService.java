@@ -22,6 +22,10 @@ public class JwtService {
     this.expirationMillis = expirationMillis;
   }
 
+  public String extractUsername(String token) {
+    return extractClaim(token, verifier -> verifier.getSubject());
+  }
+
   private <T> T extractClaim(String token, Function<com.auth0.jwt.interfaces.DecodedJWT, T> resolver) {
     try {
       com.auth0.jwt.interfaces.DecodedJWT decodedJWT = getVerifier().verify(token);
