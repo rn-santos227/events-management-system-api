@@ -9,16 +9,19 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = Tables.PRIVILEGES)
 @SQLDelete(sql = Queries.DELETE_TIMESTAMP)
 @SQLRestriction(Queries.DELETE_RESTRICTION)
+@Getter
 public class Privilege extends AuditableEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,14 +45,6 @@ public class Privilege extends AuditableEntity {
     this.action = action;
     this.table = table;
   }
-
-  public Long getId() { return id; }
-  public String getName() { return name; }
-  public void setName(String name) { this.name = name; }
-  public String getAction() { return action; }
-  public void setAction(String action) { this.action = action; }
-  public String getTable() { return table; }
-  public void setTable(String table) { this.table = table; }
 
   @PreRemove
   @Override
