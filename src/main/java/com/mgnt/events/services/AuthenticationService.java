@@ -38,6 +38,8 @@ public class AuthenticationService {
   public LoginResponse authenticate(LoginRequest request) {
     Authentication authentication = authenticateUser(request.getEmail(), request.getPassword());
     User user = (User) authentication.getPrincipal();
+
+    revokeActiveTokens(user);
   }
 
   private Authentication authenticateUser(String email, String password) {
