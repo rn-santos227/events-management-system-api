@@ -9,5 +9,10 @@ import com.mgnt.events.services.AuthenticationService;
 @RestController
 @RequestMapping(Routes.AUTH)
 public class AuthenticationController {
-  private final AuthenticationService authenticationService; 
+  private final AuthenticationService authenticationService;
+
+  public AuthenticationController(AuthenticationService authenticationService) {
+    this.authenticationService = authenticationService;
+  }
+
 }
