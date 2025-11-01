@@ -21,23 +21,8 @@ public abstract class AuditableEntity {
   private LocalDateTime updatedAt;
 
   @Column(name = Attributes.DELETED_AT)
+  @Setter
   private LocalDateTime deletedAt;
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
-  }
-
-  public LocalDateTime getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(LocalDateTime deletedAt) {
-    this.deletedAt = deletedAt;
-  }
 
   @PrePersist
   private void prePersist() {
