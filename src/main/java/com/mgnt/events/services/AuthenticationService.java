@@ -36,7 +36,8 @@ public class AuthenticationService {
 
   @Transactional
   public LoginResponse authenticate(LoginRequest request) {
-
+    Authentication authentication = authenticateUser(request.getEmail(), request.getPassword());
+    User user = (User) authentication.getPrincipal();
   }
 
   private Authentication authenticateUser(String email, String password) {
