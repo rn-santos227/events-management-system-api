@@ -65,5 +65,8 @@ public class AuthenticationService {
     userToken.setExpired(false);
     userToken.setRevoked(false);
     userToken.setTokenType(TokenType.BEARER);
+    if (expiration != null) {
+      userToken.setExpiresAt(LocalDateTime.ofInstant(expiration, ZoneOffset.UTC));
+    }
   }
 }
