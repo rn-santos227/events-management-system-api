@@ -13,7 +13,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,11 +30,13 @@ import com.mgnt.events.constants.Tables;
 @Table(name = Tables.USERS)
 @SQLDelete(sql = Queries.DELETE_TIMESTAMP)
 @SQLRestriction(Queries.DELETE_RESTRICTION)
+@Getter
 public class User extends AuditableEntity implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Setter
   @Column(
     nullable = false,
     unique = true,
@@ -41,9 +44,11 @@ public class User extends AuditableEntity implements UserDetails {
   )
   private String email;
 
+  @Setter
   @Column(nullable = false)
   private String password;
 
+  @Setter
   @Column(
     name = Attributes.FIRST_NAME,
     nullable = false,
@@ -51,6 +56,7 @@ public class User extends AuditableEntity implements UserDetails {
   )
   private String firstName;
 
+  @Setter
   @Column(
     name = Attributes.LAST_NAME,
     nullable = false,
@@ -58,6 +64,7 @@ public class User extends AuditableEntity implements UserDetails {
   )
   private String lastName;
 
+  @Setter
   @Column(
     name = Attributes.CONTACT_NUMBER,
     nullable = false,
@@ -67,6 +74,7 @@ public class User extends AuditableEntity implements UserDetails {
 
   @ManyToOne
   @JoinColumn(name = Attributes.ROLE_ID, nullable = false)
+  @Setter
   private Role role;
 
   @Column(nullable = false)
@@ -90,15 +98,11 @@ public class User extends AuditableEntity implements UserDetails {
   }
 
   public String getFullName() {
-    return String.format("%s %s", 
-      firstName != null ? firstName.trim() : "", 
+    return String.format("%s %s",
+      firstName != null ? firstName.trim() : "",
       lastName != null ? lastName.trim() : ""
     ).trim();
   }
-
-  @Override
-  public String getPassword() { return password; }
-  public void setPassword(String password) { this.password = password; }
 
   @Override
   public String getUsername() { return email; }
@@ -138,18 +142,4 @@ public class User extends AuditableEntity implements UserDetails {
     }
     return authorities;
   }
-
-  public Long getId() { return id; }
-  public String getEmail() { return email; }
-  public void setEmail(String email) { this.email = email; }
-  public String getFirstName() { return firstName; }
-  public void setFirstName(String firstName) { this.firstName = firstName; }
-  public String getLastName() { return lastName; }
-  public void setLastName(String lastName) { this.lastName = lastName; }
-  public String getContactNumber() { return contactNumber; }
-  public void setContactNumber(String contactNumber) { this.contactNumber = contactNumber; }
-  public boolean isActive() { return active; }
-  public void setActive(boolean active) { this.active = active; }
-  public Role getRole() { return role; }
-  public void setRole(Role role) { this.role = role; }
 }
