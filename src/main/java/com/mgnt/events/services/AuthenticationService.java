@@ -68,5 +68,6 @@ public class AuthenticationService {
     if (expiration != null) {
       userToken.setExpiresAt(LocalDateTime.ofInstant(expiration, ZoneOffset.UTC));
     }
+    tokenRepository.save(userToken);
   }
 }
