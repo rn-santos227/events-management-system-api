@@ -49,5 +49,11 @@ public class AuthenticationService {
     if (validTokens.isEmpty()) {
       return;
     }
+
+    validTokens.forEach(token -> {
+      token.setExpired(true);
+      token.setRevoked(true);
+    });
+    tokenRepository.saveAll(validTokens);
   }
 }
