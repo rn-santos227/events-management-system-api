@@ -43,4 +43,8 @@ public class AuthenticationService {
       new UsernamePasswordAuthenticationToken(email, password)
     );
   }
+
+  private void revokeActiveTokens(User user) {
+
+  }
 }
