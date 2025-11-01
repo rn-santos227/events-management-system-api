@@ -40,6 +40,9 @@ public class AuthenticationService {
     User user = (User) authentication.getPrincipal();
 
     revokeActiveTokens(user);
+
+    String token = jwtService.generateToken(user);
+    Instant expiration = jwtService.extractExpiration(token);
   }
 
   private Authentication authenticateUser(String email, String password) {
