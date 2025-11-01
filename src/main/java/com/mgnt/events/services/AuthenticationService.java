@@ -16,6 +16,7 @@ import com.mgnt.events.repositories.UserTokenRepository;
 import com.mgnt.events.requests.LoginRequest;
 import com.mgnt.events.security.auth.LoginResponse;
 import com.mgnt.events.services.JwtService;
+import com.mgnt.events.types.TokenType;
 
 @Service
 public class AuthenticationService {
@@ -59,5 +60,10 @@ public class AuthenticationService {
 
   private void saveUserToken(User user, String token, Instant expiration) {
     UserToken userToken = new UserToken();
+    userToken.setUser(user);
+    userToken.setToken(token);
+    userToken.setExpired(false);
+    userToken.setRevoked(false);
+    userToken.setTokenType(TokenType.BEARER);
   }
 }
