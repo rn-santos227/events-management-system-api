@@ -56,4 +56,8 @@ public class AuthenticationService {
     });
     tokenRepository.saveAll(validTokens);
   }
+
+  private void saveUserToken(User user, String token, Instant expiration) {
+    UserToken userToken = new UserToken();
+  }
 }
