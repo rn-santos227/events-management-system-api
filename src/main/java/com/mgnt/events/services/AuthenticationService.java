@@ -43,6 +43,11 @@ public class AuthenticationService {
 
     String token = jwtService.generateToken(user);
     Instant expiration = jwtService.extractExpiration(token);
+
+    saveUserToken(user, token, expiration);
+
+    long expiresAt = expiration != null ? expiration.toEpochMilli() : 0L;
+    return new LoginResponse(token, "Bearer", expiresAt);
   }
 
   private Authentication authenticateUser(String email, String password) {
