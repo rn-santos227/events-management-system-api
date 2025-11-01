@@ -5,11 +5,14 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.PreUpdate;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import com.mgnt.events.constants.Attributes;
 
 @MappedSuperclass
+@Getter
 public abstract class AuditableEntity {
   @Column(name = Attributes.CREATED_AT, nullable = false, updatable = false)
   private LocalDateTime createdAt;
