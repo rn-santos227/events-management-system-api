@@ -13,6 +13,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -24,6 +26,7 @@ import com.mgnt.events.constants.Tables;
 @Table(name = Tables.ROLES)
 @SQLDelete(sql = Queries.DELETE_TIMESTAMP)
 @SQLRestriction(Queries.DELETE_RESTRICTION)
+@Getter
 public class Role extends AuditableEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,14 +48,6 @@ public class Role extends AuditableEntity {
 
   public Role() {}
   public Role(String name) { this.name = name; }
-
-  public Long getId() { return id; }
-  public String getName() { return name; }
-  public void setName(String name) { this.name = name; }
-  public Set<Privilege> getPrivileges() { return privileges; }
-  public void setPrivileges(Set<Privilege> privileges) { this.privileges = privileges; }
-  public Set<User> getUsers() { return users; }
-  public void setUsers(Set<User> users) { this.users = users; }
 
   @PreRemove
   @Override
