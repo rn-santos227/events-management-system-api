@@ -27,12 +27,15 @@ public class Privilege extends AuditableEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Setter
   @Column(unique = true, nullable = false)
   private String name;
 
+  @Setter
   @Column(unique = true, nullable = false)
   private String action;
 
+  @Setter
   @Column(unique = true, nullable = false)
   private String table;
 
