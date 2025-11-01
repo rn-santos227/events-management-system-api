@@ -1,12 +1,21 @@
 package com.mgnt.events.services;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.List;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mgnt.events.models.User;
+import com.mgnt.events.models.UserToken;
 import com.mgnt.events.repositories.UserTokenRepository;
 import com.mgnt.events.requests.LoginRequest;
 import com.mgnt.events.security.auth.LoginResponse;
+import com.mgnt.events.services.JwtService;
 
 @Service
 public class AuthenticationService {
@@ -26,6 +35,12 @@ public class AuthenticationService {
 
   @Transactional
   public LoginResponse authenticate(LoginRequest request) {
-    
+
+  }
+
+  private Authentication authenticateUser(String email, String password) {
+    return authenticationManager.authenticate(
+      new UsernamePasswordAuthenticationToken(email, password)
+    );
   }
 }
