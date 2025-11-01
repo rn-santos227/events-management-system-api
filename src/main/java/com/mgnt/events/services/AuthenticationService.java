@@ -45,6 +45,9 @@ public class AuthenticationService {
   }
 
   private void revokeActiveTokens(User user) {
-
+    List<UserToken> validTokens = tokenRepository.findAllByUserAndExpiredFalseAndRevokedFalse(user);
+    if (validTokens.isEmpty()) {
+      return;
+    }
   }
 }
