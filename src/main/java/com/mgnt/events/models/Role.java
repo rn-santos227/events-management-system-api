@@ -32,6 +32,7 @@ public class Role extends AuditableEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Setter
   @Column(unique = true, nullable = false)
   private String name;
 
@@ -41,9 +42,12 @@ public class Role extends AuditableEntity {
     joinColumns = @JoinColumn(name = Attributes.ROLE_ID),
     inverseJoinColumns = @JoinColumn(name = Attributes.PRIVILEGE_ID)
   )
+
+  @Setter
   private Set<Privilege> privileges;
 
   @OneToMany(mappedBy = Attributes.ROLE)
+  @Setter
   private Set<User> users;
 
   public Role() {}
