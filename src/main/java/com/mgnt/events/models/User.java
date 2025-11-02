@@ -28,7 +28,7 @@ import com.mgnt.events.constants.Tables;
 
 @Entity
 @Table(name = Tables.USERS)
-@SQLDelete(sql = Queries.DELETE_TIMESTAMP)
+@SQLDelete(sql = Queries.DELETE_USERS)
 @SQLRestriction(Queries.DELETE_RESTRICTION)
 @Getter
 public class User extends AuditableEntity implements UserDetails {
@@ -77,6 +77,7 @@ public class User extends AuditableEntity implements UserDetails {
   @Setter
   private Role role;
 
+  @Setter
   @Column(nullable = false)
   private boolean active = true;
 

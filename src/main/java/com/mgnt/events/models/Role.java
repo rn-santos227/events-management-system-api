@@ -24,7 +24,7 @@ import com.mgnt.events.constants.Tables;
 
 @Entity
 @Table(name = Tables.ROLES)
-@SQLDelete(sql = Queries.DELETE_TIMESTAMP)
+@SQLDelete(sql = Queries.DELETE_ROLES)
 @SQLRestriction(Queries.DELETE_RESTRICTION)
 @Getter
 public class Role extends AuditableEntity {
