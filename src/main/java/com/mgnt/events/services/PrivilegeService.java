@@ -22,8 +22,10 @@ public class PrivilegeService {
     return new PrivilegeResponse(
       privilege.getId(),
       privilege.getName(),
-     privilege.getAction(),
-      privilege.getResource()
+      privilege.getAction(),
+      privilege.getResource(),
+      privilege.getCreatedAt(),
+      privilege.getUpdatedAt()
     );
   }
 }
