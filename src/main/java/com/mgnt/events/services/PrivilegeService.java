@@ -42,7 +42,14 @@ public class PrivilegeService {
 
   @Transactional
   public PrivilegeResponse update(Long id, PrivilegeRequest request) {
+    Privilege privilege = getPrivilege(id);
+    validateUniqueness(request.name(), request.action(), id);
 
+    privilege.setName(request.name());
+    privilege.setAction(request.action());
+    privilege.setResource(request.resource());
+
+    return toResponse(privilegeRepository.save(privilege));
   }
 
   private Privilege getPrivilege(Long id) {
