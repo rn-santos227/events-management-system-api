@@ -2,7 +2,7 @@ CREATE TABLE privileges (
   id BIGSERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL UNIQUE,
   action VARCHAR(255) NOT NULL UNIQUE,
-  "table" VARCHAR(255) NOT NULL UNIQUE,
+  resource VARCHAR(255) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   deleted_at TIMESTAMP
@@ -31,7 +31,7 @@ CREATE TABLE users (
   CONSTRAINT fk_users_role_id FOREIGN KEY (role_id) REFERENCES roles (id)
 );
 
-CREATE TABLE roles_priveleges (
+CREATE TABLE roles_privileges (
   role_id BIGINT NOT NULL,
   privilege_id BIGINT NOT NULL,
   PRIMARY KEY (role_id, privilege_id),
