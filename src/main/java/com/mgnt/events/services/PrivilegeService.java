@@ -4,7 +4,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.models.Privilege;
 import com.mgnt.events.repositories.PrivilegeRepository;
+import com.mgnt.events.responses.privileges.PrivilegeResponse;
 
 @Service
 public class PrivilegeService {
@@ -13,5 +15,10 @@ public class PrivilegeService {
 
   public PrivilegeService(PrivilegeRepository privilegeRepository) {
     this.privilegeRepository = privilegeRepository;
-  }  
+  }
+
+
+  private PrivilegeResponse toResponse(Privilege privilege) {
+
+  }
 }
