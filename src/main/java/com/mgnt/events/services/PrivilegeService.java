@@ -58,11 +58,15 @@ public class PrivilegeService {
   public void delete(Long id) {
     Privilege privilege = getPrivilege(id);
     try {
-
+      privilegeRepository.delete(privilege);
     } catch(IllegalStateException exception) {
-
+      throw new ResponseStatusException(
+        HttpStatus.CONFLICT,
+        exception.getMessage() != null ? exception.getMessage() : "Unable to delete privilege",
+        exception
+      );
     } catch(DataIntegrityViolationException exception) {
-      
+
     }
   }
 
