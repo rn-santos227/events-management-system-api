@@ -26,6 +26,10 @@ public class PrivilegeService {
     return privilegeRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
   }
 
+  @Transactional(readOnly = true)
+  public PrivilegeResponse findById(Long id) {
+    return toResponse(getPrivilege(id));
+  }
 
   private Privilege getPrivilege(Long id) {
     return privilegeRepository
