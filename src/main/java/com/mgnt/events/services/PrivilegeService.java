@@ -1,6 +1,8 @@
 package com.mgnt.events.services;
 
 import java.util.List;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,18 @@ public class PrivilegeService {
     privilege.setResource(request.resource());
 
     return toResponse(privilegeRepository.save(privilege));
+  }
+
+  @Transactional
+  public void delete(Long id) {
+    Privilege privilege = getPrivilege(id);
+    try {
+
+    } catch(IllegalStateException exception) {
+
+    } catch(DataIntegrityViolationException exception) {
+      
+    }
   }
 
   private Privilege getPrivilege(Long id) {
