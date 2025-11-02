@@ -66,7 +66,11 @@ public class PrivilegeService {
         exception
       );
     } catch(DataIntegrityViolationException exception) {
-
+      throw new ResponseStatusException(
+        HttpStatus.CONFLICT,
+        "Unable to delete privilege while it is still in use",
+        exception
+      );
     }
   }
 
