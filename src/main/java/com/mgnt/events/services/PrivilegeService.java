@@ -1,8 +1,10 @@
 package com.mgnt.events.services;
 
+import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
@@ -12,11 +14,16 @@ import com.mgnt.events.responses.privileges.PrivilegeResponse;
 
 @Service
 public class PrivilegeService {
-  private static final Sort DEFA_SORT = Sort.by(Sort.Direction.ASC, Attributes.NAME);
+  private static final Sort DEFAULT_SORT = Sort.by(Sort.Direction.ASC, Attributes.NAME);
   private final PrivilegeRepository privilegeRepository;
 
   public PrivilegeService(PrivilegeRepository privilegeRepository) {
     this.privilegeRepository = privilegeRepository;
+  }
+
+  @Transactional(readOnly = true)
+  public List<PrivilegeResponse> findAll() {
+    return privilegeRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
   }
 
   private void validateUniqueness(String name, String action, Long excludeId) {
