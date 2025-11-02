@@ -19,7 +19,7 @@ import com.mgnt.events.constants.Tables;
 
 @Entity
 @Table(name = Tables.PRIVILEGES)
-@SQLDelete(sql = Queries.DELETE_TIMESTAMP)
+@SQLDelete(sql = Queries.DELETE_PRIVILEGES)
 @SQLRestriction(Queries.DELETE_RESTRICTION)
 @Getter
 public class Privilege extends AuditableEntity {
@@ -36,17 +36,17 @@ public class Privilege extends AuditableEntity {
   private String action;
 
   @Setter
-  @Column(unique = true, nullable = false)
-  private String table;
+  @Column(nullable = false)
+  private String resource;
 
   @ManyToMany(mappedBy = Tables.PRIVILEGES)
   private Set<Role> roles;
 
   public Privilege() {}
-  public Privilege(String name, String action, String table) {
+  public Privilege(String name, String action, String resource) {
     this.name = name;
     this.action = action;
-    this.table = table;
+    this.resource = resource;
   }
 
   @PreRemove
