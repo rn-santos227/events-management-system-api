@@ -40,6 +40,11 @@ public class PrivilegeService {
     return toResponse(privilegeRepository.save(privilege));
   }
 
+  @Transactional
+  public PrivilegeResponse update(Long id, PrivilegeRequest request) {
+
+  }
+
   private Privilege getPrivilege(Long id) {
     return privilegeRepository
       .findById(id)
