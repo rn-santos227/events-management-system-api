@@ -19,6 +19,9 @@ public class PrivilegeService {
 
 
   private PrivilegeResponse toResponse(Privilege privilege) {
-
+    return new PrivilegeResponse(
+      privilege.getId(),
+      privilege.getName(),
+    );
   }
 }
