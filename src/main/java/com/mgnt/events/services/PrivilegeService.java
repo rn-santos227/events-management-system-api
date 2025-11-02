@@ -26,6 +26,13 @@ public class PrivilegeService {
     return privilegeRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
   }
 
+
+  private Privilege getPrivilege(Long id) {
+    return privilegeRepository
+      .findById(id)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Privilege not found"));
+  }
+
   private void validateUniqueness(String name, String action, Long excludeId) {
     privilegeRepository
       .findByNameIgnoreCase(name)
