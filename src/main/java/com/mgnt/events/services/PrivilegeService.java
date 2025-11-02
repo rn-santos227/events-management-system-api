@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.models.Privilege;
 import com.mgnt.events.repositories.PrivilegeRepository;
+import com.mgnt.events.requests.privileges.PrivilegeRequest;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
 
 @Service
@@ -29,6 +30,14 @@ public class PrivilegeService {
   @Transactional(readOnly = true)
   public PrivilegeResponse findById(Long id) {
     return toResponse(getPrivilege(id));
+  }
+
+  @Transactional
+  public PrivilegeResponse create(PrivilegeRequest request) {
+    validateUniqueness(request.name(), request.action(), null);
+
+    Privilege privilege = new Privilege(request.name(), request.action(), request.resource());
+    return toResponse(privilegeRepository.save(privilege));
   }
 
   private Privilege getPrivilege(Long id) {
