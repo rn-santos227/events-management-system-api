@@ -26,6 +26,13 @@ public class PrivilegeService {
       .ifPresent(existing -> {
         throw new ResponseStatusException(HttpStatus.CONFLICT, "Privilege name already exists");
       });
+
+    privilegeRepository
+      .findByActionIgnoreCase(action)
+      .filter(existing -> !existing.getId().equals(excludeId))
+      .ifPresent(existing -> {
+        throw new ResponseStatusException(HttpStatus.CONFLICT, "Privilege action already exists");
+      });
   }
 
   private PrivilegeResponse toResponse(Privilege privilege) {
