@@ -15,6 +15,7 @@ import com.mgnt.events.models.Role;
 import com.mgnt.events.models.User;
 import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.repositories.UserRepository;
+import com.mgnt.events.requests.users.UserCreateRequest;
 import com.mgnt.events.responses.roles.RoleSummary;
 import com.mgnt.events.responses.users.UserResponse;
 
@@ -47,6 +48,33 @@ public class UserService {
     return toResponse(getUser(id));
   }
 
+
+  @Transactional
+  public UserResponse create(UserCreateRequest request) {
+    String normalizedEmail = normalizeEmail(request.email());
+
+    if (userRepository.existsByEmail(normalizedEmail)) {
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
+    }
+
+    Role role = getRole(request.roleId());
+
+    User user = new User(
+      normalizedEmail,
+      passwordEncoder.encode(request.password()),
+      request.firstName(),
+      request.lastName(),
+      request.contactNumber(),
+      role
+    );
+
+    if (request.active() != null) {
+      user.setActive(request.active());
+    }
+
+    return toResponse(userRepository.save(user));
+  }
+
   private User getUser(Long id) {
     return userRepository
       .findById(id)
@@ -57,6 +85,10 @@ public class UserService {
     return roleRepository
       .findById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
+  }
+
+  private String normalizeEmail(String email) {
+    return email == null ? null : email.trim().toLowerCase();
   }
 
   private UserResponse toResponse(User user) {

@@ -61,13 +61,13 @@ public class PrivilegeService {
     Privilege privilege = getPrivilege(id);
     try {
       privilegeRepository.delete(privilege);
-    } catch(IllegalStateException exception) {
+    } catch (IllegalStateException exception) {
       throw new ResponseStatusException(
         HttpStatus.CONFLICT,
         exception.getMessage() != null ? exception.getMessage() : "Unable to delete privilege",
         exception
       );
-    } catch(DataIntegrityViolationException exception) {
+    } catch (DataIntegrityViolationException exception) {
       throw new ResponseStatusException(
         HttpStatus.CONFLICT,
         "Unable to delete privilege while it is still in use",
