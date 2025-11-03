@@ -83,9 +83,11 @@ public class RoleService {
   }
 
   private Role getRole(Long id) {
-    return roleRepository
-      .findWithPrivilegesById(id)
-      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
+    return Objects.requireNonNull(
+      roleRepository
+        .findWithPrivilegesById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"))
+    );
   }
 
   private void validateNameUniqueness(String name, Long excludeId) {
