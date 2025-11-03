@@ -135,8 +135,15 @@ public class UserService {
   }
 
   private UserResponse toResponse(User user) {
-    Role role = user.getRole();
-    RoleSummary roleSummary = role != null ? new RoleSummary(role.getId(), role.getName()) : null;
+    User ensuredUser = Objects.requireNonNull(user, "User must not be null");
+    Role role = ensuredUser.getRole();
+    RoleSummary roleSummary =
+      role != null
+        ? new RoleSummary(
+          Objects.requireNonNull(role.getId(), "Role identifier must not be null"),
+          role.getName()
+        )
+        : null;
 
     return new UserResponse(
       user.getId(),
