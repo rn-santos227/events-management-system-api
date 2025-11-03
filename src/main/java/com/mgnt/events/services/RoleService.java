@@ -7,8 +7,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.models.Privilege;
@@ -34,6 +36,14 @@ public class RoleService {
   @Transactional(readOnly = true)
   public List<RoleResponse> findAll() {
     return roleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public RoleResponse findById(Long id) {
+    Role role = roleRepository
+      .findWithPrivilegesById(id)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
+    return toResponse(role);
   }
 
   private Set<Privilege> resolvePrivileges(Set<Log> privilegeIds) {
