@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,11 +45,11 @@ public class Role extends AuditableEntity {
   )
 
   @Setter
-  private Set<Privilege> privileges;
+  private Set<Privilege> privileges = new LinkedHashSet<>();
 
   @OneToMany(mappedBy = Attributes.ROLE)
   @Setter
-  private Set<User> users;
+  private Set<User> users = new LinkedHashSet<>();
 
   public Role() {}
   public Role(String name) { this.name = name; }
