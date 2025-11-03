@@ -57,7 +57,7 @@ public class RoleService {
 
   @Transactional
   public RoleResponse update(Long id, RoleRequest request) {
-    Role role = getRole(id);
+    Role role = Objects.requireNonNull(getRole(id));
     validateNameUniqueness(request.name(), id);
 
     role.setName(request.name());
@@ -68,7 +68,7 @@ public class RoleService {
 
   @Transactional
   public void delete(Long id) {
-    Role role = getRole(id);
+    Role role = Objects.requireNonNull(getRole(id));
     try {
       roleRepository.delete(role);
     } catch (IllegalStateException exception) {
