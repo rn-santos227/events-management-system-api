@@ -7,6 +7,7 @@ public class Attributes {
   public static final String PRIVILEGE_ID = "privilege_id";
 
   public static final String CONTACT_NUMBER = "contact_number";
+  public static final String EMAIL = "email";
   public static final String FIRST_NAME = "first_name";
   public static final String LAST_NAME = "last_name";
   public static final String NAME = "name";
