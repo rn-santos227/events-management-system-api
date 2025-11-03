@@ -146,12 +146,12 @@ public class UserService {
         : null;
 
     return new UserResponse(
-      user.getId(),
-      user.getEmail(),
-      user.getFirstName(),
-      user.getLastName(),
-      user.getContactNumber(),
-      user.isActive(),
+      Objects.requireNonNull(ensuredUser.getId(), "User identifier must not be null"),
+      ensuredUser.getEmail(),
+      ensuredUser.getFirstName(),
+      ensuredUser.getLastName(),
+      ensuredUser.getContactNumber(),
+      ensuredUser.isActive(),
       roleSummary,
       user.getCreatedAt(),
       user.getUpdatedAt(),
