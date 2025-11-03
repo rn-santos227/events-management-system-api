@@ -1,7 +1,7 @@
 package com.mgnt.events.services;
 
 import java.util.List;
-
+import java.util.Objects;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -60,7 +60,7 @@ public class PrivilegeService {
   public void delete(Long id) {
     Privilege privilege = getPrivilege(id);
     try {
-      privilegeRepository.delete(privilege);
+      privilegeRepository.delete(Objects.requireNonNull(privilege));
     } catch (IllegalStateException exception) {
       throw new ResponseStatusException(
         HttpStatus.CONFLICT,
