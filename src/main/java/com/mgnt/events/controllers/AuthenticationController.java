@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mgnt.events.constants.Routes;
-import com.mgnt.events.requests.LoginRequest;
-import com.mgnt.events.security.auth.LoginResponse;
+import com.mgnt.events.requests.auth.LoginRequest;
+import com.mgnt.events.responses.auth.LoginResponse;
 import com.mgnt.events.services.AuthenticationService;
 
 import jakarta.validation.Valid;

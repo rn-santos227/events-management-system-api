@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mgnt.events.models.User;
 import com.mgnt.events.models.UserToken;
 import com.mgnt.events.repositories.UserTokenRepository;
-import com.mgnt.events.requests.LoginRequest;
-import com.mgnt.events.security.auth.LoginResponse;
+import com.mgnt.events.requests.auth.LoginRequest;
+import com.mgnt.events.responses.auth.LoginResponse;
 import com.mgnt.events.types.TokenType;
 
 @Service
