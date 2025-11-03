@@ -56,7 +56,7 @@ public class RoleService {
   }
 
   @Transactional
-  public RoleResponse update(Long id, RoleRequest request) {
+  public RoleResponse update(@NonNull Long id, RoleRequest request) {
     Role role = Objects.requireNonNull(getRole(id));
     validateNameUniqueness(request.name(), id);
 
@@ -67,7 +67,7 @@ public class RoleService {
   }
 
   @Transactional
-  public void delete(Long id) {
+  public void delete(@NonNull Long id) {
     Role role = Objects.requireNonNull(getRole(id));
     try {
       roleRepository.delete(role);
@@ -82,7 +82,7 @@ public class RoleService {
     }
   }
 
-  private Role getRole(Long id) {
+  private Role getRole(@NonNull Long id) {
     return Objects.requireNonNull(
       roleRepository
         .findWithPrivilegesById(id)
