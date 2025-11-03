@@ -3,6 +3,7 @@ package com.mgnt.events.services;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
@@ -36,6 +37,12 @@ public class RoleService {
         Privilege::getName,
         Comparator.nullsLast((String.CASE_INSENSITIVE_ORDER))
       );
+      privilegeSummaries = role
+        .getPrivileges()
+        .stream()
+        .sorted(comparator)
+        .map(this::toPrivilegeSummary)
+        .collect(Collectors.toCollection(LinkedHashSet::new));
     }
   }
 
