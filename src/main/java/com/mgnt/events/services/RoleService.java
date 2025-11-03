@@ -5,9 +5,11 @@ import org.springframework.lang.NonNull;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.models.Privilege;
+import com.mgnt.events.models.Role;
 import com.mgnt.events.repositories.PrivilegeRepository;
 import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.responses.privileges.PrivilegeSummary;
+import com.mgnt.events.responses.roles.RoleResponse;
 
 public class RoleService {
   @NonNull
@@ -20,6 +22,10 @@ public class RoleService {
     this.privilegeRepository = privilegeRepository;
   }
 
+
+  private RoleResponse toResponse(Role role) {
+
+  }
 
   private PrivilegeSummary toPrivilegeSummary(Privilege privilege) {
     return new PrivilegeSummary(
