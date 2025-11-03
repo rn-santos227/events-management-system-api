@@ -129,28 +129,30 @@ public class RoleService {
   }
 
   private RoleResponse toResponse(Role role) {
+    Role ensuredRole = Objects.requireNonNull(role, "Role must not be null");
     Set<PrivilegeSummary> privilegeSummaries;
-    if (role.getPrivileges() == null) {
+    if (ensuredRole.getPrivileges() == null) {
       privilegeSummaries = new LinkedHashSet<>();
     } else {
       Comparator<Privilege> comparator = Comparator.comparing(
         Privilege::getName,
         Comparator.nullsLast((String.CASE_INSENSITIVE_ORDER))
       );
-      privilegeSummaries = role
+      privilegeSummaries = ensuredRole
         .getPrivileges()
         .stream()
+        .filter(Objects::nonNull)
         .sorted(comparator)
         .map(this::toPrivilegeSummary)
         .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     return new RoleResponse(
-      role.getId(),
-      role.getName(),
+      Objects.requireNonNull(ensuredRole.getId(), "Role identifier must not be null"),
+      ensuredRole.getName(),
       privilegeSummaries,
-      role.getCreatedAt(),
-      role.getUpdatedAt()
+      ensuredRole.getCreatedAt(),
+      ensuredRole.getUpdatedAt()
     );
   }
 
