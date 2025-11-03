@@ -1,0 +1,17 @@
+extend type Query {
+  roles: [Role!]!
+  role(id: ID!): Role
+}
+
+type Role {
+  id: ID!
+  name: String
+  privileges: [PrivilegeSummary!]!
+  createdAt: String
+  updatedAt: String
+}
+
+type RoleSummary {
+  id: ID!
+  name: String
+}
