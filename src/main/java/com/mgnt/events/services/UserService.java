@@ -21,6 +21,7 @@ import com.mgnt.events.requests.users.UserCreateRequest;
 import com.mgnt.events.requests.users.UserUpdateRequest;
 import com.mgnt.events.responses.roles.RoleSummary;
 import com.mgnt.events.responses.users.UserResponse;
+import com.mgnt.events.utils.RequestValidators;
 
 @Service
 public class UserService {
@@ -58,11 +59,7 @@ public class UserService {
       throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
     }
 
-    Long roleId = request.roleId();
-    if (roleId == null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role ID must not be null");
-    }
-
+    Long roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
     Role role = getRole(roleId);
     User user = new User(
       normalizedEmail,
@@ -93,10 +90,7 @@ public class UserService {
     user.setLastName(request.lastName());
     user.setContactNumber(request.contactNumber());
 
-    Long roleId = request.roleId();
-    if (roleId == null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role ID must not be null");
-    }
+    Long roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
     user.setRole(getRole(roleId));
 
     if (request.password() != null && !request.password().isBlank()) {
