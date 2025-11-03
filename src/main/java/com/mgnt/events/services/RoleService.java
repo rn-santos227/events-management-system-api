@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -62,6 +63,22 @@ public class RoleService {
     role.setPrivileges(resolvePrivileges(request.privilegeIds()));
 
     return toResponse(roleRepository.save(role));
+  }
+
+  @Transactional
+  public void delete(Long id) {
+    Role role = getRole(id);
+    try {
+      roleRepository.delete(role);
+    } catch (IllegalStateException exception) {
+      throw new ResponseStatusException(
+        HttpStatus.CONFLICT,
+        exception.getMessage() != null ? exception.getMessage() : "Unable to delete role",
+        exception
+      );
+    } catch (DataIntegrityViolationException exception) {
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Unable to delete role", exception);
+    }
   }
 
   private Role getRole(Long id) {
