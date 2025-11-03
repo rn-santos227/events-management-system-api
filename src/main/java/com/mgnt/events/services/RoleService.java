@@ -3,6 +3,7 @@ package com.mgnt.events.services;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,7 +44,7 @@ public class RoleService {
     Role role = roleRepository
       .findWithPrivilegesById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
-    return toResponse(role);
+    return toResponse(Objects.requireNonNull(role));
   }
 
   @Transactional
