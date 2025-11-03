@@ -22,6 +22,11 @@ public class RoleService {
 
 
   private PrivilegeSummary toPrivilegeSummary(Privilege privilege) {
-    
+    return new PrivilegeSummary(
+      privilege.getId(),
+      privilege.getName(),
+      privilege.getAction(),
+      privilege.getResource()
+    );
   }
 }
