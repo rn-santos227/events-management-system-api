@@ -16,6 +16,8 @@ import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.responses.privileges.PrivilegeSummary;
 import com.mgnt.events.responses.roles.RoleResponse;
 
+import lombok.extern.java.Log;
+
 public class RoleService {
   @NonNull
   private static final Sort DEFAULT_SORT = Sort.by(Sort.Direction.ASC, Attributes.NAME);
@@ -27,10 +29,17 @@ public class RoleService {
     this.privilegeRepository = privilegeRepository;
   }
 
+  private Set<Privilege> resolvePrivileges(Set<Log> privilegeIds) {
+    if (privilegeIds == null || privilegeIds.isEmpty()) {
+      return new LinkedHashSet<>();
+    }
+
+    
+  }
 
   private RoleResponse toResponse(Role role) {
     Set<PrivilegeSummary> privilegeSummaries;
-    if(role.getPrivileges() == null) {
+    if (role.getPrivileges() == null) {
       privilegeSummaries = new LinkedHashSet<>();
     } else {
       Comparator<Privilege> comparator = Comparator.comparing(
