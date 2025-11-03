@@ -33,5 +33,18 @@ public class UserService {
   private UserResponse toResponse(User user) {
     Role role = user.getRole();
     RoleSummary roleSummary = role != null ? new RoleSummary(role.getId(), role.getName()) : null;
+
+    return new UserResponse(
+      user.getId(),
+      user.getEmail(),
+      user.getFirstName(),
+      user.getLastName(),
+      user.getContactNumber(),
+      user.isActive(),
+      roleSummary,
+      user.getCreatedAt(),
+      user.getUpdatedAt(),
+      user.getDeletedAt()
+    );
   }
 }
