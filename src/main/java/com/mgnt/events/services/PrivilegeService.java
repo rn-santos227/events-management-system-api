@@ -59,9 +59,9 @@ public class PrivilegeService {
 
   @Transactional
   public void delete(@NonNull Long id) {
-    Privilege privilege = getPrivilege(id);
+    Privilege privilege = Objects.requireNonNull(getPrivilege(id));
     try {
-      privilegeRepository.delete(Objects.requireNonNull(privilege));
+      privilegeRepository.delete(privilege);
     } catch (IllegalStateException exception) {
       throw new ResponseStatusException(
         HttpStatus.CONFLICT,

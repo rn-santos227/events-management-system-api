@@ -1,6 +1,7 @@
 package com.mgnt.events.services;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
@@ -102,8 +103,8 @@ public class UserService {
   }
 
   @Transactional
-  public void delete(Long id) {
-    User user = getUser(id);
+  public void delete(@NonNull Long id) {
+    User user = Objects.requireNonNull(getUser(id));
     try {
       userRepository.delete(user);
     } catch (DataIntegrityViolationException exception) {
@@ -111,10 +112,12 @@ public class UserService {
     }
   }
 
-  private User getUser(Long id) {
-    return userRepository
-      .findById(id)
-      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+  private User getUser(@NonNull Long id) {
+    return Objects.requireNonNull(
+      userRepository
+        .findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"))
+    );
   }
 
   private Role getRole(Long id) {
