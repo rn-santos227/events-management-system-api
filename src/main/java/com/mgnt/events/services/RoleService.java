@@ -1,5 +1,8 @@
 package com.mgnt.events.services;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 
@@ -24,7 +27,10 @@ public class RoleService {
 
 
   private RoleResponse toResponse(Role role) {
-
+    Set<PrivilegeSummary> privilegeSummaries;
+    if(role.getPrivileges() == null) {
+      privilegeSummaries = new LinkedHashSet<>();
+    }
   }
 
   private PrivilegeSummary toPrivilegeSummary(Privilege privilege) {
