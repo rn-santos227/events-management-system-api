@@ -62,6 +62,8 @@ public class RoleService {
         "Unknown privilege identifiers: " + missing
       );
     }
+
+    return new LinkedHashSet<>(privileges);
   }
 
   private RoleResponse toResponse(Role role) {
