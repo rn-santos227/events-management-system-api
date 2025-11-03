@@ -1,5 +1,6 @@
 package com.mgnt.events.services;
 
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -30,6 +31,11 @@ public class RoleService {
     Set<PrivilegeSummary> privilegeSummaries;
     if(role.getPrivileges() == null) {
       privilegeSummaries = new LinkedHashSet<>();
+    } else {
+      Comparator<Privilege> comparator = Comparator.comparing(
+        Privilege::getName,
+        Comparator.nullsLast((String.CASE_INSENSITIVE_ORDER))
+      );
     }
   }
 
