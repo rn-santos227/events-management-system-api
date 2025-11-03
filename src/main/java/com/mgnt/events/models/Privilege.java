@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +41,7 @@ public class Privilege extends AuditableEntity {
   private String resource;
 
   @ManyToMany(mappedBy = Tables.PRIVILEGES)
-  private Set<Role> roles;
+  private Set<Role> roles = new LinkedHashSet<>();
 
   public Privilege() {}
   public Privilege(String name, String action, String resource) {
