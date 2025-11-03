@@ -44,6 +44,14 @@ public class RoleService {
         .map(this::toPrivilegeSummary)
         .collect(Collectors.toCollection(LinkedHashSet::new));
     }
+
+    return new RoleResponse(
+      role.getId(),
+      role.getName(),
+      privilegeSummaries,
+      role.getCreatedAt(),
+      role.getUpdatedAt()
+    );
   }
 
   private PrivilegeSummary toPrivilegeSummary(Privilege privilege) {
