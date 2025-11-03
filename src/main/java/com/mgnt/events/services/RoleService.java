@@ -44,6 +44,12 @@ public class RoleService {
     return toResponse(role);
   }
 
+  private Role getRole(Long id) {
+    return roleRepository
+      .findWithPrivilegesById(id)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
+  }
+
   private Set<Privilege> resolvePrivileges(Set<Long> privilegeIds) {
     if (privilegeIds == null || privilegeIds.isEmpty()) {
       return new LinkedHashSet<>();
