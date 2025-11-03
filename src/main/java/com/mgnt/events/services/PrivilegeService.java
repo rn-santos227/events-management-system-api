@@ -2,6 +2,7 @@ package com.mgnt.events.services;
 
 import java.util.List;
 import java.util.Objects;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class PrivilegeService {
   }
 
   @Transactional(readOnly = true)
-  public PrivilegeResponse findById(Long id) {
+  public PrivilegeResponse findById(@NonNull Long id) {
     return toResponse(getPrivilege(id));
   }
 
@@ -45,7 +46,7 @@ public class PrivilegeService {
   }
 
   @Transactional
-  public PrivilegeResponse update(Long id, PrivilegeRequest request) {
+  public PrivilegeResponse update(@NonNull Long id, PrivilegeRequest request) {
     Privilege privilege = getPrivilege(id);
     validateUniqueness(request.name(), request.action(), id);
 
@@ -57,7 +58,7 @@ public class PrivilegeService {
   }
 
   @Transactional
-  public void delete(Long id) {
+  public void delete(@NonNull Long id) {
     Privilege privilege = getPrivilege(id);
     try {
       privilegeRepository.delete(Objects.requireNonNull(privilege));
@@ -76,7 +77,7 @@ public class PrivilegeService {
     }
   }
 
-  private Privilege getPrivilege(Long id) {
+  private Privilege getPrivilege(@NonNull Long id) {
     return privilegeRepository
       .findById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Privilege not found"));
