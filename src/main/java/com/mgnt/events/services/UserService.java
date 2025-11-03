@@ -5,8 +5,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.models.Role;
+import com.mgnt.events.models.User;
 import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.repositories.UserRepository;
+import com.mgnt.events.responses.roles.RoleSummary;
+import com.mgnt.events.responses.users.UserResponse;
 
 @Service
 public class UserService {
@@ -24,5 +28,10 @@ public class UserService {
     this.userRepository = userRepository;
     this.roleRepository = roleRepository;
     this.passwordEncoder = passwordEncoder;
+  }
+
+  private UserResponse toResponse(User user) {
+    Role role = user.getRole();
+    RoleSummary roleSummary = role != null ? new RoleSummary(role.getId(), role.getName()) : null;
   }
 }
