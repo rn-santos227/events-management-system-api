@@ -92,7 +92,12 @@ public class UserService {
     user.setFirstName(request.firstName());
     user.setLastName(request.lastName());
     user.setContactNumber(request.contactNumber());
-    user.setRole(getRole(request.roleId()));
+
+    Long roleId = request.roleId();
+    if (roleId == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role ID must not be null");
+    }
+    user.setRole(getRole(roleId));
 
     if (request.password() != null && !request.password().isBlank()) {
       user.setPassword(passwordEncoder.encode(request.password()));
