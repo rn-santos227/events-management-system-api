@@ -56,6 +56,12 @@ public class RoleService {
       .filter(id -> !foundIds.contains(id))
       .toList();
 
+    if (!missing.isEmpty()) {
+      throw new ResponseStatusException(
+        HttpStatus.BAD_REQUEST,
+        "Unknown privilege identifiers: " + missing
+      );
+    }
   }
 
   private RoleResponse toResponse(Role role) {
