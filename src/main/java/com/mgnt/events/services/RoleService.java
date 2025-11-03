@@ -50,6 +50,16 @@ public class RoleService {
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
   }
 
+  private void validateNameUniqueness(String name, Long excludeId) {
+    roleRepository
+      .findByNameIgnoreCase(name)
+      .filter(existing -> !existing.getId().equals(excludeId))
+      .ifPresent(existing -> {
+        throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name already exists");
+      });
+  }
+
+
   private Set<Privilege> resolvePrivileges(Set<Long> privilegeIds) {
     if (privilegeIds == null || privilegeIds.isEmpty()) {
       return new LinkedHashSet<>();
