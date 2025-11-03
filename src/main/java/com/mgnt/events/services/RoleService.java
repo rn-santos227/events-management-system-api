@@ -2,11 +2,13 @@ package com.mgnt.events.services;
 
 import java.util.Comparator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.models.Privilege;
@@ -29,12 +31,17 @@ public class RoleService {
     this.privilegeRepository = privilegeRepository;
   }
 
+  @Transactional(readOnly = true)
+  public List<RoleResponse> findAll() {
+    return roleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+  }
+
   private Set<Privilege> resolvePrivileges(Set<Log> privilegeIds) {
     if (privilegeIds == null || privilegeIds.isEmpty()) {
       return new LinkedHashSet<>();
     }
 
-    
+
   }
 
   private RoleResponse toResponse(Role role) {
