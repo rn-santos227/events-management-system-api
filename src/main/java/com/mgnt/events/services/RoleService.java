@@ -157,11 +157,12 @@ public class RoleService {
   }
 
   private PrivilegeSummary toPrivilegeSummary(Privilege privilege) {
+    Privilege ensuredPrivilege = Objects.requireNonNull(privilege, "Privilege must not be null");
     return new PrivilegeSummary(
-      privilege.getId(),
-      privilege.getName(),
-      privilege.getAction(),
-      privilege.getResource()
+      Objects.requireNonNull(ensuredPrivilege.getId(), "Privilege identifier must not be null"),
+      ensuredPrivilege.getName(),
+      ensuredPrivilege.getAction(),
+      ensuredPrivilege.getResource()
     );
   }
 }
