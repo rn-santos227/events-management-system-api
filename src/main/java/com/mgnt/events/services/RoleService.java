@@ -17,6 +17,7 @@ import com.mgnt.events.models.Privilege;
 import com.mgnt.events.models.Role;
 import com.mgnt.events.repositories.PrivilegeRepository;
 import com.mgnt.events.repositories.RoleRepository;
+import com.mgnt.events.requests.roles.RoleRequest;
 import com.mgnt.events.responses.privileges.PrivilegeSummary;
 import com.mgnt.events.responses.roles.RoleResponse;
 
@@ -44,6 +45,14 @@ public class RoleService {
     return toResponse(role);
   }
 
+  @Transactional
+  public RoleResponse create(RoleRequest request) {
+    validateNameUniqueness(request.name(), null);
+    Role role = new Role(request.name());
+    role.setPrivileges(resolvePrivileges(request.privilegeIds()));
+    return toResponse(roleRepository.save(role));
+  }
+
   private Role getRole(Long id) {
     return roleRepository
       .findWithPrivilegesById(id)
@@ -58,7 +67,6 @@ public class RoleService {
         throw new ResponseStatusException(HttpStatus.CONFLICT, "Role name already exists");
       });
   }
-
 
   private Set<Privilege> resolvePrivileges(Set<Long> privilegeIds) {
     if (privilegeIds == null || privilegeIds.isEmpty()) {
