@@ -32,6 +32,12 @@ public class UserService {
     this.passwordEncoder = passwordEncoder;
   }
 
+  private User getUser(Long id) {
+    return userRepository
+      .findById(id)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+  }
+
   private Role getRole(Long id) {
     return roleRepository
       .findById(id)
