@@ -47,20 +47,23 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public UserResponse findById(Long id) {
+  public UserResponse findById(@NonNull Long id) {
     return toResponse(getUser(id));
   }
 
   @Transactional
   public UserResponse create(UserCreateRequest request) {
     String normalizedEmail = normalizeEmail(request.email());
-
     if (userRepository.existsByEmail(normalizedEmail)) {
       throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
     }
 
-    Role role = getRole(request.roleId());
+    Long roleId = request.roleId();
+    if (roleId == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Role ID must not be null");
+    }
 
+    Role role = getRole(roleId);
     User user = new User(
       normalizedEmail,
       passwordEncoder.encode(request.password()),
