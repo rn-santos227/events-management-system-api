@@ -104,8 +104,15 @@ public class RoleService {
       return new LinkedHashSet<>();
     }
 
-    List<Privilege> privileges = privilegeRepository.findAllById(privilegeIds);
-    Set<Long> foundIds = privileges.stream().map(Privilege::getId).collect(Collectors.toSet());
+    List<Privilege> privileges = privilegeRepository
+      .findAllById(privilegeIds)
+      .stream()
+      .map(privilege -> Objects.requireNonNull(privilege, "Privilege must not be null"))
+      .toList();
+    Set<Long> foundIds = privileges
+      .stream()
+      .map(privilege -> Objects.requireNonNull(privilege.getId(), "Privilege identifier must not be null"))
+      .collect(Collectors.toSet());
     List<Long> missing = privilegeIds
       .stream()
       .filter(id -> !foundIds.contains(id))
