@@ -2,6 +2,7 @@ package com.mgnt.events.services;
 
 import java.util.List;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -16,6 +17,7 @@ import com.mgnt.events.models.User;
 import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.repositories.UserRepository;
 import com.mgnt.events.requests.users.UserCreateRequest;
+import com.mgnt.events.requests.users.UserUpdateRequest;
 import com.mgnt.events.responses.roles.RoleSummary;
 import com.mgnt.events.responses.users.UserResponse;
 
@@ -48,7 +50,6 @@ public class UserService {
     return toResponse(getUser(id));
   }
 
-
   @Transactional
   public UserResponse create(UserCreateRequest request) {
     String normalizedEmail = normalizeEmail(request.email());
@@ -73,6 +74,41 @@ public class UserService {
     }
 
     return toResponse(userRepository.save(user));
+  }
+
+  @Transactional
+  public UserResponse update(Long id, UserUpdateRequest request) {
+    User user = getUser(id);
+
+    if (userRepository.existsByEmailAndIdNot(request.email(), id)) {
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
+    }
+
+    user.setEmail(request.email());
+    user.setFirstName(request.firstName());
+    user.setLastName(request.lastName());
+    user.setContactNumber(request.contactNumber());
+    user.setRole(getRole(request.roleId()));
+
+    if (request.password() != null && !request.password().isBlank()) {
+      user.setPassword(passwordEncoder.encode(request.password()));
+    }
+
+    if (request.active() != null) {
+      user.setActive(request.active());
+    }
+
+    return toResponse(userRepository.save(user));
+  }
+
+  @Transactional
+  public void delete(Long id) {
+    User user = getUser(id);
+    try {
+      userRepository.delete(user);
+    } catch (DataIntegrityViolationException exception) {
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Unable to delete user", exception);
+    }
   }
 
   private User getUser(Long id) {
