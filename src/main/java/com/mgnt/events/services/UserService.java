@@ -153,9 +153,9 @@ public class UserService {
       ensuredUser.getContactNumber(),
       ensuredUser.isActive(),
       roleSummary,
-      user.getCreatedAt(),
-      user.getUpdatedAt(),
-      user.getDeletedAt()
+      ensuredUser.getCreatedAt(),
+      ensuredUser.getUpdatedAt(),
+      ensuredUser.getDeletedAt()
     );
   }
 }
