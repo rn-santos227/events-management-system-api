@@ -4,8 +4,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.models.Privilege;
 import com.mgnt.events.repositories.PrivilegeRepository;
 import com.mgnt.events.repositories.RoleRepository;
+import com.mgnt.events.responses.privileges.PrivilegeSummary;
 
 public class RoleService {
   @NonNull
@@ -16,5 +18,10 @@ public class RoleService {
   public RoleService(RoleRepository roleRepository, PrivilegeRepository privilegeRepository) {
     this.roleRepository = roleRepository;
     this.privilegeRepository = privilegeRepository;
+  }
+
+
+  private PrivilegeSummary toPrivilegeSummary(Privilege privilege) {
+    
   }
 }
