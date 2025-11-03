@@ -78,7 +78,7 @@ public class UserService {
   }
 
   @Transactional
-  public UserResponse update(Long id, UserUpdateRequest request) {
+  public UserResponse update(@NonNull Long id, UserUpdateRequest request) {
     User user = getUser(id);
 
     if (userRepository.existsByEmailAndIdNot(request.email(), id)) {
@@ -120,10 +120,12 @@ public class UserService {
     );
   }
 
-  private Role getRole(Long id) {
-    return roleRepository
-      .findById(id)
-      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
+  private Role getRole(@NonNull Long id) {
+    return Objects.requireNonNull(
+      roleRepository
+        .findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"))
+    );
   }
 
   private String normalizeEmail(String email) {
