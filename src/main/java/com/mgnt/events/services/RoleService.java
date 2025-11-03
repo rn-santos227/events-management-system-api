@@ -53,6 +53,17 @@ public class RoleService {
     return toResponse(roleRepository.save(role));
   }
 
+  @Transactional
+  public RoleResponse update(Long id, RoleRequest request) {
+    Role role = getRole(id);
+    validateNameUniqueness(request.name(), id);
+
+    role.setName(request.name());
+    role.setPrivileges(resolvePrivileges(request.privilegeIds()));
+
+    return toResponse(roleRepository.save(role));
+  }
+
   private Role getRole(Long id) {
     return roleRepository
       .findWithPrivilegesById(id)
