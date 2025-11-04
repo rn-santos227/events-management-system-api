@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.graphql.data.method.HandlerMethod;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -27,6 +29,10 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
     if (requiresPrivilege == null) {
       return true;
     }
+  }
+
+  private void ensureAuthenticated(String[] requiredPrivileges) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
   }
 
   @Nullable
