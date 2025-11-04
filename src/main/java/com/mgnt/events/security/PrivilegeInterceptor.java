@@ -20,13 +20,14 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import com.mgnt.events.security.annotations.RequiresPrivilege;
 
 @Component
-public class PrivilegeInterceptor extends HandlerInterceptor {
+public class PrivilegeInterceptor implements HandlerInterceptor {
+
   @Override
   public boolean preHandle(
     @NonNull HttpServletRequest request,
     @NonNull HttpServletResponse response,
-    @NonNull Object handler
-  ) throws Exception {
+    @NonNull Object handler)
+    throws Exception {
     if (!(handler instanceof HandlerMethod handlerMethod)) {
       return true;
     }
@@ -35,6 +36,9 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
     if (requiresPrivilege == null) {
       return true;
     }
+
+    ensureAuthenticated(requiresPrivilege.value());
+    return true;
   }
 
   private void ensureAuthenticated(String[] requiredPrivileges) {
