@@ -2,18 +2,22 @@ package com.mgnt.events.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.graphql.data.method.HandlerMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.mgnt.events.security.annotations.RequiresPrivilege;
-
-import io.micrometer.common.lang.Nullable;
 
 @Component
 public class PrivilegeInterceptor extends HandlerInterceptor {
@@ -38,6 +42,8 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
     if (authentication == null || !authentication.isAuthenticated()) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication is required");
     }
+
+    Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
   }
 
   @Nullable
