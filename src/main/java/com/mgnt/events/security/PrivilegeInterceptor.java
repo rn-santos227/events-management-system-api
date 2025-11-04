@@ -9,6 +9,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.mgnt.events.security.annotations.RequiresPrivilege;
 
+import io.micrometer.common.lang.Nullable;
+
 @Component
 public class PrivilegeInterceptor extends HandlerInterceptor {
   @Override
@@ -19,6 +21,14 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
   ) throws Exception {
     if (!(handler instanceof HandlerMethod handlerMethod)) {
       return true;
+    }
+  }
+
+  @Nullable
+  private RequiresPrivilege resolveAnnotation(HandlerMethod handlerMethod) {
+    RequiresPrivilege methodAnnotation = handlerMethod.getMethodAnnotation(RequiresPrivilege.class);
+    if (methodAnnotation != null) {
+      return methodAnnotation;
     }
   }
 }
