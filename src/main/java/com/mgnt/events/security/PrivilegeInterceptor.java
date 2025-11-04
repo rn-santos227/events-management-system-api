@@ -22,6 +22,11 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
     if (!(handler instanceof HandlerMethod handlerMethod)) {
       return true;
     }
+
+    RequiresPrivilege requiresPrivilege = resolveAnnotation(handlerMethod);
+    if (requiresPrivilege == null) {
+      return true;
+    }
   }
 
   @Nullable
@@ -30,7 +35,6 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
     if (methodAnnotation != null) {
       return methodAnnotation;
     }
-
 
     Class<?> beanType = handlerMethod.getBeanType();
     return beanType.getAnnotation(RequiresPrivilege.class);
