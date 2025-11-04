@@ -53,6 +53,12 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
       .stream(requiredPrivileges)
       .filter(requiredPrivilege -> requiredPrivilege != null && !requiredPrivilege.isBlank())
       .collect(Collectors.toSet());
+
+    if (required.isEmpty()) {
+      return;
+    }
+
+    boolean allowed = required.stream().anyMatch(granted::contains);
   }
 
   @Nullable
