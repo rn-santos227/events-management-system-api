@@ -4,9 +4,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.graphql.data.method.HandlerMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.mgnt.events.security.annotations.RequiresPrivilege;
@@ -33,6 +35,9 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
 
   private void ensureAuthenticated(String[] requiredPrivileges) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication == null || !authentication.isAuthenticated()) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication is required");
+    }
   }
 
   @Nullable
