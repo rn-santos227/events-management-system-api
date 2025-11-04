@@ -44,6 +44,10 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
     }
 
     Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+    Set<String> granted = authorities
+      .stream()
+      .map(GrantedAuthority::getAuthority)
+      .collect(Collectors.toSet());
   }
 
   @Nullable
