@@ -1,11 +1,13 @@
 package com.mgnt.events.security;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.springframework.graphql.data.method.HandlerMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.mgnt.events.security.annotations.RequiresPrivilege;
 
 @Component
 public class PrivilegeInterceptor extends HandlerInterceptor {
@@ -15,6 +17,8 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
     @NonNull HttpServletResponse response,
     @NonNull Object handler
   ) throws Exception {
-    
+    if (!(handler instanceof HandlerMethod handlerMethod)) {
+      return true;
+    }
   }
 }
