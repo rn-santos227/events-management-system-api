@@ -48,6 +48,11 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
       .stream()
       .map(GrantedAuthority::getAuthority)
       .collect(Collectors.toSet());
+
+    Set<String> required = Arrays
+      .stream(requiredPrivileges)
+      .filter(requiredPrivilege -> requiredPrivilege != null && !requiredPrivilege.isBlank())
+      .collect(Collectors.toSet());
   }
 
   @Nullable
