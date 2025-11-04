@@ -57,8 +57,13 @@ public class PrivilegeInterceptor extends HandlerInterceptor {
     if (required.isEmpty()) {
       return;
     }
-
     boolean allowed = required.stream().anyMatch(granted::contains);
+    if (!allowed) {
+      throw new ResponseStatusException(
+        HttpStatus.FORBIDDEN,
+        "Access denied: missing privileges " + required
+      );
+    }
   }
 
   @Nullable
