@@ -10,27 +10,27 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mgnt.events.enums.TokenType;
 import com.mgnt.events.models.User;
 import com.mgnt.events.models.UserToken;
 import com.mgnt.events.repositories.UserTokenRepository;
 import com.mgnt.events.requests.auth.LoginRequest;
 import com.mgnt.events.responses.auth.LoginResponse;
-import com.mgnt.events.types.TokenType;
 
 @Service
 public class AuthenticationService {
-  private final AuthenticationManager authenticationManager;
-  private final JwtService jwtService;
-  private final UserTokenRepository tokenRepository;
+  private final AuthenticationManager _authenticationManager;
+  private final JwtService _jwtService;
+  private final UserTokenRepository _tokenRepository;
 
   public AuthenticationService(
     AuthenticationManager authenticationManager,
     JwtService jwtService,
     UserTokenRepository tokenRepository
   ) {
-    this.authenticationManager = authenticationManager;
-    this.jwtService = jwtService;
-    this.tokenRepository = tokenRepository;
+    this._authenticationManager = authenticationManager;
+    this._jwtService = jwtService;
+    this._tokenRepository = tokenRepository;
   }
 
   @Transactional
@@ -40,8 +40,8 @@ public class AuthenticationService {
 
     revokeActiveTokens(user);
 
-    String token = jwtService.generateToken(user);
-    Instant expiration = jwtService.extractExpiration(token);
+    String token = _jwtService.generateToken(user);
+    Instant expiration = _jwtService.extractExpiration(token);
 
     saveUserToken(user, token, expiration);
 
@@ -50,13 +50,13 @@ public class AuthenticationService {
   }
 
   private Authentication authenticateUser(String email, String password) {
-    return authenticationManager.authenticate(
+    return _authenticationManager.authenticate(
       new UsernamePasswordAuthenticationToken(email, password)
     );
   }
 
   private void revokeActiveTokens(User user) {
-    List<UserToken> validTokens = tokenRepository.findAllByUserAndExpiredFalseAndRevokedFalse(user);
+    List<UserToken> validTokens = _tokenRepository.findAllByUserAndExpiredFalseAndRevokedFalse(user);
     if (validTokens.isEmpty()) {
       return;
     }
@@ -65,19 +65,19 @@ public class AuthenticationService {
       token.setExpired(true);
       token.setRevoked(true);
     });
-    tokenRepository.saveAll(validTokens);
+    _tokenRepository.saveAll(validTokens);
   }
 
   private void saveUserToken(User user, String token, Instant expiration) {
-    UserToken userToken = new UserToken();
-    userToken.setUser(user);
-    userToken.setToken(token);
-    userToken.setExpired(false);
-    userToken.setRevoked(false);
-    userToken.setTokenType(TokenType.BEARER);
+    UserToken _userToken = new UserToken();
+    _userToken.setUser(user);
+    _userToken.setToken(token);
+    _userToken.setExpired(false);
+    _userToken.setRevoked(false);
+    _userToken.setTokenType(TokenType.BEARER);
     if (expiration != null) {
-      userToken.setExpiresAt(LocalDateTime.ofInstant(expiration, ZoneOffset.UTC));
+      _userToken.setExpiresAt(LocalDateTime.ofInstant(expiration, ZoneOffset.UTC));
     }
-    tokenRepository.save(userToken);
+    _tokenRepository.save(_userToken);
   }
 }

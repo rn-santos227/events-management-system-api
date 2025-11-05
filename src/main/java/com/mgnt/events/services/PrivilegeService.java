@@ -21,15 +21,15 @@ import com.mgnt.events.responses.privileges.PrivilegeResponse;
 public class PrivilegeService {
   @NonNull
   private static final Sort DEFAULT_SORT = Sort.by(Sort.Direction.ASC, Attributes.NAME);
-  private final PrivilegeRepository privilegeRepository;
+  private final PrivilegeRepository _privilegeRepository;
 
   public PrivilegeService(PrivilegeRepository privilegeRepository) {
-    this.privilegeRepository = privilegeRepository;
+    this._privilegeRepository = privilegeRepository;
   }
 
   @Transactional(readOnly = true)
   public List<PrivilegeResponse> findAll() {
-    return privilegeRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    return _privilegeRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
   }
 
   @Transactional(readOnly = true)
@@ -42,7 +42,7 @@ public class PrivilegeService {
     validateUniqueness(request.name(), request.action(), null);
 
     Privilege privilege = new Privilege(request.name(), request.action(), request.resource());
-    return toResponse(privilegeRepository.save(privilege));
+    return toResponse(_privilegeRepository.save(privilege));
   }
 
   @Transactional
@@ -54,14 +54,14 @@ public class PrivilegeService {
     privilege.setAction(request.action());
     privilege.setResource(request.resource());
 
-    return toResponse(privilegeRepository.save(privilege));
+    return toResponse(_privilegeRepository.save(privilege));
   }
 
   @Transactional
   public void delete(@NonNull Long id) {
     Privilege privilege = Objects.requireNonNull(getPrivilege(id));
     try {
-      privilegeRepository.delete(privilege);
+      _privilegeRepository.delete(privilege);
     } catch (IllegalStateException exception) {
       throw new ResponseStatusException(
         HttpStatus.CONFLICT,
@@ -78,20 +78,20 @@ public class PrivilegeService {
   }
 
   private Privilege getPrivilege(@NonNull Long id) {
-    return privilegeRepository
+    return _privilegeRepository
       .findById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Privilege not found"));
   }
 
   private void validateUniqueness(String name, String action, Long excludeId) {
-    privilegeRepository
+    _privilegeRepository
       .findByNameIgnoreCase(name)
       .filter(existing -> !existing.getId().equals(excludeId))
       .ifPresent(existing -> {
         throw new ResponseStatusException(HttpStatus.CONFLICT, "Privilege name already exists");
       });
 
-    privilegeRepository
+    _privilegeRepository
       .findByActionIgnoreCase(action)
       .filter(existing -> !existing.getId().equals(excludeId))
       .ifPresent(existing -> {

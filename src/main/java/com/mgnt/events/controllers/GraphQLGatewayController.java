@@ -15,18 +15,18 @@ import com.mgnt.events.services.UserService;
 
 @Controller
 public class GraphQLGatewayController {
-  private final UserService userService;
-  private final RoleService roleService;
-  private final PrivilegeService privilegeService;
+  private final UserService _userService;
+  private final RoleService _roleService;
+  private final PrivilegeService _privilegeService;
 
   public GraphQLGatewayController(
     UserService userService,
     RoleService roleService,
     PrivilegeService privilegeService
   ) {
-    this.userService = userService;
-    this.roleService = roleService;
-    this.privilegeService = privilegeService;
+    this._userService = userService;
+    this._roleService = roleService;
+    this._privilegeService = privilegeService;
   }
 
   @QueryMapping
@@ -36,31 +36,31 @@ public class GraphQLGatewayController {
 
   @QueryMapping
   public List<UserResponse> users() {
-    return userService.findAll();
+    return _userService.findAll();
   }
 
   @QueryMapping
   public UserResponse user(@Argument long id) {
-    return userService.findById(id);
+    return _userService.findById(id);
   }
 
   @QueryMapping
   public List<RoleResponse> roles() {
-    return roleService.findAll();
+    return _roleService.findAll();
   }
 
   @QueryMapping
   public RoleResponse role(@Argument long id) {
-    return roleService.findById(id);
+    return _roleService.findById(id);
   }
 
   @QueryMapping
   public List<PrivilegeResponse> privileges() {
-    return privilegeService.findAll();
+    return _privilegeService.findAll();
   }
 
   @QueryMapping
   public PrivilegeResponse privilege(@Argument long id) {
-    return privilegeService.findById(id);
+    return _privilegeService.findById(id);
   }
 }

@@ -16,14 +16,14 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(Routes.AUTH)
 public class AuthenticationController {
-  private final AuthenticationService authenticationService;
+  private final AuthenticationService _authenticationService;
 
   public AuthenticationController(AuthenticationService authenticationService) {
-    this.authenticationService = authenticationService;
+    this._authenticationService = authenticationService;
   }
 
   @PostMapping(Routes.LOGIN)
   public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-    return ResponseEntity.ok(authenticationService.authenticate(request));
+    return ResponseEntity.ok(_authenticationService.authenticate(request));
   }
 }

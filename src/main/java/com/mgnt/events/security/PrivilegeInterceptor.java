@@ -21,7 +21,6 @@ import com.mgnt.events.security.annotations.RequiresPrivilege;
 
 @Component
 public class PrivilegeInterceptor implements HandlerInterceptor {
-
   @Override
   public boolean preHandle(
     @NonNull HttpServletRequest request,

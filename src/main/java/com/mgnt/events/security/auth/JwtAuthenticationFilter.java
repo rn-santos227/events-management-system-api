@@ -22,18 +22,18 @@ import com.mgnt.events.services.JwtService;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-  private final JwtService jwtService;
-  private final UserDetailsService userDetailsService;
-  private final UserTokenRepository tokenRepository;
+  private final JwtService _jwtService;
+  private final UserDetailsService _userDetailsService;
+  private final UserTokenRepository _tokenRepository;
 
   public JwtAuthenticationFilter(
     JwtService jwtService,
     UserDetailsService userDetailsService,
     UserTokenRepository tokenRepository
   ) {
-    this.jwtService = jwtService;
-    this.userDetailsService = userDetailsService;
-    this.tokenRepository = tokenRepository;
+    this._jwtService = jwtService;
+    this._userDetailsService = userDetailsService;
+    this._tokenRepository = tokenRepository;
   }
 
   @Override
@@ -49,17 +49,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     final String jwt = authHeader.substring(Defaults.DEFAULT_JWT_SUBSTRING);
-    final String userEmail = jwtService.extractUsername(jwt);
+    final String userEmail = _jwtService.extractUsername(jwt);
 
     if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-      boolean isTokenValid = tokenRepository
+      UserDetails userDetails = _userDetailsService.loadUserByUsername(userEmail);
+      boolean isTokenValid = _tokenRepository
         .findByToken(jwt)
         .map(token -> !token.isExpired() && !token.isRevoked())
         .orElse(false);
 
       
-      if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
+      if (_jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
           userDetails,
           null,

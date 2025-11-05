@@ -23,15 +23,15 @@ import com.mgnt.events.security.auth.JwtAuthenticationFilter;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-  private final JwtAuthenticationFilter jwtAuthenticationFilter;
-  private final UserDetailsService userDetailsService;
+  private final JwtAuthenticationFilter _jwtAuthenticationFilter;
+  private final UserDetailsService _userDetailsService;
 
   public SecurityConfig(
     JwtAuthenticationFilter jwtAuthenticationFilter,
     UserDetailsService userDetailsService
   ) {
-    this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-    this.userDetailsService = userDetailsService;
+    this._jwtAuthenticationFilter = jwtAuthenticationFilter;
+    this._userDetailsService = userDetailsService;
   }
 
   @Bean
@@ -46,7 +46,7 @@ public class SecurityConfig {
           .authenticated()
       )
       .authenticationProvider(authenticationProvider())
-      .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+      .addFilterBefore(_jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
       .build();
   }
 
@@ -54,7 +54,7 @@ public class SecurityConfig {
   @SuppressWarnings("deprecation")
   public AuthenticationProvider authenticationProvider() {
     DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    provider.setUserDetailsService(userDetailsService);
+    provider.setUserDetailsService(_userDetailsService);
     provider.setPasswordEncoder(passwordEncoder());
     return provider;
   }

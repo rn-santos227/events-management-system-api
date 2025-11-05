@@ -27,24 +27,23 @@ import com.mgnt.events.utils.RequestValidators;
 public class UserService {
   @NonNull
   private static final Sort DEFAULT_SORT = Sort.by(Sort.Direction.ASC, Attributes.EMAIL);
-
-  private final UserRepository userRepository;
-  private final RoleRepository roleRepository;
-  private final PasswordEncoder passwordEncoder;
+  private final UserRepository _userRepository;
+  private final RoleRepository _roleRepository;
+  private final PasswordEncoder _passwordEncoder;
 
   public UserService(
     UserRepository userRepository,
     RoleRepository roleRepository,
     PasswordEncoder passwordEncoder
   ) {
-    this.userRepository = userRepository;
-    this.roleRepository = roleRepository;
-    this.passwordEncoder = passwordEncoder;
+    this._userRepository = userRepository;
+    this._roleRepository = roleRepository;
+    this._passwordEncoder = passwordEncoder;
   }
 
   @Transactional(readOnly = true)
   public List<UserResponse> findAll() {
-    return userRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    return _userRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
   }
 
   @Transactional(readOnly = true)
@@ -55,7 +54,7 @@ public class UserService {
   @Transactional
   public UserResponse create(UserCreateRequest request) {
     String normalizedEmail = normalizeEmail(request.email());
-    if (userRepository.existsByEmail(normalizedEmail)) {
+    if (_userRepository.existsByEmail(normalizedEmail)) {
       throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
     }
 
@@ -63,7 +62,7 @@ public class UserService {
     Role role = getRole(roleId);
     User user = new User(
       normalizedEmail,
-      passwordEncoder.encode(request.password()),
+      _passwordEncoder.encode(request.password()),
       request.firstName(),
       request.lastName(),
       request.contactNumber(),
@@ -74,14 +73,14 @@ public class UserService {
       user.setActive(request.active());
     }
 
-    return toResponse(userRepository.save(user));
+    return toResponse(_userRepository.save(user));
   }
 
   @Transactional
   public UserResponse update(@NonNull Long id, UserUpdateRequest request) {
     User user = getUser(id);
 
-    if (userRepository.existsByEmailAndIdNot(request.email(), id)) {
+    if (_userRepository.existsByEmailAndIdNot(request.email(), id)) {
       throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
     }
 
@@ -94,21 +93,21 @@ public class UserService {
     user.setRole(getRole(roleId));
 
     if (request.password() != null && !request.password().isBlank()) {
-      user.setPassword(passwordEncoder.encode(request.password()));
+      user.setPassword(_passwordEncoder.encode(request.password()));
     }
 
     if (request.active() != null) {
       user.setActive(request.active());
     }
 
-    return toResponse(userRepository.save(user));
+    return toResponse(_userRepository.save(user));
   }
 
   @Transactional
   public void delete(@NonNull Long id) {
     User user = Objects.requireNonNull(getUser(id));
     try {
-      userRepository.delete(user);
+      _userRepository.delete(user);
     } catch (DataIntegrityViolationException exception) {
       throw new ResponseStatusException(HttpStatus.CONFLICT, "Unable to delete user", exception);
     }
@@ -116,7 +115,7 @@ public class UserService {
 
   private User getUser(@NonNull Long id) {
     return Objects.requireNonNull(
-      userRepository
+      _userRepository
         .findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"))
     );
@@ -124,7 +123,7 @@ public class UserService {
 
   private Role getRole(@NonNull Long id) {
     return Objects.requireNonNull(
-      roleRepository
+      _roleRepository
         .findById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"))
     );

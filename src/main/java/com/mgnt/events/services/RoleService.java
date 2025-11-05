@@ -27,22 +27,22 @@ import com.mgnt.events.responses.roles.RoleResponse;
 public class RoleService {
   @NonNull
   private static final Sort DEFAULT_SORT = Sort.by(Sort.Direction.ASC, Attributes.NAME);
-  private final RoleRepository roleRepository;
-  private final PrivilegeRepository privilegeRepository;
+  private final RoleRepository _roleRepository;
+  private final PrivilegeRepository _privilegeRepository;
 
   public RoleService(RoleRepository roleRepository, PrivilegeRepository privilegeRepository) {
-    this.roleRepository = roleRepository;
-    this.privilegeRepository = privilegeRepository;
+    this._roleRepository = roleRepository;
+    this._privilegeRepository = privilegeRepository;
   }
 
   @Transactional(readOnly = true)
   public List<RoleResponse> findAll() {
-    return roleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    return _roleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
   }
 
   @Transactional(readOnly = true)
   public RoleResponse findById(Long id) {
-    Role role = roleRepository
+    Role role = _roleRepository
       .findWithPrivilegesById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
     return toResponse(Objects.requireNonNull(role));
@@ -53,7 +53,7 @@ public class RoleService {
     validateNameUniqueness(request.name(), null);
     Role role = new Role(request.name());
     role.setPrivileges(resolvePrivileges(request.privilegeIds()));
-    return toResponse(roleRepository.save(role));
+    return toResponse(_roleRepository.save(role));
   }
 
   @Transactional
@@ -64,14 +64,14 @@ public class RoleService {
     role.setName(request.name());
     role.setPrivileges(resolvePrivileges(request.privilegeIds()));
 
-    return toResponse(roleRepository.save(role));
+    return toResponse(_roleRepository.save(role));
   }
 
   @Transactional
   public void delete(@NonNull Long id) {
     Role role = Objects.requireNonNull(getRole(id));
     try {
-      roleRepository.delete(role);
+      _roleRepository.delete(role);
     } catch (IllegalStateException exception) {
       throw new ResponseStatusException(
         HttpStatus.CONFLICT,
@@ -85,14 +85,14 @@ public class RoleService {
 
   private Role getRole(@NonNull Long id) {
     return Objects.requireNonNull(
-      roleRepository
+      _roleRepository
         .findWithPrivilegesById(id)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"))
     );
   }
 
   private void validateNameUniqueness(String name, Long excludeId) {
-    roleRepository
+    _roleRepository
       .findByNameIgnoreCase(name)
       .filter(existing -> !existing.getId().equals(excludeId))
       .ifPresent(existing -> {
@@ -105,7 +105,7 @@ public class RoleService {
       return new LinkedHashSet<>();
     }
 
-    List<Privilege> privileges = privilegeRepository
+    List<Privilege> privileges = _privilegeRepository
       .findAllById(privilegeIds)
       .stream()
       .map(privilege -> Objects.requireNonNull(privilege, "Privilege must not be null"))

@@ -15,15 +15,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JwtService {
-  private final Algorithm algorithm;
-  private final long expirationMillis;
+  private final Algorithm _algorithm;
+  private final long _expirationMillis;
 
   public JwtService(
     @Value("${app.security.jwt.secret}") String secret,
     @Value("${app.security.jwt.expiration:3600000}") long expirationMillis
   ) {
-    this.algorithm = Algorithm.HMAC256(secret);
-    this.expirationMillis = expirationMillis;
+    this._algorithm = Algorithm.HMAC256(secret);
+    this._expirationMillis = expirationMillis;
   }
 
   public String extractUsername(String token) {
@@ -36,14 +36,14 @@ public class JwtService {
 
   public String generateToken(UserDetails userDetails) {
     Instant now = Instant.now();
-    Instant expiration = now.plus(expirationMillis, ChronoUnit.MILLIS);
+    Instant expiration = now.plus(_expirationMillis, ChronoUnit.MILLIS);
 
     return JWT
       .create()
       .withSubject(userDetails.getUsername())
       .withIssuedAt(Date.from(now))
       .withExpiresAt(Date.from(expiration))
-      .sign(algorithm);
+      .sign(_algorithm);
   }
 
   public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -70,10 +70,10 @@ public class JwtService {
   }
   
   private JWTVerifier getVerifier() {
-    return JWT.require(algorithm).build();
+    return JWT.require(_algorithm).build();
   }
 
   public Optional<Long> getExpirationMillis() {
-    return expirationMillis <= 0 ? Optional.empty() : Optional.of(expirationMillis);
+    return _expirationMillis <= 0 ? Optional.empty() : Optional.of(_expirationMillis);
   }
 }
