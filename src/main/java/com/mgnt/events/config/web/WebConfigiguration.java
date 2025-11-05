@@ -1,4 +1,4 @@
-package com.mgnt.events.config;
+package com.mgnt.events.config.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
