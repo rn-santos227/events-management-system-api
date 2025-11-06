@@ -34,6 +34,12 @@ public class StorageConfiguration {
     S3ClientBuilder builder = S3Client.builder().credentialsProvider(StaticCredentialsProvider.create(_credentials));
 
     String regionValue = properties.getRegion();
+    Region region = regionValue == null || regionValue.isBlank()
+      ? Region.US_EAST_1 : Region.of(regionValue);
+
+    if (properties.getEndpoint() != null && !properties.getEndpoint().isBlank()) {
+      builder.endpointOverride(URI.create(properties.getEndpoint()));
+    }
     return builder.build();
   }
   
