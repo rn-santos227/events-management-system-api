@@ -43,7 +43,9 @@ public class UserService {
 
   @Transactional(readOnly = true)
   public List<UserResponse> findAll(@Nullable Integer limit) {
-    return _userRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    if (limit == null) {
+      return _userRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    }
   }
 
   @Transactional(readOnly = true)
