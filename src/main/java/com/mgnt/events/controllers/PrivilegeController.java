@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -17,8 +18,6 @@ import com.mgnt.events.constants.Routes;
 import com.mgnt.events.requests.privileges.PrivilegeRequest;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
 import com.mgnt.events.services.PrivilegeService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(Routes.PRIVILEGES)
