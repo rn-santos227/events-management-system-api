@@ -20,6 +20,7 @@ import com.mgnt.events.constants.Routes;
 import com.mgnt.events.requests.privileges.PrivilegeRequest;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
 import com.mgnt.events.services.PrivilegeService;
+import com.mgnt.events.utils.RequestValidators;
 
 @RestController
 @RequestMapping(Routes.PRIVILEGES)
@@ -32,7 +33,8 @@ public class PrivilegeController {
 
   @GetMapping
   public List<PrivilegeResponse> findAll(@RequestParam(name = Queries.LIMIT, required = false) Integer limit) {
-    return _privilegeService.findAll(limit);
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    return _privilegeService.findAll(sanitizedLimit);
   }
 
   @GetMapping(Routes.APPEND_ID)

@@ -21,6 +21,7 @@ import com.mgnt.events.requests.users.UserCreateRequest;
 import com.mgnt.events.requests.users.UserUpdateRequest;
 import com.mgnt.events.responses.users.UserResponse;
 import com.mgnt.events.services.UserService;
+import com.mgnt.events.utils.RequestValidators;
 
 import jakarta.validation.Valid;
 
@@ -35,7 +36,8 @@ public class UserController {
 
   @GetMapping
   public List<UserResponse> findAll(@RequestParam(name = Queries.LIMIT, required = false) Integer limit) {
-    return _userService.findAll(limit);
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    return _userService.findAll(sanitizedLimit);
   }
 
   @GetMapping(Routes.APPEND_ID)

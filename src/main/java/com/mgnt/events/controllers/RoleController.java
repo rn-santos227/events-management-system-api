@@ -20,6 +20,7 @@ import com.mgnt.events.constants.Routes;
 import com.mgnt.events.requests.roles.RoleRequest;
 import com.mgnt.events.responses.roles.RoleResponse;
 import com.mgnt.events.services.RoleService;
+import com.mgnt.events.utils.RequestValidators;
 
 @RestController
 @RequestMapping(Routes.ROLES)
@@ -32,7 +33,8 @@ public class RoleController {
 
   @GetMapping
   public List<RoleResponse> findAll(@RequestParam(name = Queries.LIMIT, required = false) Integer limit) {
-    return _roleService.findAll(limit);
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    return _roleService.findAll(sanitizedLimit);
   }
 
   @GetMapping(Routes.APPEND_ID)
