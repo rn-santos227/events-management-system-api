@@ -81,6 +81,18 @@ public final class RequestValidators {
       return optional.isEmpty() || isBlank(optional.orElse(null));
     }
 
+    if (value instanceof Collection<?> collection) {
+      if (collection.isEmpty()) {
+        return true;
+      }
+      for (Object element : collection) {
+        if (!isBlank(element)) {
+          return false;
+        }
+      }
+      return true;
+    }
+
     return false;
   }
 }
