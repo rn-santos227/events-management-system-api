@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.mgnt.events.constants.Storage;
 
+import software.amazon.awssdk.services.s3.S3Client;
+
 @Configuration
 @EnableConfigurationProperties(StorageProperties.class)
 @ConditionalOnProperty(
@@ -18,6 +20,10 @@ import com.mgnt.events.constants.Storage;
 )
 public class StorageConfiguration {
 
+  @Bean
+  public S3Client s3Client(StorageProperties properties) {
+
+  }
   
   private String requireProperty(String value, String propertyName) {
     if (Objects.requireNonNullElse(value, "").isBlank()) {
