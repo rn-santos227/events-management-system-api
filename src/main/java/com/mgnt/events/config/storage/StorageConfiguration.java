@@ -40,6 +40,8 @@ public class StorageConfiguration {
     if (properties.getEndpoint() != null && !properties.getEndpoint().isBlank()) {
       builder.endpointOverride(URI.create(properties.getEndpoint()));
     }
+
+    boolean usePathStyle = properties.getProvider() == StorageProvider.MINIO || properties.isPathStyleAccess();
     return builder.build();
   }
   

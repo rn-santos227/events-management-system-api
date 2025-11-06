@@ -18,4 +18,5 @@ public class StorageProperties {
   private String secretKey;
   private String region = Storage.DEFAULT_REGION;
   private boolean enabled;
+  private boolean pathStyleAccess;
 }
