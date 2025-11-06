@@ -7,6 +7,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -40,5 +41,13 @@ public class RoleController {
   @ResponseStatus(HttpStatus.CREATED)
   public RoleResponse create(@Valid @RequestBody RoleRequest request) {
     return _roleService.create(request);
+  }
+
+  @PutMapping(Routes.APPEND_ID)
+  public RoleResponse update(
+    @PathVariable @NonNull Long id,
+    @Valid @RequestBody RoleRequest request
+  ) {
+    return _roleService.update(id, request);
   }
 }
