@@ -1,7 +1,6 @@
 package com.mgnt.events.controllers;
 
 import java.util.List;
-
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
@@ -38,14 +37,15 @@ public class GraphQLGatewayController {
   public List<UserResponse> users(@Argument Integer limit) {
     return _userService.findAll(limit);
   }
+
   @QueryMapping
   public UserResponse user(@Argument long id) {
     return _userService.findById(id);
   }
 
   @QueryMapping
-  public List<RoleResponse> roles() {
-    return _roleService.findAll();
+  public List<RoleResponse> roles(@Argument Integer limit) {
+    return _roleService.findAll(limit);
   }
 
   @QueryMapping
@@ -54,8 +54,8 @@ public class GraphQLGatewayController {
   }
 
   @QueryMapping
-  public List<PrivilegeResponse> privileges() {
-    return _privilegeService.findAll();
+  public List<PrivilegeResponse> privileges(@Argument Integer limit) {
+    return _privilegeService.findAll(limit);
   }
 
   @QueryMapping
