@@ -1,5 +1,7 @@
 package com.mgnt.events.config.storage;
 
+import java.net.URI;
+import java.util.Objects;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +20,9 @@ public class StorageConfiguration {
 
   
   private String requireProperty(String value, String propertyName) {
+    if (Objects.requireNonNullElse(value, "").isBlank()) {
+
+    }
     return value;
   }
 }
