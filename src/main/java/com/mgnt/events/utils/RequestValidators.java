@@ -31,6 +31,10 @@ public final class RequestValidators {
     return value;
   }
 
+  public static int requirePositive(Integer value, String attributeName) {
+    return requirePositive(value, attributeName, HttpStatus.BAD_REQUEST);
+  }
+
   public static int requirePositive(Integer value, String attributeName, HttpStatus status) {
     if (status == null) {
       throw new IllegalArgumentException("HttpStatusCode must not be null");
