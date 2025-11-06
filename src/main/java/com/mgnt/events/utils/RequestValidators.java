@@ -42,6 +42,13 @@ public final class RequestValidators {
         String.format("%s must not be null", attributeName)
       );
     }
+
+    if (value.intValue() <= 0) {
+      throw new ResponseStatusException(
+        status,
+        String.format("%s must be greater than zero", attributeName)
+      );
+    }
     return value;
   }
 }
