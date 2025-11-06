@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,8 +29,10 @@ public class PrivilegeService {
   }
 
   @Transactional(readOnly = true)
-  public List<PrivilegeResponse> findAll() {
-    return _privilegeRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+  public List<PrivilegeResponse> findAll(@Nullable Integer limit) {
+    if (limit == null) {
+      return _privilegeRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    }
   }
 
   @Transactional(readOnly = true)
