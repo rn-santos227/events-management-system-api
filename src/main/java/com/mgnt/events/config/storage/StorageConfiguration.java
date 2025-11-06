@@ -22,7 +22,8 @@ public class StorageConfiguration {
 
   @Bean
   public S3Client s3Client(StorageProperties properties) {
-
+    String accessKey = requireProperty(properties.getAccessKey(), Storage.ACCESS_KEY_PROPERTY);
+    String secretKey = requireProperty(properties.getSecretKey(), Storage.SECRET_KEY_PROPERTY);
   }
   
   private String requireProperty(String value, String propertyName) {
