@@ -1,5 +1,5 @@
 extend type Query {
-  roles: [Role!]!
+  roles(limit: Int): [Role!]!
   role(id: ID!): Role
 }
 
