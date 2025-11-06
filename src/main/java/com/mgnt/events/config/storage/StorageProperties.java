@@ -13,8 +13,9 @@ import com.mgnt.events.constants.Storage;
 public class StorageProperties {
   private StorageProvider provider = StorageProvider.S3;
   private String accessKey;
+  private String endpoint;
   private String bucket;
   private String secretKey;
-  private String endpoint;
+  private String region = Storage.DEFAULT_REGION;
   private boolean enabled;
 }
