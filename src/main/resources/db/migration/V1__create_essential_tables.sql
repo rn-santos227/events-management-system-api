@@ -56,7 +56,7 @@ CREATE TABLE user_tokens (
 CREATE TABLE stored_files (
   id BIGSERIAL PRIMARY KEY,
   file_name VARCHAR(255) NOT NULL,
-  file_url VARCHAR(512) NOT NULL UNIQUE,
+  storage_key VARCHAR(512) NOT NULL UNIQUE,
   bucket VARCHAR(100) NOT NULL,
   file_size BIGINT NOT NULL,
   content_type VARCHAR(100),

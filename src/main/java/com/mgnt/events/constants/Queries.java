@@ -9,5 +9,7 @@ public class Queries {
     "UPDATE roles SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?";
   public static final String DELETE_USERS =
     "UPDATE users SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?";
+  public static final String DELETE_STORED_FILES =
+    "UPDATE stored_files SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?";
   public static final String LIMIT = "limit";
 }
