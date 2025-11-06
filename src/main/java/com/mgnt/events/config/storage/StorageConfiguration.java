@@ -21,7 +21,9 @@ public class StorageConfiguration {
   
   private String requireProperty(String value, String propertyName) {
     if (Objects.requireNonNullElse(value, "").isBlank()) {
-
+      throw new IllegalStateException(
+        String.format("Property '%s' must be configured when storage is enabled", propertyName)
+      );
     }
     return value;
   }
