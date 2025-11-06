@@ -73,6 +73,14 @@ public final class RequestValidators {
       return true;
     }
 
+    if (value instanceof CharSequence sequence) {
+      return sequence.toString().trim().isEmpty();
+    }
+
+    if (value instanceof Optional<?> optional) {
+      return optional.isEmpty() || isBlank(optional.orElse(null));
+    }
+
     return false;
   }
 }
