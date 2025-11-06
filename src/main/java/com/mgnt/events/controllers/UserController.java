@@ -7,6 +7,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mgnt.events.constants.Routes;
 import com.mgnt.events.requests.users.UserCreateRequest;
+import com.mgnt.events.requests.users.UserUpdateRequest;
 import com.mgnt.events.responses.users.UserResponse;
 import com.mgnt.events.services.UserService;
 
@@ -42,5 +44,13 @@ public class UserController {
   @ResponseStatus(HttpStatus.CREATED)
   public UserResponse create(@Valid @RequestBody UserCreateRequest request) {
     return _userService.create(request);
+  }
+
+  @PutMapping(Routes.APPEND_ID)
+  public UserResponse update(
+    @PathVariable @NonNull Long id, 
+    @Valid @RequestBody UserUpdateRequest request
+  ) {
+    return _userService.update(id, request);
   }
 }
