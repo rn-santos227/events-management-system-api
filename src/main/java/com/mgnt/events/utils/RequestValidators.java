@@ -93,6 +93,18 @@ public final class RequestValidators {
       return true;
     }
 
+    if (value instanceof Map<?, ?> map) {
+      if (map.isEmpty()) {
+        return true;
+      }
+      for (Object entryValue : map.values()) {
+        if (!isBlank(entryValue)) {
+          return false;
+        }
+      }
+      return true;
+    }
+
     return false;
   }
 }
