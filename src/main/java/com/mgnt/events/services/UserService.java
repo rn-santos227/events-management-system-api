@@ -2,11 +2,11 @@ package com.mgnt.events.services;
 
 import java.util.List;
 import java.util.Objects;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,7 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public List<UserResponse> findAll() {
+  public List<UserResponse> findAll(@Nullable Integer limit) {
     return _userRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
   }
 
