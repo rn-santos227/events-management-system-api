@@ -1,20 +1,19 @@
 package com.mgnt.events.config.storage;
 
 import java.net.URI;
-import java.util.Objects;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.mgnt.events.constants.Storage;
-
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3ClientBuilder;
 import software.amazon.awssdk.services.s3.S3Configuration;
+
+import com.mgnt.events.constants.Storage;
+import com.mgnt.events.utils.RequestValidators;
 
 @Configuration
 @EnableConfigurationProperties(StorageProperties.class)
@@ -53,7 +52,7 @@ public class StorageConfiguration {
   }
   
   private String requireProperty(String value, String propertyName) {
-    if (Objects.requireNonNullElse(value, "").isBlank()) {
+    if (RequestValidators.isBlank(value)) {
       throw new IllegalStateException(
         String.format("Property '%s' must be configured when storage is enabled", propertyName)
       );
