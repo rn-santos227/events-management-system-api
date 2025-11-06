@@ -52,3 +52,17 @@ CREATE TABLE user_tokens (
   deleted_at TIMESTAMP,
   CONSTRAINT fk_user_tokens_user FOREIGN KEY (user_id) REFERENCES users (id)
 );
+
+CREATE TABLE stored_files (
+  id BIGSERIAL PRIMARY KEY,
+  file_name VARCHAR(255) NOT NULL,
+  file_url VARCHAR(512) NOT NULL UNIQUE,
+  bucket VARCHAR(100) NOT NULL,
+  file_size BIGINT NOT NULL,
+  content_type VARCHAR(100),
+  notes TEXT,
+  url VARCHAR(2048),
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  deleted_at TIMESTAMP
+);
