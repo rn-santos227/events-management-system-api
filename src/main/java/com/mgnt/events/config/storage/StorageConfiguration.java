@@ -36,12 +36,19 @@ public class StorageConfiguration {
     String regionValue = properties.getRegion();
     Region region = regionValue == null || regionValue.isBlank()
       ? Region.US_EAST_1 : Region.of(regionValue);
-
+    builder.region(region);
+    
     if (properties.getEndpoint() != null && !properties.getEndpoint().isBlank()) {
       builder.endpointOverride(URI.create(properties.getEndpoint()));
     }
 
     boolean usePathStyle = properties.getProvider() == StorageProvider.MINIO || properties.isPathStyleAccess();
+      if (usePathStyle) {
+      builder.serviceConfiguration(
+        S3Configuration.builder().pathStyleAccessEnabled(true).build()
+      );
+    }
+
     return builder.build();
   }
   
