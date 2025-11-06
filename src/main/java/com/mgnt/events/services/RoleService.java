@@ -38,7 +38,9 @@ public class RoleService {
 
   @Transactional(readOnly = true)
   public List<RoleResponse> findAll(@Nullable Integer limit) {
-    return _roleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    if (limit == null) {
+      return _roleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    }
   }
 
   @Transactional(readOnly = true)
