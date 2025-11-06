@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
 import com.mgnt.events.requests.privileges.PrivilegeRequest;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
@@ -29,8 +31,8 @@ public class PrivilegeController {
   }
 
   @GetMapping
-  public List<PrivilegeResponse> findAll() {
-    return _privilegeService.findAll();
+  public List<PrivilegeResponse> findAll(@RequestParam(name = Queries.LIMIT, required = false) Integer limit) {
+    return _privilegeService.findAll(limit);
   }
 
   @GetMapping(Routes.APPEND_ID)

@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
 import com.mgnt.events.requests.users.UserCreateRequest;
 import com.mgnt.events.requests.users.UserUpdateRequest;
@@ -32,8 +34,8 @@ public class UserController {
   }
 
   @GetMapping
-  public List<UserResponse> findAll() {
-    return _userService.findAll();
+  public List<UserResponse> findAll(@RequestParam(name = Queries.LIMIT, required = false) Integer limit) {
+    return _userService.findAll(limit);
   }
 
   @GetMapping(Routes.APPEND_ID)

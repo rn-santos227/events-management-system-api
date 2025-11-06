@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
 import com.mgnt.events.requests.roles.RoleRequest;
 import com.mgnt.events.responses.roles.RoleResponse;
@@ -29,8 +31,8 @@ public class RoleController {
   }
 
   @GetMapping
-  public List<RoleResponse> findAll() {
-    return _roleService.findAll();
+  public List<RoleResponse> findAll(@RequestParam(name = Queries.LIMIT, required = false) Integer limit) {
+    return _roleService.findAll(limit);
   }
 
   @GetMapping(Routes.APPEND_ID)
