@@ -33,11 +33,10 @@ public class PrivilegeService {
 
   @Transactional(readOnly = true)
   public List<PrivilegeResponse> findAll(@Nullable Integer limit) {
-    if (limit == null) {
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    if (sanitizedLimit == null) {
       return _privilegeRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
-
-    int sanitizedLimit = RequestValidators.requirePositive(limit, Queries.LIMIT);
     return _privilegeRepository
       .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
       .stream()
