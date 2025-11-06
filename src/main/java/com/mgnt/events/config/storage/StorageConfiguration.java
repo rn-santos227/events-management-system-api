@@ -10,7 +10,11 @@ import org.springframework.context.annotation.Configuration;
 import com.mgnt.events.constants.Storage;
 
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.S3ClientBuilder;
+import software.amazon.awssdk.services.s3.S3Configuration;
 
 @Configuration
 @EnableConfigurationProperties(StorageProperties.class)
@@ -27,8 +31,10 @@ public class StorageConfiguration {
     String _secretKey = requireProperty(properties.getSecretKey(), Storage.SECRET_KEY_PROPERTY);
 
     AwsBasicCredentials _credentials = AwsBasicCredentials.create(_accessKey, _secretKey);
+    S3ClientBuilder builder = S3Client.builder().credentialsProvider(StaticCredentialsProvider.create(_credentials));
 
     String regionValue = properties.getRegion();
+    return builder.build();
   }
   
   private String requireProperty(String value, String propertyName) {
