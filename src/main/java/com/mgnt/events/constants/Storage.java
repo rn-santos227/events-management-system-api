@@ -22,4 +22,5 @@ public class Storage {
   public static final String BUCKET_PROPERTY = PROPERTY_PREFIX + "." + BUCKET_PROPERTY_NAME;
   public static final String PATH_STYLE_ACCESS_PROPERTY = PROPERTY_PREFIX + "." + PATH_STYLE_ACCESS_PROPERTY_NAME;
   public static final String DEFAULT_REGION = "us-east-1";
+  public static final String HAVING_VALUE = "true";
 }
