@@ -45,11 +45,11 @@ public class UserService {
 
   @Transactional(readOnly = true)
   public List<UserResponse> findAll(@Nullable Integer limit) {
-    if (limit == null) {
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    if (sanitizedLimit == null) {
       return _userRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
 
-    int sanitizedLimit = RequestValidators.requirePositive(limit, Queries.LIMIT);
     return _userRepository
       .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
       .stream()
@@ -103,7 +103,7 @@ public class UserService {
     Long roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
     user.setRole(getRole(roleId));
 
-    if (request.password() != null && !request.password().isBlank()) {
+    if (!RequestValidators.isBlank(request.password())) {
       user.setPassword(_passwordEncoder.encode(request.password()));
     }
 
