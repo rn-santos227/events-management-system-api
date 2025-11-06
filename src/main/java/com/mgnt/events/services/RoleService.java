@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Privilege;
 import com.mgnt.events.models.Role;
 import com.mgnt.events.repositories.PrivilegeRepository;
@@ -23,6 +24,7 @@ import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.requests.roles.RoleRequest;
 import com.mgnt.events.responses.privileges.PrivilegeSummary;
 import com.mgnt.events.responses.roles.RoleResponse;
+import com.mgnt.events.utils.RequestValidators;
 
 @Service
 public class RoleService {
@@ -41,6 +43,8 @@ public class RoleService {
     if (limit == null) {
       return _roleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
+
+    int sanitizedLimit = RequestValidators.requirePositive(limit, Queries.LIMIT);
   }
 
   @Transactional(readOnly = true)
