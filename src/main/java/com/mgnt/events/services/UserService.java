@@ -3,6 +3,7 @@ package com.mgnt.events.services;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.constants.Queries;
+import com.mgnt.events.constants.Routes;
 import com.mgnt.events.models.Role;
 import com.mgnt.events.models.User;
 import com.mgnt.events.repositories.RoleRepository;
@@ -46,6 +49,13 @@ public class UserService {
     if (limit == null) {
       return _userRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
+
+    int sanitizedLimit = RequestValidators.requirePositive(limit, Queries.LIMIT);
+    return _userRepository
+      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .stream()
+      .map(this::toResponse)
+      .toList();
   }
 
   @Transactional(readOnly = true)
