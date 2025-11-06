@@ -105,6 +105,19 @@ public final class RequestValidators {
       return true;
     }
 
+    if (value.getClass().isArray()) {
+      int length = Array.getLength(value);
+      if (length == 0) {
+        return true;
+      }
+      for (int index = 0; index < length; index++) {
+        if (!isBlank(Array.get(value, index))) {
+          return false;
+        }
+      }
+      return true;
+    }
+
     return false;
   }
 }
