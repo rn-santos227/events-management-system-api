@@ -69,6 +69,10 @@ public final class RequestValidators {
   }
 
   public static boolean isBlank(@Nullable Object value) {
+    if (value == null) {
+      return true;
+    }
+
     return false;
   }
 }
