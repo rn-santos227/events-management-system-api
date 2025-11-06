@@ -8,10 +8,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.mgnt.events.security.PrivilegeInterceptor;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfigiguration implements WebMvcConfigurer {
   private final @NonNull PrivilegeInterceptor privilegeInterceptor;
 
-  public WebConfig(@NonNull PrivilegeInterceptor privilegeInterceptor) {
+  public WebConfigiguration(@NonNull PrivilegeInterceptor privilegeInterceptor) {
     this.privilegeInterceptor = privilegeInterceptor;
   }
 
