@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -45,6 +46,11 @@ public class RoleService {
     }
 
     int sanitizedLimit = RequestValidators.requirePositive(limit, Queries.LIMIT);
+    return _roleRepository
+      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .stream()
+      .map(this::toResponse)
+      .toList();
   }
 
   @Transactional(readOnly = true)
