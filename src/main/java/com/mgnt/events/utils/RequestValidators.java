@@ -30,4 +30,8 @@ public final class RequestValidators {
     }
     return value;
   }
+
+  public static int requirePositive(Integer value, String attributeName, HttpStatus status) {
+    return value;
+  }
 }

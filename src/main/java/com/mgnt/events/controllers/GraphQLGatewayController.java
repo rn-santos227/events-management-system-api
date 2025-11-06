@@ -35,10 +35,9 @@ public class GraphQLGatewayController {
   }
 
   @QueryMapping
-  public List<UserResponse> users() {
-    return _userService.findAll();
+  public List<UserResponse> users(@Argument Integer limit) {
+    return _userService.findAll(limit);
   }
-
   @QueryMapping
   public UserResponse user(@Argument long id) {
     return _userService.findById(id);
