@@ -41,11 +41,11 @@ public class RoleService {
 
   @Transactional(readOnly = true)
   public List<RoleResponse> findAll(@Nullable Integer limit) {
-    if (limit == null) {
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    if (sanitizedLimit == null) {
       return _roleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
 
-    int sanitizedLimit = RequestValidators.requirePositive(limit, Queries.LIMIT);
     return _roleRepository
       .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
       .stream()
@@ -114,7 +114,7 @@ public class RoleService {
   }
 
   private Set<Privilege> resolvePrivileges(Set<Long> privilegeIds) {
-    if (privilegeIds == null || privilegeIds.isEmpty()) {
+    if (privilegeIds == null || RequestValidators.isBlank(privilegeIds)) {
       return new LinkedHashSet<>();
     }
 
