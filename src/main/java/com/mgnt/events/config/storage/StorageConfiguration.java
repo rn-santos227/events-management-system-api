@@ -15,5 +15,9 @@ import com.mgnt.events.constants.Storage;
   havingValue = Storage.HAVING_VALUE
 )
 public class StorageConfiguration {
-    
+
+  
+  private String requireProperty(String value, String propertyName) {
+    return value;
+  }
 }
