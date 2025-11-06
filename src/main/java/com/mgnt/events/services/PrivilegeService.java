@@ -13,10 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Privilege;
 import com.mgnt.events.repositories.PrivilegeRepository;
 import com.mgnt.events.requests.privileges.PrivilegeRequest;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
+import com.mgnt.events.utils.RequestValidators;
 
 @Service
 public class PrivilegeService {
@@ -33,6 +35,8 @@ public class PrivilegeService {
     if (limit == null) {
       return _privilegeRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
+
+    int sanitizedLimit = RequestValidators.requirePositive(limit, Queries.LIMIT);
   }
 
   @Transactional(readOnly = true)
