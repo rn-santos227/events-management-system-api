@@ -15,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
-import com.mgnt.events.constants.Routes;
 import com.mgnt.events.models.Role;
 import com.mgnt.events.models.User;
 import com.mgnt.events.repositories.RoleRepository;

@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -23,6 +23,7 @@ import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.requests.roles.RoleRequest;
 import com.mgnt.events.responses.privileges.PrivilegeSummary;
 import com.mgnt.events.responses.roles.RoleResponse;
+
 @Service
 public class RoleService {
   @NonNull
@@ -36,7 +37,7 @@ public class RoleService {
   }
 
   @Transactional(readOnly = true)
-  public List<RoleResponse> findAll() {
+  public List<RoleResponse> findAll(@Nullable Integer limit) {
     return _roleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
   }
 
