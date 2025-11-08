@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,7 +48,6 @@ public class FileController {
     return _fileStorageService.upload(request);
   }
 
-
   @GetMapping(Routes.DOWNLOAD)
   public ResponseEntity<Resource> download(@PathVariable @NonNull Long id) {
     FileStorageService.FileDownload _download = _fileStorageService.download(id);
@@ -60,5 +60,11 @@ public class FileController {
         Patterns.ATTACHMENTS.formatted(_download.fileName())
       )
       .body(_download.resource());
+  }
+
+  @DeleteMapping(Routes.APPEND_ID)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable @NonNull Long id) {
+    _fileStorageService.delete(id);
   }
 }
