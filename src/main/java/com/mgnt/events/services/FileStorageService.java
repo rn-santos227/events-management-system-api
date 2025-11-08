@@ -6,10 +6,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -144,6 +147,8 @@ public class FileStorageService {
       );
     }
   }
+
+  public record FileDownload(Resource resource, MediaType mediaType, String filename, long contentLength) {}
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
     String candidate = !RequestValidators.isBlank(originalFilename) ? originalFilename : fallbackName;
