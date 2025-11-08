@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mgnt.events.config.storage.StorageProperties;
 import com.mgnt.events.constants.Patterns;
@@ -17,6 +18,7 @@ import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.responses.files.FileUploadResponse;
 import com.mgnt.events.utils.RequestValidators;
 
+import jakarta.transaction.Transactional;
 import software.amazon.awssdk.services.s3.S3Client;
 
 @Service
@@ -35,6 +37,11 @@ public class FileStorageService {
     this._s3ClientProvider = s3ObjectProvider;
     this._storageProperties = storageProperties;
     this._storedFileRepository = storedFileRepository;
+  }
+
+  @Transactional
+  public FileUploadResponse upload(MultipartFile multipartFile, @Nullable String note) {
+    
   }
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
@@ -72,7 +79,7 @@ public class FileStorageService {
       if (sanitizedEndpoint.endsWith("/")) {
         sanitizedEndpoint = sanitizedEndpoint.substring(0, sanitizedEndpoint.length() - 1);
       }
-      return "%s/%s/%s".formatted(sanitizedEndpoint, bucket, key);
+      return Patterns.STORAGE_PATTERN.formatted(sanitizedEndpoint, bucket, key);
     }
 
     String region = _storageProperties.getRegion();
