@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import com.mgnt.events.config.storage.StorageProperties;
@@ -34,6 +35,13 @@ public class FileStorageService {
     this._s3ClientProvider = s3ObjectProvider;
     this._storageProperties = storageProperties;
     this._storedFileRepository = storedFileRepository;
+  }
+
+  private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
+    String candidate = !RequestValidators.isBlank(originalFilename) ? originalFilename : fallbackName;
+    if (RequestValidators.isBlank(candidate)) {
+      candidate = Storage.CANDIDATE;
+    }
   }
 
   private String generateObjectKey(String fileName) {
