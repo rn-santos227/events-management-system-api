@@ -22,6 +22,7 @@ import com.mgnt.events.utils.RequestValidators;
 
 import jakarta.transaction.Transactional;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Service
 public class FileStorageService {
@@ -71,6 +72,12 @@ public class FileStorageService {
     String _sanitizedBucket = _bucket.trim();
     String _normalizedFileName = normalizeFileName(ensuredFile.getOriginalFilename(), ensuredFile.getName());
     String _objectKey = generateObjectKey(_normalizedFileName);
+
+    PutObjectRequest.Builder _requestBuilder = PutObjectRequest
+      .builder()
+      .bucket(_sanitizedBucket)
+      .key(_objectKey)
+      .contentLength(ensuredFile.getSize());
   }
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
