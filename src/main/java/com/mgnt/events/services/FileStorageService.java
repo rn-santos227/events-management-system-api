@@ -29,7 +29,6 @@ import com.mgnt.events.constants.Storage;
 import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.responses.files.FileUploadResponse;
-import com.mgnt.events.services.FileStorageService.FileDownload;
 import com.mgnt.events.util.RequestValidators;
 
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
@@ -154,6 +153,7 @@ public class FileStorageService {
 
     return toResponse(_storedFileRepository.save(storedFile));
   }
+  
   @Transactional(readOnly = true)
   public FileDownload download(@NonNull Long id) {
     if (!_storageProperties.isEnabled()) {
@@ -168,7 +168,6 @@ public class FileStorageService {
       );
     }
 
-
     StoredFile _storedFile = getStoredFile(id);
     GetObjectRequest request = GetObjectRequest
       .builder()
@@ -178,7 +177,7 @@ public class FileStorageService {
 
     ResponseInputStream<GetObjectResponse> _s3Object;
     try {
-      _s3Object = _s3Client.getObject(request);
+      _s3Object = RequestValidators.requireNonNull(_s3Client.getObject(request), "File Content") ;
     } catch (NoSuchKeyException exception) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Stored file contents not found", exception);
     } catch (AwsServiceException | SdkClientException exception) {
@@ -206,6 +205,9 @@ public class FileStorageService {
         _mediaType = MediaType.APPLICATION_OCTET_STREAM;
       }
     }
+
+    Resource resource = new InputStreamResource(_s3Object);
+    return new FileDownload(resource, _mediaType, _storedFile.getFileName(), _storedFile.getSize());
   }
 
   public record FileDownload(Resource resource, MediaType mediaType, String filename, long contentLength) {}
