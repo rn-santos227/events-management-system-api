@@ -27,6 +27,7 @@ import com.mgnt.events.constants.Storage;
 import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.responses.files.FileUploadResponse;
+import com.mgnt.events.services.FileStorageService.FileDownload;
 import com.mgnt.events.util.RequestValidators;
 
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
@@ -64,6 +65,20 @@ public class FileStorageService {
       .findAll(PageRequest.of(0, sanitizedLimit))
       .stream().map(this::toResponse)
       .toList();
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  public void delete(@NonNull Long id) {
+    StoredFile storedFile = RequestValidators.requireNonNull(getStoredFile(id), "File") ;
+    try {
+      _storedFileRepository.delete(storedFile);
+    } catch (DataIntegrityViolationException exception) {
+      throw new ResponseStatusException(
+        HttpStatus.CONFLICT,
+        "Unable to delete stored file",
+        exception
+      );
+    }
   }
 
   @Transactional(rollbackFor = Throwable.class)
@@ -133,19 +148,9 @@ public class FileStorageService {
 
     return toResponse(_storedFileRepository.save(storedFile));
   }
-
-  @Transactional(rollbackFor = Throwable.class)
-  public void delete(@NonNull Long id) {
-    StoredFile storedFile = RequestValidators.requireNonNull(getStoredFile(id), "File") ;
-    try {
-      _storedFileRepository.delete(storedFile);
-    } catch (DataIntegrityViolationException exception) {
-      throw new ResponseStatusException(
-        HttpStatus.CONFLICT,
-        "Unable to delete stored file",
-        exception
-      );
-    }
+  @Transactional(readOnly = true)
+  public FileDownload download(@NonNull Long id) {
+    
   }
 
   public record FileDownload(Resource resource, MediaType mediaType, String filename, long contentLength) {}
