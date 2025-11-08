@@ -36,7 +36,11 @@ public class FileStorageService {
  private String buildFileUrl(String bucket, String key) {
     String endpoint = _storageProperties.getEndpoint();
     if (!RequestValidators.isBlank(endpoint)) {
-
+      String sanitizedEndpoint = endpoint.trim();
+      if (sanitizedEndpoint.endsWith("/")) {
+        sanitizedEndpoint = sanitizedEndpoint.substring(0, sanitizedEndpoint.length() - 1);
+      }
+      return "%s/%s/%s".formatted(sanitizedEndpoint, bucket, key);
     }
  }
 
