@@ -40,7 +40,12 @@ public class FileStorageService {
       ensuredFile.getStorageKey(),
       ensuredFile.getBucket(),
       ensuredFile.getSize(),
-      ensuredFile.getContentType()
+      ensuredFile.getContentType(),
+      ensuredFile.getNotes(),
+      ensuredFile.getUrl(),
+      ensuredFile.getCreatedAt(),
+      ensuredFile.getUpdatedAt(),
+      ensuredFile.getDeletedAt()
     );
   }
 }
