@@ -48,6 +48,6 @@ public class FileController {
 
   @GetMapping(Routes.DOWNLOAD)
   public ResponseEntity<Resource> download(@PathVariable @NonNull Long id) {
-
+    FileStorageService.FileDownload download = _fileStorageService.download(id);
   }
 }
