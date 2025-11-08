@@ -1,13 +1,16 @@
 package com.mgnt.events.services;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 
 import com.mgnt.events.config.storage.StorageProperties;
 import com.mgnt.events.constants.Formats;
+import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.StoredFileRepository;
+import com.mgnt.events.responses.files.FileUploadResponse;
 
 import software.amazon.awssdk.services.s3.S3Client;
 
@@ -27,5 +30,9 @@ public class FileStorageService {
     this._s3ClientProvider = s3ObjectProvider;
     this._storageProperties = storageProperties;
     this._storedFileRepository = storedFileRepository;
+  }
+
+  private FileUploadResponse toResponse(StoredFile storedFile) {
+    StoredFile ensureFile = Objects.requireNonNull(storedFile, "Stored file must not be null");
   }
 }
