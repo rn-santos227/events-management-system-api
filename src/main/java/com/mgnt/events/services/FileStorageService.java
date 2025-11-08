@@ -45,6 +45,11 @@ public class FileStorageService {
 
     String trimmed = Objects.requireNonNull(candidate).trim().replace("\\", "/");
     int lastSlashIndex = trimmed.lastIndexOf('/');
+
+    if (lastSlashIndex >= 0 && lastSlashIndex < trimmed.length() - 1) {
+      return trimmed.substring(lastSlashIndex + 1);
+    }
+    return lastSlashIndex == trimmed.length() - 1 ? Storage.CANDIDATE : trimmed;
   }
 
   private String generateObjectKey(String fileName) {
