@@ -32,6 +32,10 @@ public class FileStorageService {
     this._storedFileRepository = storedFileRepository;
   }
 
+ private String buildFileUrl(String bucket, String key) {
+
+ }
+
   private FileUploadResponse toResponse(StoredFile storedFile) {
     StoredFile ensuredFile = Objects.requireNonNull(storedFile, "Stored file must not be null");
     return new FileUploadResponse(
