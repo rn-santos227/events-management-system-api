@@ -11,7 +11,9 @@ VALUES
   ('Create User', 'users:create', 'users'),
   ('Read User', 'users:read', 'users'),
   ('Update User', 'users:update', 'users'),
-  ('Delete User', 'users:delete', 'users')
+  ('Delete User', 'users:delete', 'users'),
+  ('Upload File', 'files:upload', 'files'),
+  ('Delete File', 'files:delete', 'files')
 ON CONFLICT (action) DO NOTHING;
 
 INSERT INTO roles (name) VALUES ('ADMIN') ON CONFLICT (name) DO NOTHING;

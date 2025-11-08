@@ -7,7 +7,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -103,7 +105,6 @@ public class FileStorageService {
     }
 
     StoredFile storedFile = new StoredFile();
-
     storedFile.setFileName(_normalizedFileName);
     storedFile.setStorageKey(_objectKey);
     storedFile.setBucket(_sanitizedBucket);
@@ -113,6 +114,20 @@ public class FileStorageService {
     storedFile.setUrl(buildFileUrl(_sanitizedBucket, _objectKey));
 
     return toResponse(_storedFileRepository.save(storedFile));
+  }
+
+  @Transactional
+  public void delete(@NonNull Long id) {
+    StoredFile storedFile = RequestValidators.requireNonNull(getStoredFile(id), "File") ;
+    try {
+      _storedFileRepository.delete(storedFile);
+    } catch (DataIntegrityViolationException exception) {
+      throw new ResponseStatusException(
+        HttpStatus.CONFLICT,
+        "Unable to delete stored file",
+        exception
+      );
+    }
   }
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
@@ -158,7 +173,15 @@ public class FileStorageService {
       region = Storage.DEFAULT_REGION;
     }
     return Patterns.AWS_PATTERN.formatted(bucket, region.trim(), key);
- }
+  }
+
+  private StoredFile getStoredFile(@NonNull Long id) {
+    return Objects.requireNonNull(
+      _storedFileRepository
+        .findById(id)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"))
+    );
+  }
 
   private FileUploadResponse toResponse(StoredFile storedFile) {
     StoredFile ensuredFile = Objects.requireNonNull(storedFile, "Stored file must not be null");

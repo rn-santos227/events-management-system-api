@@ -8,4 +8,6 @@ public final class PrivilegeActions {
   public static final String PRIVILEGES_READ = "privileges:read";
   public static final String STATUS_READ = "status:read";
   public static final String TEST_READ = "test:read";
+  public static final String FILES_UPLOAD = "files:upload";
+  public static final String FILES_DELETE = "files:delete";
 }
