@@ -34,6 +34,7 @@ import software.amazon.awssdk.awscore.exception.AwsServiceException;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Service
@@ -161,6 +162,14 @@ public class FileStorageService {
         "Storage client is not configured"
       );
     }
+
+
+    StoredFile _storedFile = getStoredFile(id);
+    GetObjectRequest request = GetObjectRequest
+      .builder()
+      .bucket(_storedFile.getBucket())
+      .key(_storedFile.getUrl())
+      .build();
   }
 
   public record FileDownload(Resource resource, MediaType mediaType, String filename, long contentLength) {}
