@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -187,10 +189,22 @@ public class FileStorageService {
       );
     }
 
-
     String _contentType = _storedFile.getContentType();
     if (RequestValidators.isBlank(_contentType)) {
       _contentType = _s3Object.response().contentType();
+    }
+    
+    MediaType _mediaType = MediaType.APPLICATION_OCTET_STREAM;
+    if (!RequestValidators.isBlank(_contentType)) {
+      try {
+        _mediaType = Optional.ofNullable(_contentType)
+          .filter(c -> !RequestValidators.isBlank(c))
+          .map(String::trim)
+          .map(MediaType::parseMediaType)
+          .orElse(MediaType.APPLICATION_OCTET_STREAM);
+      } catch (InvalidMediaTypeException ignored) {
+        _mediaType = MediaType.APPLICATION_OCTET_STREAM;
+      }
     }
   }
 
