@@ -78,6 +78,10 @@ public class FileStorageService {
       .bucket(_sanitizedBucket)
       .key(_objectKey)
       .contentLength(ensuredFile.getSize());
+
+    if (!RequestValidators.isBlank(ensuredFile.getContentType())) {
+      _requestBuilder.contentType(ensuredFile.getContentType());
+    }
   }
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
