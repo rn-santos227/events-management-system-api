@@ -35,7 +35,9 @@ public class FileStorageService {
   }
 
   private String generateObjectKey(String fileName) {
-
+    String sanitized = fileName.replace("\\", "/");
+    String extension = "";
+    int lastDot = sanitized.lastIndexOf('.');
   }
 
   private String buildFileUrl(String bucket, String key) {
