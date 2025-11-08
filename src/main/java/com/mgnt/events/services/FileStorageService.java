@@ -31,10 +31,13 @@ import com.mgnt.events.services.FileStorageService.FileDownload;
 import com.mgnt.events.util.RequestValidators;
 
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
+import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Service
@@ -170,6 +173,19 @@ public class FileStorageService {
       .bucket(_storedFile.getBucket())
       .key(_storedFile.getUrl())
       .build();
+
+    ResponseInputStream<GetObjectResponse> _s3Object;
+    try {
+      _s3Object = _s3Client.getObject(request);
+    } catch (NoSuchKeyException exception) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Stored file contents not found", exception);
+    } catch (AwsServiceException | SdkClientException exception) {
+      throw new ResponseStatusException(
+        HttpStatus.BAD_GATEWAY,
+        "Failed to download file from storage provider",
+        exception
+      );
+    }
   }
 
   public record FileDownload(Resource resource, MediaType mediaType, String filename, long contentLength) {}
