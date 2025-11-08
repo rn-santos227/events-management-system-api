@@ -49,7 +49,7 @@ public class PrivilegeService {
     return toResponse(getPrivilege(id));
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public PrivilegeResponse create(PrivilegeRequest request) {
     validateUniqueness(request.name(), request.action(), null);
 
@@ -57,7 +57,7 @@ public class PrivilegeService {
     return toResponse(_privilegeRepository.save(privilege));
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public PrivilegeResponse update(@NonNull Long id, PrivilegeRequest request) {
     Privilege privilege = getPrivilege(id);
     validateUniqueness(request.name(), request.action(), id);
@@ -69,7 +69,7 @@ public class PrivilegeService {
     return toResponse(_privilegeRepository.save(privilege));
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public void delete(@NonNull Long id) {
     Privilege privilege = Objects.requireNonNull(getPrivilege(id));
     try {

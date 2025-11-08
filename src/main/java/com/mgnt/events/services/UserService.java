@@ -62,7 +62,7 @@ public class UserService {
     return toResponse(getUser(id));
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public UserResponse create(UserCreateRequest request) {
     String normalizedEmail = normalizeEmail(request.email());
     if (_userRepository.existsByEmail(normalizedEmail)) {
@@ -87,7 +87,7 @@ public class UserService {
     return toResponse(_userRepository.save(user));
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public UserResponse update(@NonNull Long id, UserUpdateRequest request) {
     User user = getUser(id);
 
@@ -114,7 +114,7 @@ public class UserService {
     return toResponse(_userRepository.save(user));
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public void delete(@NonNull Long id) {
     User user = Objects.requireNonNull(getUser(id));
     try {

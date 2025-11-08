@@ -61,7 +61,7 @@ public class RoleService {
     return toResponse(Objects.requireNonNull(role));
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public RoleResponse create(RoleRequest request) {
     validateNameUniqueness(request.name(), null);
     Role role = new Role(request.name());
@@ -69,7 +69,7 @@ public class RoleService {
     return toResponse(_roleRepository.save(role));
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public RoleResponse update(@NonNull Long id, RoleRequest request) {
     Role role = Objects.requireNonNull(getRole(id));
     validateNameUniqueness(request.name(), id);
@@ -80,7 +80,7 @@ public class RoleService {
     return toResponse(_roleRepository.save(role));
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public void delete(@NonNull Long id) {
     Role role = Objects.requireNonNull(getRole(id));
     try {

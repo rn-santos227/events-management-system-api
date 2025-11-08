@@ -63,7 +63,7 @@ public class FileStorageService {
       .toList();
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public FileUploadResponse upload(MultipartFile multipartFile, @Nullable String notes) {
     if (!_storageProperties.isEnabled()) {
       throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "File storage is disabled");
@@ -131,7 +131,7 @@ public class FileStorageService {
     return toResponse(_storedFileRepository.save(storedFile));
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public void delete(@NonNull Long id) {
     StoredFile storedFile = RequestValidators.requireNonNull(getStoredFile(id), "File") ;
     try {

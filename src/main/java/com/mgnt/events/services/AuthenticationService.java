@@ -33,7 +33,7 @@ public class AuthenticationService {
     this._tokenRepository = tokenRepository;
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Throwable.class)
   public LoginResponse authenticate(LoginRequest request) {
     Authentication authentication = authenticateUser(request.getEmail(), request.getPassword());
     User user = (User) authentication.getPrincipal();
