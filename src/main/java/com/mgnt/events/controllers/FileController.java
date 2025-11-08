@@ -2,11 +2,14 @@ package com.mgnt.events.controllers;
 
 import java.util.List;
 
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,5 +43,11 @@ public class FileController {
   @ResponseStatus(HttpStatus.CREATED)
   public FileUploadResponse upload(@Valid @NonNull @ModelAttribute FileUploadRequest request) {
     return _fileStorageService.upload(request);
+  }
+
+
+  @GetMapping(Routes.DOWNLOAD)
+  public ResponseEntity<Resource> download(@PathVariable @NonNull Long id) {
+
   }
 }
