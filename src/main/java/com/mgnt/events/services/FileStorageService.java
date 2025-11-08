@@ -55,6 +55,10 @@ public class FileStorageService {
       );
     }
 
+    MultipartFile ensuredFile = RequestValidators.requireNonNull(multipartFile, "File");
+    if (ensuredFile.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File must not be empty");
+    }
   }
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
