@@ -34,7 +34,11 @@ public class FileStorageService {
     this._storedFileRepository = storedFileRepository;
   }
 
- private String buildFileUrl(String bucket, String key) {
+  private String generateObjectKey(String fileName) {
+
+  }
+
+  private String buildFileUrl(String bucket, String key) {
     String endpoint = _storageProperties.getEndpoint();
     if (!RequestValidators.isBlank(endpoint)) {
       String sanitizedEndpoint = endpoint.trim();
