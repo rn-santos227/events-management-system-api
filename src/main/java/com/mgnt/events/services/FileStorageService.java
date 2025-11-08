@@ -7,7 +7,8 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 
 import com.mgnt.events.config.storage.StorageProperties;
-import com.mgnt.events.constants.Formats;
+import com.mgnt.events.constants.Patterns;
+import com.mgnt.events.constants.Storage;
 import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.responses.files.FileUploadResponse;
@@ -17,7 +18,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 
 @Service
 public class FileStorageService {
-  private static final DateTimeFormatter _DIRECTORY_FORMATTER = DateTimeFormatter.ofPattern(Formats.DATE_FORMAT);
+  private static final DateTimeFormatter _DIRECTORY_FORMATTER = DateTimeFormatter.ofPattern(Patterns.DATE_FORMAT);
 
   private final ObjectProvider<S3Client> _s3ClientProvider;
   private final StorageProperties _storageProperties;
@@ -42,6 +43,12 @@ public class FileStorageService {
       }
       return "%s/%s/%s".formatted(sanitizedEndpoint, bucket, key);
     }
+
+    String region = _storageProperties.getRegion();
+    if (RequestValidators.isBlank(region)) {
+      region = Storage.DEFAULT_REGION;
+    }
+    return Patterns.AWS_PATTERN.formatted(bucket, region.trim(), key);
  }
 
   private FileUploadResponse toResponse(StoredFile storedFile) {
