@@ -1,7 +1,9 @@
 package com.mgnt.events.services;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,9 @@ public class FileStorageService {
       extension = sanitized.substring(lastDot);
     }
 
+    String randomName = UUID.randomUUID().toString();
+    String datePath = _DIRECTORY_FORMATTER.format(LocalDate.now());
+    return "%s/%s%s".formatted(datePath, randomName, extension);
   }
 
   private String buildFileUrl(String bucket, String key) {
