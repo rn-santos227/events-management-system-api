@@ -11,6 +11,7 @@ import com.mgnt.events.constants.Formats;
 import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.responses.files.FileUploadResponse;
+import com.mgnt.events.utils.RequestValidators;
 
 import software.amazon.awssdk.services.s3.S3Client;
 
@@ -33,7 +34,10 @@ public class FileStorageService {
   }
 
  private String buildFileUrl(String bucket, String key) {
+    String endpoint = _storageProperties.getEndpoint();
+    if (!RequestValidators.isBlank(endpoint)) {
 
+    }
  }
 
   private FileUploadResponse toResponse(StoredFile storedFile) {
