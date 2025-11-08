@@ -153,6 +153,14 @@ public class FileStorageService {
     if (!_storageProperties.isEnabled()) {
       throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "File storage is disabled");
     }
+
+    S3Client _s3Client = _s3ClientProvider.getIfAvailable();
+    if (_s3Client == null) {
+      throw new ResponseStatusException(
+        HttpStatus.SERVICE_UNAVAILABLE,
+        "Storage client is not configured"
+      );
+    }
   }
 
   public record FileDownload(Resource resource, MediaType mediaType, String filename, long contentLength) {}
