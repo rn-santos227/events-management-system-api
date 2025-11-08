@@ -19,7 +19,7 @@ import com.mgnt.events.models.Privilege;
 import com.mgnt.events.repositories.PrivilegeRepository;
 import com.mgnt.events.requests.privileges.PrivilegeRequest;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
-import com.mgnt.events.utils.RequestValidators;
+import com.mgnt.events.util.RequestValidators;
 
 @Service
 public class PrivilegeService {

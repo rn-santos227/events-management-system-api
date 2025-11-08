@@ -3,11 +3,12 @@ package com.mgnt.events.services;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -18,11 +19,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.config.storage.StorageProperties;
 import com.mgnt.events.constants.Patterns;
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Storage;
 import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.responses.files.FileUploadResponse;
-import com.mgnt.events.utils.RequestValidators;
+import com.mgnt.events.util.RequestValidators;
 
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
 import software.amazon.awssdk.core.exception.SdkClientException;
@@ -46,6 +48,19 @@ public class FileStorageService {
     this._s3ClientProvider = s3ObjectProvider;
     this._storageProperties = storageProperties;
     this._storedFileRepository = storedFileRepository;
+  }
+
+  @Transactional(readOnly = true)
+  public List<FileUploadResponse> findAll(@Nullable Integer limit) {
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    if (sanitizedLimit == null) {
+       return _storedFileRepository.findAll().stream().map(this::toResponse).toList();
+    }
+
+    return _storedFileRepository
+      .findAll(PageRequest.of(0, sanitizedLimit))
+      .stream().map(this::toResponse)
+      .toList();
   }
 
   @Transactional

@@ -20,7 +20,7 @@ import com.mgnt.events.constants.Routes;
 import com.mgnt.events.requests.roles.RoleRequest;
 import com.mgnt.events.responses.roles.RoleResponse;
 import com.mgnt.events.services.RoleService;
-import com.mgnt.events.utils.RequestValidators;
+import com.mgnt.events.util.RequestValidators;
 
 @RestController
 @RequestMapping(Routes.ROLES)

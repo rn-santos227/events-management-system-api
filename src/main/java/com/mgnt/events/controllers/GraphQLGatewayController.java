@@ -12,7 +12,7 @@ import com.mgnt.events.responses.users.UserResponse;
 import com.mgnt.events.services.PrivilegeService;
 import com.mgnt.events.services.RoleService;
 import com.mgnt.events.services.UserService;
-import com.mgnt.events.utils.RequestValidators;
+import com.mgnt.events.util.RequestValidators;
 
 @Controller
 public class GraphQLGatewayController {

@@ -1,4 +1,4 @@
-package com.mgnt.events.types;
+package com.mgnt.events.enums;
 
 public enum TokenType {
   BEARER

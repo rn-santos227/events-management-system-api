@@ -20,7 +20,7 @@ import com.mgnt.events.constants.Routes;
 import com.mgnt.events.requests.privileges.PrivilegeRequest;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
 import com.mgnt.events.services.PrivilegeService;
-import com.mgnt.events.utils.RequestValidators;
+import com.mgnt.events.util.RequestValidators;
 
 @RestController
 @RequestMapping(Routes.PRIVILEGES)

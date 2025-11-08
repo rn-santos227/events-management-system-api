@@ -25,7 +25,7 @@ import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.requests.roles.RoleRequest;
 import com.mgnt.events.responses.privileges.PrivilegeSummary;
 import com.mgnt.events.responses.roles.RoleResponse;
-import com.mgnt.events.utils.RequestValidators;
+import com.mgnt.events.util.RequestValidators;
 
 @Service
 public class RoleService {

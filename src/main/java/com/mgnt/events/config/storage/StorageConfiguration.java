@@ -13,7 +13,7 @@ import software.amazon.awssdk.services.s3.S3ClientBuilder;
 import software.amazon.awssdk.services.s3.S3Configuration;
 
 import com.mgnt.events.constants.Storage;
-import com.mgnt.events.utils.RequestValidators;
+import com.mgnt.events.util.RequestValidators;
 
 @Configuration
 @EnableConfigurationProperties(StorageProperties.class)

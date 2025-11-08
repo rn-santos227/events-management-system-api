@@ -18,7 +18,7 @@ import lombok.Setter;
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.constants.Tables;
-import com.mgnt.events.types.TokenType;
+import com.mgnt.events.enums.TokenType;
 
 @Entity
 @Table(name = Tables.USER_TOKENS)

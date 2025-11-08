@@ -1,4 +1,4 @@
-package com.mgnt.events.utils;
+package com.mgnt.events.util;
 
 import java.lang.reflect.Array;
 import java.util.Collection;
@@ -115,7 +115,7 @@ public final class RequestValidators {
           return false;
         }
       }
-      return true;
+    return true;
     }
 
     return false;

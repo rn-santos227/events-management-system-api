@@ -21,7 +21,7 @@ import com.mgnt.events.requests.users.UserCreateRequest;
 import com.mgnt.events.requests.users.UserUpdateRequest;
 import com.mgnt.events.responses.users.UserResponse;
 import com.mgnt.events.services.UserService;
-import com.mgnt.events.utils.RequestValidators;
+import com.mgnt.events.util.RequestValidators;
 
 import jakarta.validation.Valid;
 
