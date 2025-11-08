@@ -186,6 +186,12 @@ public class FileStorageService {
         exception
       );
     }
+
+
+    String _contentType = _storedFile.getContentType();
+    if (RequestValidators.isBlank(_contentType)) {
+      _contentType = _s3Object.response().contentType();
+    }
   }
 
   public record FileDownload(Resource resource, MediaType mediaType, String filename, long contentLength) {}
