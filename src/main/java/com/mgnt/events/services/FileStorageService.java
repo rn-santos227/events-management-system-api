@@ -59,6 +59,14 @@ public class FileStorageService {
     if (ensuredFile.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File must not be empty");
     }
+
+    String _bucket = _storageProperties.getBucket();
+    if (RequestValidators.isBlank(_bucket)) {
+      throw new ResponseStatusException(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        "Storage bucket is not configured"
+      );
+    }
   }
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
