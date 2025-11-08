@@ -67,6 +67,10 @@ public class FileStorageService {
         "Storage bucket is not configured"
       );
     }
+
+    String _sanitizedBucket = _bucket.trim();
+    String _normalizedFileName = normalizeFileName(ensuredFile.getOriginalFilename(), ensuredFile.getName());
+    String _objectKey = generateObjectKey(_normalizedFileName);
   }
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
