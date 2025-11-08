@@ -10,6 +10,7 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,7 +22,6 @@ import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.responses.files.FileUploadResponse;
 import com.mgnt.events.utils.RequestValidators;
 
-import jakarta.transaction.Transactional;
 import software.amazon.awssdk.awscore.exception.AwsServiceException;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -47,7 +47,7 @@ public class FileStorageService {
   }
 
   @Transactional
-  public FileUploadResponse upload(MultipartFile multipartFile, @Nullable String note) {
+  public FileUploadResponse upload(MultipartFile multipartFile, @Nullable String notes) {
     if (!_storageProperties.isEnabled()) {
       throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "File storage is disabled");
     }
@@ -101,6 +101,18 @@ public class FileStorageService {
         exception
       );
     }
+
+    StoredFile storedFile = new StoredFile();
+
+    storedFile.setFileName(_normalizedFileName);
+    storedFile.setStorageKey(_objectKey);
+    storedFile.setBucket(_sanitizedBucket);
+    storedFile.setContentType(ensuredFile.getContentType());
+    storedFile.setSize(ensuredFile.getSize());
+    storedFile.setNotes((notes == null || RequestValidators.isBlank(notes)) ? null : notes.trim());
+    storedFile.setUrl(buildFileUrl(_sanitizedBucket, _objectKey));
+
+    return toResponse(_storedFileRepository.save(storedFile));
   }
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
