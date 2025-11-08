@@ -3,6 +3,7 @@ package com.mgnt.events.controllers;
 import java.util.List;
 
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mgnt.events.constants.Patterns;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
 import com.mgnt.events.requests.files.FileUploadRequest;
@@ -48,6 +50,15 @@ public class FileController {
 
   @GetMapping(Routes.DOWNLOAD)
   public ResponseEntity<Resource> download(@PathVariable @NonNull Long id) {
-    FileStorageService.FileDownload download = _fileStorageService.download(id);
+    FileStorageService.FileDownload _download = _fileStorageService.download(id);
+    return ResponseEntity
+      .ok()
+      .contentType(_download.mediaType())
+      .contentLength(_download.contentLength())
+      .header(
+        HttpHeaders.CONTENT_DISPOSITION,
+        Patterns.ATTACHMENTS.formatted(_download.fileName())
+      )
+      .body(_download.resource());
   }
 }

@@ -211,11 +211,21 @@ public class FileStorageService {
       }
     }
 
-    Resource resource = new InputStreamResource(_s3Object);
-    return new FileDownload(resource, _mediaType, _storedFile.getFileName(), _storedFile.getSize());
+    Resource resource = new InputStreamResource(Objects.requireNonNull(_s3Object));
+    return new FileDownload(
+      resource, 
+      RequestValidators.requireNonNull(_mediaType, "Media Type"),
+      RequestValidators.requireNonNull(_storedFile.getFileName(), "File Name"),
+      _storedFile.getSize()
+    );
   }
 
-  public record FileDownload(Resource resource, MediaType mediaType, String filename, long contentLength) {}
+  public record FileDownload(
+    @NonNull Resource resource, 
+    @NonNull MediaType mediaType, 
+    @NonNull String fileName,
+    long contentLength
+  ) {}
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
     String candidate = !RequestValidators.isBlank(originalFilename) ? originalFilename : fallbackName;
