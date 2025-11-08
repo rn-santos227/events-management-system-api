@@ -33,6 +33,14 @@ public class FileStorageService {
   }
 
   private FileUploadResponse toResponse(StoredFile storedFile) {
-    StoredFile ensureFile = Objects.requireNonNull(storedFile, "Stored file must not be null");
+    StoredFile ensuredFile = Objects.requireNonNull(storedFile, "Stored file must not be null");
+    return new FileUploadResponse(
+      Objects.requireNonNull(ensuredFile.getId(), "File identifier must not be null"),
+      ensuredFile.getFileName(),
+      ensuredFile.getStorageKey(),
+      ensuredFile.getBucket(),
+      ensuredFile.getSize(),
+      ensuredFile.getContentType()
+    );
   }
 }
