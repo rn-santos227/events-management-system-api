@@ -28,6 +28,7 @@ import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Storage;
 import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.StoredFileRepository;
+import com.mgnt.events.requests.files.FileUploadRequest;
 import com.mgnt.events.responses.files.FileUploadResponse;
 import com.mgnt.events.util.RequestValidators;
 
@@ -87,7 +88,7 @@ public class FileStorageService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
-  public FileUploadResponse upload(MultipartFile multipartFile, @Nullable String notes) {
+  public FileUploadResponse upload(@NonNull FileUploadRequest request) {
     if (!_storageProperties.isEnabled()) {
       throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "File storage is disabled");
     }
@@ -100,10 +101,7 @@ public class FileStorageService {
       );
     }
 
-    MultipartFile ensuredFile = RequestValidators.requireNonNull(multipartFile, "File");
-    if (ensuredFile.isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File must not be empty");
-    }
+    FileUploadRequest ensuredRequest = Objects.requireNonNull(request, "File upload request must not be null");
 
     String _bucket = _storageProperties.getBucket();
     if (RequestValidators.isBlank(_bucket)) {
@@ -113,24 +111,29 @@ public class FileStorageService {
       );
     }
 
+    MultipartFile _ensuredFile = RequestValidators.requireNonNull(ensuredRequest.file(), "File");
+    if (_ensuredFile.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File must not be empty");
+    }
+
     String _sanitizedBucket = _bucket.trim();
-    String _normalizedFileName = normalizeFileName(ensuredFile.getOriginalFilename(), ensuredFile.getName());
+    String _normalizedFileName = normalizeFileName(_ensuredFile.getOriginalFilename(), _ensuredFile.getName());
     String _objectKey = generateObjectKey(_normalizedFileName);
 
     PutObjectRequest.Builder _requestBuilder = PutObjectRequest
       .builder()
       .bucket(_sanitizedBucket)
       .key(_objectKey)
-      .contentLength(ensuredFile.getSize());
+      .contentLength(_ensuredFile.getSize());
 
-    if (!RequestValidators.isBlank(ensuredFile.getContentType())) {
-      _requestBuilder.contentType(ensuredFile.getContentType());
+    if (!RequestValidators.isBlank(_ensuredFile.getContentType())) {
+      _requestBuilder.contentType(_ensuredFile.getContentType());
     }
 
     try {
       _s3Client.putObject(
       _requestBuilder.build(),
-      RequestBody.fromInputStream(ensuredFile.getInputStream(), ensuredFile.getSize())
+      RequestBody.fromInputStream(_ensuredFile.getInputStream(), _ensuredFile.getSize())
       );
     } catch (IOException exception) {
       throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to read file contents", exception);
@@ -142,16 +145,18 @@ public class FileStorageService {
       );
     }
 
-    StoredFile storedFile = new StoredFile();
-    storedFile.setFileName(_normalizedFileName);
-    storedFile.setStorageKey(_objectKey);
-    storedFile.setBucket(_sanitizedBucket);
-    storedFile.setContentType(ensuredFile.getContentType());
-    storedFile.setSize(ensuredFile.getSize());
-    storedFile.setNotes((notes == null || RequestValidators.isBlank(notes)) ? null : notes.trim());
-    storedFile.setUrl(buildFileUrl(_sanitizedBucket, _objectKey));
+    StoredFile _storedFile = new StoredFile();
+    String notes = ensuredRequest.notes();
+  
+    _storedFile.setFileName(_normalizedFileName);
+    _storedFile.setStorageKey(_objectKey);
+    _storedFile.setBucket(_sanitizedBucket);
+    _storedFile.setContentType(_ensuredFile.getContentType());
+    _storedFile.setSize(_ensuredFile.getSize());
+    _storedFile.setNotes(RequestValidators.isBlank(notes) ? null : notes.trim());
+    _storedFile.setUrl(buildFileUrl(_sanitizedBucket, _objectKey));
 
-    return toResponse(_storedFileRepository.save(storedFile));
+    return toResponse(_storedFileRepository.save(_storedFile));
   }
   
   @Transactional(readOnly = true)
