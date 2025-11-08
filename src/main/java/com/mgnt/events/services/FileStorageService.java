@@ -42,6 +42,9 @@ public class FileStorageService {
     if (RequestValidators.isBlank(candidate)) {
       candidate = Storage.CANDIDATE;
     }
+
+    String trimmed = Objects.requireNonNull(candidate).trim().replace("\\", "/");
+    int lastSlashIndex = trimmed.lastIndexOf('/');
   }
 
   private String generateObjectKey(String fileName) {
