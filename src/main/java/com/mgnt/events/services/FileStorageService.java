@@ -6,9 +6,11 @@ import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.config.storage.StorageProperties;
 import com.mgnt.events.constants.Patterns;
@@ -41,7 +43,18 @@ public class FileStorageService {
 
   @Transactional
   public FileUploadResponse upload(MultipartFile multipartFile, @Nullable String note) {
-    
+    if (!_storageProperties.isEnabled()) {
+      throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "File storage is disabled");
+    }
+
+    S3Client _s3Client = _s3ClientProvider.getIfAvailable(); 
+    if (_s3Client == null) {
+      throw new ResponseStatusException(
+        HttpStatus.SERVICE_UNAVAILABLE,
+        "Storage client is not configured"
+      );
+    }
+
   }
 
   private String normalizeFileName(@Nullable String originalFilename, String fallbackName) {
