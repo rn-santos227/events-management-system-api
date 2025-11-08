@@ -38,6 +38,10 @@ public class FileStorageService {
     String sanitized = fileName.replace("\\", "/");
     String extension = "";
     int lastDot = sanitized.lastIndexOf('.');
+    if (lastDot >= 0 && lastDot < sanitized.length() - 1) {
+      extension = sanitized.substring(lastDot);
+    }
+
   }
 
   private String buildFileUrl(String bucket, String key) {
