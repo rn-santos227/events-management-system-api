@@ -150,7 +150,9 @@ public class FileStorageService {
   }
   @Transactional(readOnly = true)
   public FileDownload download(@NonNull Long id) {
-    
+    if (!_storageProperties.isEnabled()) {
+      throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "File storage is disabled");
+    }
   }
 
   public record FileDownload(Resource resource, MediaType mediaType, String filename, long contentLength) {}
