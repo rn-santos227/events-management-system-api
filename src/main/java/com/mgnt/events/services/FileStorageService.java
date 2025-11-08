@@ -1,5 +1,6 @@
 package com.mgnt.events.services;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -21,6 +22,9 @@ import com.mgnt.events.responses.files.FileUploadResponse;
 import com.mgnt.events.utils.RequestValidators;
 
 import jakarta.transaction.Transactional;
+import software.amazon.awssdk.awscore.exception.AwsServiceException;
+import software.amazon.awssdk.core.exception.SdkClientException;
+import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
@@ -81,6 +85,21 @@ public class FileStorageService {
 
     if (!RequestValidators.isBlank(ensuredFile.getContentType())) {
       _requestBuilder.contentType(ensuredFile.getContentType());
+    }
+
+    try {
+      _s3Client.putObject(
+      _requestBuilder.build(),
+      RequestBody.fromInputStream(ensuredFile.getInputStream(), ensuredFile.getSize())
+      );
+    } catch (IOException exception) {
+      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to read file contents", exception);
+    } catch (AwsServiceException | SdkClientException exception) {
+      throw new ResponseStatusException(
+        HttpStatus.BAD_GATEWAY,
+        "Failed to upload file to storage provider",
+        exception
+      );
     }
   }
 
