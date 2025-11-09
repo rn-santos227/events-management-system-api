@@ -1,12 +1,15 @@
 package com.mgnt.events.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -40,6 +43,10 @@ public class TestControllerTest {
   @Test
   void test_shouldReturnMessage() throws Exception {
     _mockMvc
-      .perform(get(Routes.TEST));
+      .perform(get(Routes.TEST))
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(
+        RequestValidators.requireNonNull(MediaType.APPLICATION_JSON, "Media Tye")
+      ));
   }
 }
