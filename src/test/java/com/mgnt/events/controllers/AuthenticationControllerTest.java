@@ -49,5 +49,9 @@ public class AuthenticationControllerTest {
   void login_ShouldReturnAccessToken() throws Exception {
     LoginResponse response = new LoginResponse(Mocks.Auth.TOKEN_VALUE, Mocks.Auth.TOKEN_TYPE, 1_720_000_000L);
     when(_authenticationService.authenticate(any(LoginRequest.class))).thenReturn(response);
+
+    LoginRequest request = new LoginRequest();
+    request.setEmail(Mocks.Auth.EMAIL);
+    request.setPassword(Mocks.Auth.PASSWORD);
   }
 }
