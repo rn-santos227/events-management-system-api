@@ -6,4 +6,5 @@ public final class JsonPaths {
   public static final String ACCESS_TOKEN = "$.accessToken";
   public static final String TOKEN_TYPE = "$.tokenType";
   public static final String EXPIRES_AT = "$.expiresAt";
+  public static final String MESSAGE = "$.message";
 }

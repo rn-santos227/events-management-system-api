@@ -11,4 +11,10 @@ public final class Mocks {
 
     private Auth() {}
   }
+
+  public static final class Messages {
+    public static final String TEST = "this is a test";
+
+    private Messages() {}
+  }
 }
