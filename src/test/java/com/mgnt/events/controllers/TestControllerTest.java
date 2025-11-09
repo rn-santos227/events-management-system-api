@@ -1,6 +1,7 @@
 package com.mgnt.events.controllers;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -31,5 +32,10 @@ public class TestControllerTest {
         RequestValidators.requireNonNull(_objectMapper, "Object Mapper")
       ))
       .build();
+  }
+
+  @Test
+  void test_shouldReturnMessage() throws Exception {
+    
   }
 }
