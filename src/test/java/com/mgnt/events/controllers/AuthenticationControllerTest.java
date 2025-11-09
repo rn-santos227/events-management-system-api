@@ -1,5 +1,8 @@
 package com.mgnt.events.controllers;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,12 +10,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.requests.auth.LoginRequest;
+import com.mgnt.events.responses.auth.LoginResponse;
 import com.mgnt.events.services.AuthenticationService;
 import com.mgnt.events.util.RequestValidators;
 
@@ -42,6 +46,7 @@ public class AuthenticationControllerTest {
 
   @Test
   void login_ShouldReturnAccessToken() throws Exception {
-    
+    LoginResponse response = new LoginResponse("token-value", "Bearer", 1_720_000_000L);
+    when(_authenticationService.authenticate(any(LoginRequest.class))).thenReturn(response);
   }
 }
