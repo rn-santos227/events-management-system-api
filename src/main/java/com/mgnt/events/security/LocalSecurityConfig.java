@@ -15,8 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.mgnt.events.constants.Profiles;
+
 @Configuration
-@Profile("local")
+@Profile(Profiles.LOCAL)
 @EnableWebSecurity
 @EnableMethodSecurity
 public class LocalSecurityConfig {
