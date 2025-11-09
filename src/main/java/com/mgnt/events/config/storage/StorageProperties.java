@@ -3,12 +3,14 @@ package com.mgnt.events.config.storage;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 import com.mgnt.events.constants.Storage;
 @Getter
 @Setter
 @Validated
+@Component
 @ConfigurationProperties(prefix = Storage.PROPERTY_PREFIX)
 public class StorageProperties {
   private StorageProvider provider = StorageProvider.S3;

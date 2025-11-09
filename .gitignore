@@ -83,6 +83,7 @@ build/test-results/
 *.local
 application-local.yml
 application-local.properties
+!src/main/resources/application-local.properties
 application-secrets.yml
 application-secrets.properties
 

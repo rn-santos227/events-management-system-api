@@ -5,35 +5,24 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.mgnt.events.constants.Profiles;
-import com.mgnt.events.constants.Routes;
-import com.mgnt.events.security.auth.JwtAuthenticationFilter;
 
 @Configuration
-@Profile(Profiles.GLOBAL)
+@Profile("local")
 @EnableWebSecurity
 @EnableMethodSecurity
-public class SecurityConfig {
-  private final JwtAuthenticationFilter _jwtAuthenticationFilter;
+public class LocalSecurityConfig {
   private final UserDetailsService _userDetailsService;
 
-  public SecurityConfig(
-    JwtAuthenticationFilter jwtAuthenticationFilter,
-    UserDetailsService userDetailsService
-  ) {
-    this._jwtAuthenticationFilter = jwtAuthenticationFilter;
+  public LocalSecurityConfig(UserDetailsService userDetailsService) {
     this._userDetailsService = userDetailsService;
   }
 
@@ -41,16 +30,13 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http
       .csrf(csrf -> csrf.disable())
-      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-      .authorizeHttpRequests(auth ->
-        auth
-          .requestMatchers(Routes.AUTH + "/**").permitAll()
-          .anyRequest()
-          .authenticated()
-      )
-      .authenticationProvider(authenticationProvider())
-      .addFilterBefore(_jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+      .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
       .build();
+  }
+
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationProvider authenticationProvider) {
+    return new ProviderManager(authenticationProvider);
   }
 
   @Bean
@@ -60,12 +46,6 @@ public class SecurityConfig {
     provider.setUserDetailsService(_userDetailsService);
     provider.setPasswordEncoder(passwordEncoder());
     return provider;
-  }
-
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
-    throws Exception {
-    return config.getAuthenticationManager();
   }
 
   @Bean
