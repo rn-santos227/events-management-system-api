@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -14,4 +15,9 @@ public class TestControllerTest {
 
   @InjectMocks
   private TestController _testController;
+
+  @BeforeEach()
+  void setup() {
+    
+  }
 }
