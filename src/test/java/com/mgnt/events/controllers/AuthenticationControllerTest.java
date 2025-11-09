@@ -9,6 +9,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mgnt.events.services.AuthenticationService;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,6 +25,7 @@ public class AuthenticationControllerTest {
 
   @BeforeAll
   void setup() {
-    
+    _objectMapper = new ObjectMapper();
+    _objectMapper.registerModule(new JavaTimeModule());
   }
 }
