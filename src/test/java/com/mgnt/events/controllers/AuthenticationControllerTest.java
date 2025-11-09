@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.Mocks;
 import com.mgnt.events.requests.auth.LoginRequest;
 import com.mgnt.events.responses.auth.LoginResponse;
 import com.mgnt.events.services.AuthenticationService;
@@ -46,7 +47,7 @@ public class AuthenticationControllerTest {
 
   @Test
   void login_ShouldReturnAccessToken() throws Exception {
-    LoginResponse response = new LoginResponse("token-value", "Bearer", 1_720_000_000L);
+    LoginResponse response = new LoginResponse(Mocks.Auth.TOKEN_VALUE, Mocks.Auth.TOKEN_TYPE, 1_720_000_000L);
     when(_authenticationService.authenticate(any(LoginRequest.class))).thenReturn(response);
   }
 }
