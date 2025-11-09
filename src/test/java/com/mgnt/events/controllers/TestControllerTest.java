@@ -1,5 +1,7 @@
 package com.mgnt.events.controllers;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.Routes;
 import com.mgnt.events.util.RequestValidators;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,6 +39,7 @@ public class TestControllerTest {
 
   @Test
   void test_shouldReturnMessage() throws Exception {
-    
+    _mockMvc
+      .perform(get(Routes.TEST));
   }
 }
