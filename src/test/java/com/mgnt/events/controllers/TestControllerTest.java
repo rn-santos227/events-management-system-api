@@ -2,6 +2,7 @@ package com.mgnt.events.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.JsonPaths;
+import com.mgnt.events.constants.Mocks;
 import com.mgnt.events.constants.Routes;
 import com.mgnt.events.util.RequestValidators;
 
@@ -47,6 +50,7 @@ public class TestControllerTest {
       .andExpect(status().isOk())
       .andExpect(content().contentType(
         RequestValidators.requireNonNull(MediaType.APPLICATION_JSON, "Media Tye")
-      ));
+      ))
+      .andExpect(jsonPath(JsonPaths.MESSAGE).value(Mocks.Messages.TEST));
   }
 }
