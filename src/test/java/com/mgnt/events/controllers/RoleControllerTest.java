@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
@@ -108,6 +109,9 @@ public class RoleControllerTest {
 
     ArgumentCaptor<RoleRequest> captor = ArgumentCaptor.forClass(RoleRequest.class);
     verify(_roleService, times(1)).create(captor.capture());
+    RoleRequest captured = captor.getValue();
+    assertThat(captured.name()).isEqualTo(Mocks.Roles.NAME_ADMIN);
+    assertThat(captured.privilegeIds()).containsExactlyInAnyOrder(1L, 2L);
   }
 
   @Test
