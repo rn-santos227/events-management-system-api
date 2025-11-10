@@ -25,6 +25,7 @@ public final class Mocks {
     public static final String PRIVILEGE_ACTION_WRITE = "WRITE";
     public static final String ROLE_NAME_MANAGER = "Manager";
     public static final String ROLE_NAME_STAFF = "Staff";
+    public static final String PAGINATION = "5";
 
     private Roles() {}
   }

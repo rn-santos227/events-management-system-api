@@ -10,8 +10,7 @@ public final class JsonPaths {
   public static final String ID = "$.id";
   public static final String NAME = "$.name";
 
-  public static final String PAGINATION = "5";
   public static final String INDEX_0_ID = "$[0].id";
   public static final String INDEX_0_NAME = "$[0].name";
-  public static final String INDEX_0_PRIVILEGES = "$[0].privileges[*].name";
+  public static final String INDEX_0_PRIVILEGES = "$[0].privileges[0].name";
 }

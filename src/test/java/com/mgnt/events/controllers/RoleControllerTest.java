@@ -1,6 +1,10 @@
 package com.mgnt.events.controllers;
 
 import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
@@ -19,7 +23,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.JsonPaths;
 import com.mgnt.events.constants.Mocks;
+import com.mgnt.events.constants.Queries;
+import com.mgnt.events.constants.Routes;
 import com.mgnt.events.responses.privileges.PrivilegeSummary;
 import com.mgnt.events.responses.roles.RoleResponse;
 import com.mgnt.events.services.RoleService;
@@ -63,5 +70,11 @@ public class RoleControllerTest {
       new RoleResponse(1L, Mocks.Roles.NAME_ADMIN, _privileges, LocalDateTime.now(), LocalDateTime.now())
     );
     when(_roleService.findAll(5)).thenReturn(responses);
+    _mockMvc
+      .perform(get(Routes.ROLES).param(Queries.LIMIT, Mocks.Roles.PAGINATION))
+      .andExpect(status().isOk())
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(1))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Roles.NAME_ADMIN))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_PRIVILEGES).value(Mocks.Roles.PRIVILEGE_MANAGE_USERS));
   }
 }
