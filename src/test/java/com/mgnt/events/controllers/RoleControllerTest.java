@@ -99,7 +99,10 @@ public class RoleControllerTest {
         .content(
           RequestValidators.requireNonNull(_objectMapper.writeValueAsString(request), "Request")
         )
-      );
+      )
+      .andExpect(status().isCreated())
+      .andExpect(jsonPath(JsonPaths.ID).value(1))
+      .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Roles.NAME_ADMIN));
   }
 
   @Test
