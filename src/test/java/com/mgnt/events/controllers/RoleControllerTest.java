@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mgnt.events.services.RoleService;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,6 +24,7 @@ public class RoleControllerTest {
 
   @BeforeEach
   void setUp() {
-
+    _objectMapper = new ObjectMapper();
+    _objectMapper.registerModule(new JavaTimeModule());
   }
 }
