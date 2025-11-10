@@ -1,6 +1,7 @@
 package com.mgnt.events.controllers;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -31,10 +32,15 @@ public class RoleControllerTest {
     _objectMapper.registerModule(new JavaTimeModule());
 
     _mockMvc = MockMvcBuilders
-    .standaloneSetup(_roleController)
-    .setMessageConverters(new MappingJackson2HttpMessageConverter(
-      RequestValidators.requireNonNull(_objectMapper, "Object Mapper")
-    ))
-    .build();
+      .standaloneSetup(_roleController)
+      .setMessageConverters(new MappingJackson2HttpMessageConverter(
+        RequestValidators.requireNonNull(_objectMapper, "Object Mapper")
+      ))
+      .build();
+  }
+
+  @Test
+  void findAll_shoudReturnRoleResponses() throws Exception {
+    
   }
 }
