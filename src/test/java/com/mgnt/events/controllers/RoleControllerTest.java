@@ -41,6 +41,6 @@ public class RoleControllerTest {
 
   @Test
   void findAll_shoudReturnRoleResponses() throws Exception {
-    
+
   }
 }

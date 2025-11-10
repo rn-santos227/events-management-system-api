@@ -17,4 +17,15 @@ public final class Mocks {
 
     private Messages() {}
   }
+
+  public static final class Roles {
+    public static final String NAME_ADMIN = "Admin";
+    public static final String PRIVILEGE_MANAGE_USERS = "Manage Users";
+    public static final String PRIVILEGE_SCOPE_USERS = "users";
+    public static final String PRIVILEGE_ACTION_WRITE = "WRITE";
+    public static final String ROLE_NAME_MANAGER = "Manager";
+    public static final String ROLE_NAME_STAFF = "Staff";
+
+    private Roles() {}
+  }
 }
