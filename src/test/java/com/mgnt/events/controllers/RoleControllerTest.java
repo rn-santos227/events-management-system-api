@@ -53,7 +53,7 @@ public class RoleControllerTest {
   private RoleController _roleController;
 
   @BeforeEach
-  void setup() {
+  void setUp() {
     _objectMapper = new ObjectMapper();
     _objectMapper.registerModule(new JavaTimeModule());
 

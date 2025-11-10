@@ -31,7 +31,7 @@ public class TestControllerTest {
   private TestController _testController;
 
   @BeforeEach()
-  void setup() {
+  void setUp() {
     _objectMapper = new ObjectMapper();
     _objectMapper.registerModule(new JavaTimeModule());
 

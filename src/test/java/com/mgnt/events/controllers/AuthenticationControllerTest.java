@@ -42,7 +42,7 @@ public class AuthenticationControllerTest {
   private AuthenticationController _authenticationController;
 
   @BeforeAll
-  void setup() {
+  void setUp() {
     _objectMapper = new ObjectMapper();
     _objectMapper.registerModule(new JavaTimeModule());
 
