@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,6 +30,7 @@ import com.mgnt.events.constants.JsonPaths;
 import com.mgnt.events.constants.Mocks;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
+import com.mgnt.events.requests.roles.RoleRequest;
 import com.mgnt.events.responses.privileges.PrivilegeSummary;
 import com.mgnt.events.responses.roles.RoleResponse;
 import com.mgnt.events.services.RoleService;
@@ -82,7 +84,9 @@ public class RoleControllerTest {
 
   @Test
   void create_ShouldForwardRequestToService() throws Exception {
-
+    RoleRequest request = new RoleRequest(Mocks.Roles.NAME_ADMIN, Set.of(1L, 2L));
+    RoleResponse response = new RoleResponse(1L, Mocks.Roles.NAME_ADMIN, Set.of(), LocalDateTime.now(), LocalDateTime.now());
+    when(_roleService.create(any(RoleRequest.class))).thenReturn(response);
   }
 
   @Test
