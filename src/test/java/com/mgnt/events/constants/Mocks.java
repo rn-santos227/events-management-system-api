@@ -29,4 +29,17 @@ public final class Mocks {
 
     private Roles() {}
   }
+
+  public static final class Users {
+    public static final String EMAIL_JANE = "jane.doe@example.com";
+    public static final String EMAIL_JOHN = "john.smith@example.com";
+    public static final String FIRST_NAME_JANE = "Jane";
+    public static final String LAST_NAME_JANE = "Doe";
+    public static final String FIRST_NAME_JOHN = "John";
+    public static final String LAST_NAME_JOHN = "Smith";
+    public static final String PHONE_PRIMARY = "1234567890";
+    public static final String PHONE_SECONDARY = "0987654321";
+
+    private Users() {}
+  }
 }
