@@ -1,6 +1,12 @@
 package com.mgnt.events.controllers;
 
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -11,6 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.Routes;
 import com.mgnt.events.services.UserService;
 import com.mgnt.events.util.RequestValidators;
 
@@ -36,5 +43,11 @@ public class UseControllerTest {
         RequestValidators.requireNonNull(_objectMapper, "Object Mapper")
       ))
       .build();
+  }
+
+  @Test
+  void delete_ShouldReturnNoContent() throws Exception {
+    _mockMvc.perform(delete(Routes.USERS + Routes.APPEND_ID, 11L)).andExpect(status().isNoContent());
+    verify(_userService).delete(eq(11L));
   }
 }
