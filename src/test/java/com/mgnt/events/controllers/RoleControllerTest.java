@@ -2,6 +2,7 @@ package com.mgnt.events.controllers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -18,6 +19,7 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -103,6 +105,9 @@ public class RoleControllerTest {
       .andExpect(status().isCreated())
       .andExpect(jsonPath(JsonPaths.ID).value(1))
       .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Roles.NAME_ADMIN));
+
+    ArgumentCaptor<RoleRequest> captor = ArgumentCaptor.forClass(RoleRequest.class);
+    verify(_roleService, times(1)).create(captor.capture());
   }
 
   @Test
