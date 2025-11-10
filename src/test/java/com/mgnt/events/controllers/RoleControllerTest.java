@@ -1,7 +1,9 @@
 package com.mgnt.events.controllers;
 
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -76,5 +78,11 @@ public class RoleControllerTest {
       .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(1))
       .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Roles.NAME_ADMIN))
       .andExpect(jsonPath(JsonPaths.INDEX_0_PRIVILEGES).value(Mocks.Roles.PRIVILEGE_MANAGE_USERS));
+  }
+
+  @Test
+  void delete_ShouldReturnNoContent() throws Exception {
+    _mockMvc.perform(delete(Routes.ROLES + Routes.APPEND_ID, 7L)).andExpect(status().isNoContent());
+    verify(_roleService).delete(eq(7L));
   }
 }
