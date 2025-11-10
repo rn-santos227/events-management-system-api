@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record FileUploadResponse(
   Long id,
   String fileName,
-  String fileUrl,
+  String storageKey,
   String bucket,
   Long size,
   String contentType,
