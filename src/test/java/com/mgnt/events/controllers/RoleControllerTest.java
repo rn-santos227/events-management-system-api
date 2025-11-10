@@ -1,5 +1,8 @@
 package com.mgnt.events.controllers;
 
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mgnt.events.constants.Mocks;
 import com.mgnt.events.responses.privileges.PrivilegeSummary;
+import com.mgnt.events.responses.roles.RoleResponse;
 import com.mgnt.events.services.RoleService;
 import com.mgnt.events.util.RequestValidators;
 
@@ -54,5 +58,10 @@ public class RoleControllerTest {
         Mocks.Roles.PRIVILEGE_SCOPE_USERS
       ))
     );
+
+    List<RoleResponse> responses = List.of(
+      new RoleResponse(1L, Mocks.Roles.NAME_ADMIN, _privileges, LocalDateTime.now(), LocalDateTime.now())
+    );
+    when(_roleService.findAll(5)).thenReturn(responses);
   }
 }
