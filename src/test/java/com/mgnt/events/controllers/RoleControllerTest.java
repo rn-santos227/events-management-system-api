@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -19,4 +20,9 @@ public class RoleControllerTest {
 
   @InjectMocks
   private RoleController _roleController;
+
+  @BeforeEach
+  void setUp() {
+
+  }
 }
