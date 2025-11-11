@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mgnt.events.constants.Mocks;
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
 import com.mgnt.events.responses.roles.RoleSummary;
 import com.mgnt.events.responses.users.UserResponse;
@@ -67,6 +69,9 @@ public class UserControllerTest {
       null
     );
     when(_userService.findAll(10)).thenReturn(List.of(_response));
+    _mockMvc
+      .perform(get(Routes.USERS).param(Queries.LIMIT, Mocks.Users.PAGINATION))
+      .andExpect(status().isOk());
   }
 
   @Test

@@ -39,6 +39,7 @@ public final class Mocks {
     public static final String LAST_NAME_JOHN = "Smith";
     public static final String PHONE_PRIMARY = "1234567890";
     public static final String PHONE_SECONDARY = "0987654321";
+    public static final String PAGINATION = "10";
 
     private Users() {}
   }
