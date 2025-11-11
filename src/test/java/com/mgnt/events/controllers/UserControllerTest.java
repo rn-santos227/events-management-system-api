@@ -73,7 +73,11 @@ public class UserControllerTest {
     when(_userService.findAll(10)).thenReturn(List.of(_response));
     _mockMvc
       .perform(get(Routes.USERS).param(Queries.LIMIT, Mocks.Users.PAGINATION))
-      .andExpect(status().isOk());
+      .andExpect(status().isOk())
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(42))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_EMAIL).value(Mocks.Users.EMAIL_JANE))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ROLE_ID).value(5))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ROLE_NAME).value(Mocks.Roles.ROLE_NAME_MANAGER));
   }
 
   @Test
