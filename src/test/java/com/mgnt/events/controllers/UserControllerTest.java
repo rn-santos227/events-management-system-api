@@ -22,7 +22,7 @@ import com.mgnt.events.services.UserService;
 import com.mgnt.events.util.RequestValidators;
 
 @ExtendWith(MockitoExtension.class)
-public class UseControllerTest {
+public class UserControllerTest {
   private MockMvc _mockMvc;
   private ObjectMapper _objectMapper;
 
@@ -43,6 +43,11 @@ public class UseControllerTest {
         RequestValidators.requireNonNull(_objectMapper, "Object Mapper")
       ))
       .build();
+  }
+
+  @Test
+  void findAll_ShouldReturnUsers() throws Exception {
+    
   }
 
   @Test
