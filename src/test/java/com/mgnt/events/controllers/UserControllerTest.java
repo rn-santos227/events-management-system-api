@@ -92,6 +92,19 @@ public class UserControllerTest {
       7L,
       Boolean.TRUE
     );
+
+    UserResponse _response = new UserResponse(
+      101L,
+      Mocks.Users.EMAIL_JOHN,
+      Mocks.Users.FIRST_NAME_JOHN,
+      Mocks.Users.LAST_NAME_JOHN,
+      Mocks.Users.PHONE_SECONDARY,
+      true,
+      new RoleSummary(7L, Mocks.Roles.ROLE_NAME_STAFF),
+      LocalDateTime.now(),
+      LocalDateTime.now(),
+      null
+    );
   }
 
   @Test
