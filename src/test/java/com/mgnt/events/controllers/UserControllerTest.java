@@ -120,7 +120,10 @@ public class UserControllerTest {
         .content(
           RequestValidators.requireNonNull(_objectMapper.writeValueAsString(_request), "Request")
         )
-      );
+      )
+      .andExpect(status().isCreated())
+      .andExpect(jsonPath(JsonPaths.ID).value(101))
+      .andExpect(jsonPath(JsonPaths.EMAIL).value(Mocks.Users.EMAIL_JOHN));
   }
 
   @Test
