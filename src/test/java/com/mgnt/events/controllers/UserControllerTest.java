@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -128,6 +129,11 @@ public class UserControllerTest {
 
     ArgumentCaptor<UserCreateRequest> captor = ArgumentCaptor.forClass(UserCreateRequest.class);
     verify(_userService).create(captor.capture());
+
+    UserCreateRequest captured = captor.getValue();
+    assertThat(captured.email()).isEqualTo(Mocks.Users.EMAIL_JOHN);
+    assertThat(captured.roleId()).isEqualTo(7L);
+    assertThat(captured.active()).isTrue();
   }
 
   @Test
