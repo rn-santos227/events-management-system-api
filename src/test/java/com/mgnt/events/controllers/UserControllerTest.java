@@ -81,6 +81,11 @@ public class UserControllerTest {
   }
 
   @Test
+  void create_ShouldDelegateToService() throws Exception {
+
+  }
+
+  @Test
   void delete_ShouldReturnNoContent() throws Exception {
     _mockMvc.perform(delete(Routes.USERS + Routes.APPEND_ID, 11L)).andExpect(status().isNoContent());
     verify(_userService).delete(eq(11L));

@@ -33,6 +33,7 @@ public final class Mocks {
   public static final class Users {
     public static final String EMAIL_JANE = "jane.doe@example.com";
     public static final String EMAIL_JOHN = "john.smith@example.com";
+    public static final String PASSWORD_JOHN = "password123";
     public static final String FIRST_NAME_JANE = "Jane";
     public static final String LAST_NAME_JANE = "Doe";
     public static final String FIRST_NAME_JOHN = "John";
