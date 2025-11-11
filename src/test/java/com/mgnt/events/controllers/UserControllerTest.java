@@ -27,6 +27,7 @@ import com.mgnt.events.constants.JsonPaths;
 import com.mgnt.events.constants.Mocks;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
+import com.mgnt.events.requests.users.UserCreateRequest;
 import com.mgnt.events.responses.roles.RoleSummary;
 import com.mgnt.events.responses.users.UserResponse;
 import com.mgnt.events.services.UserService;
@@ -82,7 +83,15 @@ public class UserControllerTest {
 
   @Test
   void create_ShouldDelegateToService() throws Exception {
-
+    UserCreateRequest _request = new UserCreateRequest(
+      Mocks.Users.EMAIL_JOHN,
+      Mocks.Users.PASSWORD_JOHN,
+      Mocks.Users.FIRST_NAME_JOHN,
+      Mocks.Users.LAST_NAME_JOHN,
+      Mocks.Users.PHONE_SECONDARY,
+      7L,
+      Boolean.TRUE
+    );
   }
 
   @Test
