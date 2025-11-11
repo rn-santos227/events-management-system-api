@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -105,6 +106,8 @@ public class UserControllerTest {
       LocalDateTime.now(),
       null
     );
+
+    when(_userService.create(any(UserCreateRequest.class))).thenReturn(_response);
   }
 
   @Test
