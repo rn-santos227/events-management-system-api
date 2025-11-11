@@ -5,6 +5,8 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +19,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.Mocks;
 import com.mgnt.events.constants.Routes;
+import com.mgnt.events.responses.roles.RoleSummary;
+import com.mgnt.events.responses.users.UserResponse;
 import com.mgnt.events.services.UserService;
 import com.mgnt.events.util.RequestValidators;
 
@@ -47,7 +52,18 @@ public class UserControllerTest {
 
   @Test
   void findAll_ShouldReturnUsers() throws Exception {
-    
+    UserResponse _response = new UserResponse(
+      42L,
+      Mocks.Users.EMAIL_JANE,
+      Mocks.Users.FIRST_NAME_JANE,
+      Mocks.Users.LAST_NAME_JANE,
+      Mocks.Users.PHONE_PRIMARY,
+      true,
+      new RoleSummary(5L, Mocks.Roles.ROLE_NAME_MANAGER),
+      LocalDateTime.now(),
+      LocalDateTime.now(),
+      null
+    );
   }
 
   @Test
