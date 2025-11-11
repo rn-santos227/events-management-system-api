@@ -16,6 +16,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -124,6 +125,9 @@ public class UserControllerTest {
       .andExpect(status().isCreated())
       .andExpect(jsonPath(JsonPaths.ID).value(101))
       .andExpect(jsonPath(JsonPaths.EMAIL).value(Mocks.Users.EMAIL_JOHN));
+
+    ArgumentCaptor<UserCreateRequest> captor = ArgumentCaptor.forClass(UserCreateRequest.class);
+    verify(_userService).create(captor.capture());
   }
 
   @Test
