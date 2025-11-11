@@ -11,6 +11,9 @@ public final class JsonPaths {
   public static final String NAME = "$.name";
 
   public static final String INDEX_0_ID = "$[0].id";
+  public static final String INDEX_0_EMAIL = "$[0].email";
   public static final String INDEX_0_NAME = "$[0].name";
   public static final String INDEX_0_PRIVILEGES = "$[0].privileges[0].name";
+  public static final String INDEX_0_ROLE_ID = "$[0].role.id";
+  public static final String INDEX_0_ROLE_NAME = "$[0].role.name";
 }
