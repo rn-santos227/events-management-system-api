@@ -13,7 +13,14 @@ final class CliOptionParser {
     }
 
     for (String rawArg : args) {
+      if (rawArg == null || rawArg.isBlank()) {
+        continue;
+      }
 
+      String arg = rawArg.trim();
+      if (!arg.startsWith("--")) {
+        throw new IllegalArgumentException("Invalid argument: " + rawArg);
+      }
     }
 
     return values;
