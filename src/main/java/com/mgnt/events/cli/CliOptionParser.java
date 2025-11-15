@@ -6,4 +6,12 @@ import java.util.Objects;
 
 final class CliOptionParser {
   private CliOptionParser() {}
+
+  static Map<String, String> parse(String[] args) {
+    Map<String, String> values = new LinkedHashMap<>();
+    if (args == null) {
+      return values;
+    }
+
+  }
 }
