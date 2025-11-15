@@ -80,6 +80,7 @@ build/test-results/
 
 ### Environment / credentials ###
 .env
+.env.properties
 *.local
 application-local.yml
 application-local.properties
