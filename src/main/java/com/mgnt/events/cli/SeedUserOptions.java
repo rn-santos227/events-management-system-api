@@ -10,5 +10,7 @@ record SeedUserOptions(
   boolean active,
   boolean force
 ) {
-
+  static SeedUserOptions from(String[] args) {
+    
+  }
 }
