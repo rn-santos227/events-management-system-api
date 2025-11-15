@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mgnt.events.models.User;
+import com.mgnt.events.models.Role;
 import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.repositories.UserRepository;
 
@@ -35,5 +36,9 @@ public class UserSeeder {
       System.out.printf("User %s already exists. Use --force to update.%n", normalizedEmail);
       return;
     }
+
+    Role _role = _roleRepository
+      .findByNameIgnoreCase(options.role())
+      .orElseThrow(() -> new IllegalArgumentException("Role %s not found".formatted(options.role())));
   }
 }
