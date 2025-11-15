@@ -11,4 +11,8 @@ public final class SeedUserCommand {
       System.err.println(exception.getMessage());
     }
   }
+
+  private static void printUsage() {
+    System.out.println("Usage: ./gradlew seedUser -PseedEmail=<email> -PseedPassword=<password> [...]");
+  }
 }
