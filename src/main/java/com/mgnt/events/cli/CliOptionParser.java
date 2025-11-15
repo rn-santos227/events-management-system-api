@@ -28,6 +28,19 @@ final class CliOptionParser {
         throw new IllegalArgumentException("Invalid argument: " + rawArg);
       }
 
+      String key;
+      String value;
+      int equalsIndex = body.indexOf('=');
+      if (equalsIndex >= 0) {
+        key = body.substring(0, equalsIndex);
+        value = body.substring(equalsIndex + 1);
+      } else {
+        key = body;
+        value = "true";
+      }
+
+      key = normalizeKey(key);
+      values.put(key, value);
     }
 
     return values;
