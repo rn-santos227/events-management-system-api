@@ -26,22 +26,3 @@ FROM roles r
 CROSS JOIN privileges p
 WHERE r.name = 'ADMIN'
 ON CONFLICT DO NOTHING;
-
-INSERT INTO users (
-  email,
-  password,
-  first_name,
-  last_name,
-  contact_number,
-  role_id
-)
-
-VALUES (
-  'admin@events.com',
-  '$2y$12$E9K91gFKSle5AMfLlqDSwOU46iznKg764ah8BDcwGMI2RXuty.wUq',
-  'Admin',
-  'User',
-  '+10000000000',
-  (SELECT id FROM roles WHERE name = 'ADMIN')
-)
-ON CONFLICT (email) DO NOTHING;
