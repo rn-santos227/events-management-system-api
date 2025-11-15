@@ -40,5 +40,14 @@ public class UserSeeder {
     Role _role = _roleRepository
       .findByNameIgnoreCase(options.role())
       .orElseThrow(() -> new IllegalArgumentException("Role %s not found".formatted(options.role())));
+
+    User user = _existingUser.orElseGet(User::new);
+    user.setEmail(normalizedEmail);
+    user.setFirstName(options.firstName());
+    user.setLastName(options.lastName());
+    user.setContactNumber(options.contactNumber());
+    user.setRole(_role);
+    user.setActive(options.active());
+    user.setPassword(_passwordEncoder.encode(options.password()));
   }
 }
