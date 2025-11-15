@@ -2,7 +2,6 @@ package com.mgnt.events.cli;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 final class CliOptionParser {
   private CliOptionParser() {}
@@ -13,5 +12,10 @@ final class CliOptionParser {
       return values;
     }
 
+    for (String rawArg : args) {
+
+    }
+
+    return values;
   }
 }
