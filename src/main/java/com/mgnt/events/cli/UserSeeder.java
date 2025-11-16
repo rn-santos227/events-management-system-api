@@ -60,4 +60,8 @@ public class UserSeeder {
       System.out.printf("Created user %s with role %s.%n", normalizedEmail, _role.getName());
     }
   }
+
+  private Role initializeRole(String roleName) {
+
+  }
 }
