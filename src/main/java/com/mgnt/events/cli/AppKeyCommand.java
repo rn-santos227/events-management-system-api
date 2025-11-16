@@ -27,7 +27,9 @@ public final class AppKeyCommand {
 
     AppKeyManager _manager = new AppKeyManager(_envFile);
     try {
+      if (_manager.hasExistingKey() && !_force) {
 
+      }
     } catch (IOException exception) {
       System.err.printf("Failed to update %s: %s%n", _envFile, exception.getMessage());
       exception.printStackTrace(System.err);
