@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 final class AppKeyManager {
-  static final String _PROPERTY = "APP_KEY";
+  static final String _PROPERTY_NAME = "APP_KEY";
   private static final Base64.Encoder _ENCODER = Base64.getEncoder().withoutPadding();
   private static final SecureRandom _RANDOM = new SecureRandom();
 
@@ -34,12 +34,13 @@ final class AppKeyManager {
     }
 
     Properties properties = loadProperties();
-    String value = properties.getProperty(_PROPERTY);
+    String value = properties.getProperty(_PROPERTY_NAME);
     return value != null && !value.isBlank();
   }
 
   void writeKey(String key) throws IOException {
-
+    Properties properties = loadProperties();
+    properties.setProperty(_PROPERTY_NAME, Objects.requireNonNull(key, "Key must not be null"));
   }
 
   private Properties loadProperties() throws IOException {
