@@ -76,3 +76,27 @@ tasks.register('generateAppKey', JavaExec) {
   }
   args = cliArgs
 }
+
+tasks.register('seedUser', JavaExec) {
+  group = 'application'
+  description = 'Seeds or updates a user record using the Spring Boot context.'
+  mainClass = 'com.mgnt.events.cli.SeedUserCommand'
+  classpath = sourceSets.main.runtimeClasspath
+
+  args = [
+    "--email=${project.findProperty('seedEmail') ?: ''}",
+    "--password=${project.findProperty('seedPassword') ?: ''}",
+    "--first-name=${project.findProperty('seedFirstName') ?: 'Admin'}",
+    "--last-name=${project.findProperty('seedLastName') ?: 'User'}",
+    "--contact=${project.findProperty('seedContactNumber') ?: '+10000000000'}",
+    "--role=${project.findProperty('seedRole') ?: 'ADMIN'}"
+  ]
+
+  if ((project.findProperty('seedActive') ?: 'true').toBoolean())
+    args << "--active=true"
+
+  if ((project.findProperty('seedForce') ?: 'false').toBoolean())
+    args << "--force"
+
+  systemProperty 'spring.profiles.active', project.findProperty('seedProfile') ?: 'local'
+}
