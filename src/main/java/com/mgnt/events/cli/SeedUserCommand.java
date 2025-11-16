@@ -1,5 +1,6 @@
 package com.mgnt.events.cli;
 
+import org.springframework.beans.BeansException;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -24,6 +25,22 @@ public final class SeedUserCommand {
       .web(WebApplicationType.NONE)
       .logStartupInfo(false)
       .run();
+
+    int exitCode = 0;
+    try {
+      UserSeeder seeder = _context.getBean(UserSeeder.class);
+      seeder.seed(_options);
+    } catch (BeansException exception) {
+      exitCode = 1;
+      System.err.println("Failed to seed user: " + exception.getMessage());
+      exception.printStackTrace(System.err);
+    } finally {
+      _context.close();
+    }
+
+    if (exitCode != 0) {
+      System.exit(exitCode);
+    }
   }
 
   private static void printUsage() {

@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import com.mgnt.events.constants.Seeds;
 
-record SeedUserOptions(
+public record SeedUserOptions(
   String email,
   String password,
   String firstName,
