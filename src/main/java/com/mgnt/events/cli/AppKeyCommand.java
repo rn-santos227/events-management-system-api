@@ -29,7 +29,9 @@ public final class AppKeyCommand {
     try {
 
     } catch (IOException exception) {
-
+      System.err.printf("Failed to update %s: %s%n", _envFile, exception.getMessage());
+      exception.printStackTrace(System.err);
+      System.exit(1);
     }
   }
 
