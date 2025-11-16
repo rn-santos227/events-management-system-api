@@ -28,6 +28,12 @@ final class AppKeyManager {
     return "base64:" + _ENCODER.encodeToString(buffer);
   }
 
+  boolean hasExistingKey() throws IOException {
+    if (!Files.exists(_envFile)) {
+      return false;
+    }
+  }
+
   private Properties loadProperties() throws IOException {
     Properties _properties = new Properties();
     if (!Files.exists(_envFile)) {
