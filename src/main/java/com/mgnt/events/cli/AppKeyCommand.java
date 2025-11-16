@@ -28,7 +28,11 @@ public final class AppKeyCommand {
     AppKeyManager _manager = new AppKeyManager(_envFile);
     try {
       if (_manager.hasExistingKey() && !_force) {
-
+        System.out.printf(
+          "APP_KEY already exists in %s. Use --force to overwrite.%n",
+          _envFile.toAbsolutePath()
+        );
+        return;
       }
     } catch (IOException exception) {
       System.err.printf("Failed to update %s: %s%n", _envFile, exception.getMessage());
