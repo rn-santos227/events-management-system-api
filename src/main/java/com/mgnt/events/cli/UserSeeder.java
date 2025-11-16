@@ -71,6 +71,11 @@ public class UserSeeder {
     if (Seeds.ROLE_DEFAULT.equalsIgnoreCase(roleName)) {
       List<Privilege> privileges = _privilegeRepository.findAll();
       _role.setPrivileges(new LinkedHashSet<>(privileges));
+      System.out.printf(
+        "Role %s missing in database. Created it and granted %d privilege(s).%n",
+        roleName,
+        privileges.size()
+      );
     }
   }
 }
