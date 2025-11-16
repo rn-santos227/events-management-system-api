@@ -32,6 +32,10 @@ final class AppKeyManager {
     if (!Files.exists(_envFile)) {
       return false;
     }
+
+    Properties properties = loadProperties();
+    String value = properties.getProperty(_PROPERTY);
+    return value != null && !value.isBlank();
   }
 
   private Properties loadProperties() throws IOException {
