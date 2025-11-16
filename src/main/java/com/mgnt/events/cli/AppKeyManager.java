@@ -1,5 +1,6 @@
 package com.mgnt.events.cli;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -20,5 +21,11 @@ final class AppKeyManager {
     byte[] buffer = new byte[32];
     _RANDOM.nextBytes(buffer);
     return "base64:" + _ENCODER.encodeToString(buffer);
+  }
+
+  boolean hasExistingKey() throws IOException {
+   if (!Files.exists(envFile)) {
+      return false;
+    }
   }
 }
