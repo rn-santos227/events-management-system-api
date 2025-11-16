@@ -1,5 +1,6 @@
 package com.mgnt.events.cli;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
@@ -23,6 +24,13 @@ public final class AppKeyCommand {
 
     Path _envFile = Paths.get(_options.getOrDefault(Seeds.ENV_KEY, _DEFAULT_ENV_FILE));
     boolean _force = Boolean.parseBoolean(_options.getOrDefault(Seeds.FORCE_KEY, Seeds.FORCE_DEFAULT));
+
+    AppKeyManager _manager = new AppKeyManager(_envFile);
+    try {
+
+    } catch (IOException exception) {
+
+    }
   }
 
   private static void printUsage() {
