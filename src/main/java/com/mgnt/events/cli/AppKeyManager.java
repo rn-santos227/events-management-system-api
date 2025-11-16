@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Objects;
+import java.util.Properties;
 
 final class AppKeyManager {
   static final String _PROPERTY = "APP_KEY";
@@ -23,9 +24,7 @@ final class AppKeyManager {
     return "base64:" + _ENCODER.encodeToString(buffer);
   }
 
-  boolean hasExistingKey() throws IOException {
-   if (!Files.exists(envFile)) {
-      return false;
-    }
+  private Properties loadProperties() throws IOException {
+
   }
 }
