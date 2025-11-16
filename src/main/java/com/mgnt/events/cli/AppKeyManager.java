@@ -15,4 +15,10 @@ final class AppKeyManager {
   AppKeyManager(Path envFile) {
     this._envFile = Objects.requireNonNull(envFile, "Environment file path must not be null");
   }
+
+  String generateKey() {
+    byte[] buffer = new byte[32];
+    _RANDOM.nextBytes(buffer);
+    return "base64:" + _ENCODER.encodeToString(buffer);
+  }
 }
