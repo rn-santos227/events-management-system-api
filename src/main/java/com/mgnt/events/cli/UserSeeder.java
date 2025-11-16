@@ -1,5 +1,6 @@
 package com.mgnt.events.cli;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -69,6 +70,7 @@ public class UserSeeder {
 
     if (Seeds.ROLE_DEFAULT.equalsIgnoreCase(roleName)) {
       List<Privilege> privileges = _privilegeRepository.findAll();
+      _role.setPrivileges(new LinkedHashSet<>(privileges));
     }
   }
 }
