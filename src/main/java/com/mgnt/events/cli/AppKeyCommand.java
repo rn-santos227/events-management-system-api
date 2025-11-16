@@ -1,17 +1,18 @@
 package com.mgnt.events.cli;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Map;
+
+import com.mgnt.events.constants.Seeds;
 
 public final class AppKeyCommand {
   private static final String _DEFAULT_ENV_FILE = ".env.properties";
   
   private AppKeyCommand() {}
-
   public static void main(String[] args) {
-    Map<String, String> _options;
+    Map<String, String> _options = Collections.emptyMap();
     try {
       _options = CliOptionParser.parse(args);
     } catch (IllegalArgumentException exception) {
@@ -20,8 +21,8 @@ public final class AppKeyCommand {
       System.exit(1);
     }
 
-    Path _envFile = Paths.get(_options.getOrDefault("env-file", _DEFAULT_ENV_FILE));
-    boolean _force = Boolean.parseBoolean(_options.getOrDefault("force", "false"));
+    Path _envFile = Paths.get(_options.getOrDefault(Seeds.ENV_KEY, _DEFAULT_ENV_FILE));
+    boolean _force = Boolean.parseBoolean(_options.getOrDefault(Seeds.FORCE_KEY, Seeds.FORCE_DEFAULT));
   }
 
   private static void printUsage() {
