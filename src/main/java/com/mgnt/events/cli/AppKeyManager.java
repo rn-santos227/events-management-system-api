@@ -1,6 +1,9 @@
 package com.mgnt.events.cli;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.SecureRandom;
@@ -36,6 +39,9 @@ final class AppKeyManager {
       return _properties;
     }
 
+    try (InputStream inputStream = Files.newInputStream(_envFile)) {
+      _properties.load(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+    }
     return _properties;
   }
 }
