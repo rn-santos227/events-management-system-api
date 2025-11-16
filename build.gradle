@@ -49,12 +49,6 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks.named('bootRun') {
-  if (!System.getProperty('spring.profiles.active') && System.getenv('SPRING_PROFILES_ACTIVE') == null) {
-    systemProperty 'spring.profiles.active', 'local'
-  }
-}
-
 def requireProjectProperty = { String name ->
   def value = project.findProperty(name)?.toString()
   if (!value || value.trim().isEmpty()) {
