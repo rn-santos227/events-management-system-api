@@ -29,6 +29,9 @@ final class AppKeyManager {
     Properties _properties = new Properties();
     if (!Files.exists(_envFile)) {
       Path _parent = _envFile.getParent();
+      if (_parent != null) {
+        Files.createDirectories(_parent);
+      }
     }
 
     return _properties;
