@@ -62,3 +62,17 @@ def requireProjectProperty = { String name ->
   }
   value
 }
+
+tasks.register('generateAppKey', JavaExec) {
+  group = 'application'
+  description = 'Generates a secure APP_KEY entry in the selected environment file.'
+  mainClass = 'com.mgnt.events.cli.AppKeyCommand'
+  classpath = sourceSets.main.runtimeClasspath
+
+  def envFile = project.findProperty('appKeyEnvFile') ?: '.env.properties'
+  def cliArgs = ["--env-file=${envFile}".toString()]
+  if (project.findProperty('appKeyForce')?.toString()?.toBoolean()) {
+    cliArgs << '--force'
+  }
+  args = cliArgs
+}
