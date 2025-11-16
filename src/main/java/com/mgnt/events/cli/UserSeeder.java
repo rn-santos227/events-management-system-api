@@ -43,10 +43,9 @@ public class UserSeeder {
       System.out.printf("User %s already exists. Use --force to update.%n", normalizedEmail);
       return;
     }
-
     Role _role = _roleRepository
       .findByNameIgnoreCase(options.role())
-      .orElseThrow(() -> new IllegalArgumentException("Role %s not found".formatted(options.role())));
+      .orElseGet(() -> initializeRole(options.role()));
 
     User user = _existingUser.orElseGet(User::new);
     user.setEmail(normalizedEmail);
