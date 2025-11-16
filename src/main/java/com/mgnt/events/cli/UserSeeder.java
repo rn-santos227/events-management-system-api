@@ -1,5 +1,6 @@
 package com.mgnt.events.cli;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mgnt.events.models.User;
 import com.mgnt.events.constants.Seeds;
+import com.mgnt.events.models.Privilege;
 import com.mgnt.events.models.Role;
 import com.mgnt.events.repositories.PrivilegeRepository;
 import com.mgnt.events.repositories.RoleRepository;
@@ -66,7 +68,7 @@ public class UserSeeder {
     Role _role = new Role(roleName.toUpperCase());
 
     if (Seeds.ROLE_DEFAULT.equalsIgnoreCase(roleName)) {
-
+      List<Privilege> privileges = _privilegeRepository.findAll();
     }
   }
 }
