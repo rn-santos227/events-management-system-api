@@ -32,6 +32,8 @@ final class AppKeyManager {
       if (_parent != null) {
         Files.createDirectories(_parent);
       }
+      Files.createFile(_envFile);
+      return _properties;
     }
 
     return _properties;
