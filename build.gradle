@@ -54,3 +54,11 @@ tasks.named('bootRun') {
     systemProperty 'spring.profiles.active', 'local'
   }
 }
+
+def requireProjectProperty = { String name ->
+  def value = project.findProperty(name)?.toString()
+  if (!value || value.trim().isEmpty()) {
+    throw new GradleException("Missing required project property '${name}'. Pass it via -P${name}=<value>.")
+  }
+  value
+}
