@@ -38,6 +38,10 @@ final class AppKeyManager {
     return value != null && !value.isBlank();
   }
 
+  void writeKey(String key) throws IOException {
+
+  }
+
   private Properties loadProperties() throws IOException {
     Properties _properties = new Properties();
     if (!Files.exists(_envFile)) {
