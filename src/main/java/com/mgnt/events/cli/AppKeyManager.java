@@ -25,6 +25,8 @@ final class AppKeyManager {
   }
 
   private Properties loadProperties() throws IOException {
+    Properties _properties = new Properties();
 
+    return _properties;
   }
 }
