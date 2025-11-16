@@ -76,6 +76,10 @@ public class UserSeeder {
         roleName,
         privileges.size()
       );
+    } else {
+      System.out.printf("Role %s missing in database. Created it without privileges.%n", roleName);
     }
+
+    return _roleRepository.save(_role);
   }
 }
