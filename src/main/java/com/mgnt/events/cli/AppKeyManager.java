@@ -1,6 +1,7 @@
 package com.mgnt.events.cli;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -26,6 +27,9 @@ final class AppKeyManager {
 
   private Properties loadProperties() throws IOException {
     Properties _properties = new Properties();
+    if (!Files.exists(_envFile)) {
+      Path _parent = _envFile.getParent();
+    }
 
     return _properties;
   }
