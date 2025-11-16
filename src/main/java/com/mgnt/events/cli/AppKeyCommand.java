@@ -12,7 +12,10 @@ public final class AppKeyCommand {
     try {
       _options = CliOptionParser.parse(args);
     } catch (IllegalArgumentException exception) {
-      
+      System.err.println(exception.getMessage());
+      printUsage();
+      System.exit(1);
+      return;
     }
   }
 
