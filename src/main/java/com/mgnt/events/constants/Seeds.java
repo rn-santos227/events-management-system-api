@@ -1,6 +1,7 @@
 package com.mgnt.events.constants;
 
 public class Seeds {
+  public static final String ENV_KEY = "env-file";
   public static final String EMAIL_KEY = "email";
   public static final String PASSWORD_KEY = "password";
   public static final String FIRST_NAME_KEY = "first-name";

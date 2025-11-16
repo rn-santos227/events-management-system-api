@@ -34,6 +34,13 @@ public final class AppKeyCommand {
         );
         return;
       }
+
+      String _key = _manager.generateKey();
+      _manager.writeKey(_key);
+      System.out.printf(
+        "Generated a new APP_KEY and saved it to %s.%n",
+        _envFile.toAbsolutePath()
+      );
     } catch (IOException exception) {
       System.err.printf("Failed to update %s: %s%n", _envFile, exception.getMessage());
       exception.printStackTrace(System.err);
