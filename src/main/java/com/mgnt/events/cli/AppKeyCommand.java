@@ -1,5 +1,8 @@
 package com.mgnt.events.cli;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 public final class AppKeyCommand {
@@ -15,8 +18,10 @@ public final class AppKeyCommand {
       System.err.println(exception.getMessage());
       printUsage();
       System.exit(1);
-      return;
     }
+
+    Path _envFile = Paths.get(_options.getOrDefault("env-file", _DEFAULT_ENV_FILE));
+    boolean _force = Boolean.parseBoolean(_options.getOrDefault("force", "false"));
   }
 
   private static void printUsage() {
