@@ -50,7 +50,9 @@ tasks.named('test') {
 }
 
 tasks.named('bootRun') {
-  // no automatic profile
+  if (!System.getProperty('spring.profiles.active') && System.getenv('SPRING_PROFILES_ACTIVE') == null) {
+    systemProperty 'spring.profiles.active', 'local'
+  }
 }
 
 def requireProjectProperty = { String name ->
