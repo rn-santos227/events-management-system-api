@@ -9,6 +9,11 @@ public final class AppKeyCommand {
 
   public static void main(String[] args) {
     Map<String, String> _options;
+    try {
+      _options = CliOptionParser.parse(args);
+    } catch (IllegalArgumentException exception) {
+      
+    }
   }
 
   private static void printUsage() {
