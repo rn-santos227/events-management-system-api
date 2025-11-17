@@ -69,6 +69,10 @@ public class AuthenticationService {
    UserToken _userToken = _tokenRepository
       .findByToken(_token)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired token"));
+
+    _userToken.setExpired(true);
+    _userToken.setRevoked(true);
+    _tokenRepository.save(_userToken);
   }
 
   private Authentication authenticateUser(String email, String password) {
