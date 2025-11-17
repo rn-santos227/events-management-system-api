@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import com.mgnt.events.models.UserToken;
 import com.mgnt.events.repositories.UserTokenRepository;
 import com.mgnt.events.requests.auth.LoginRequest;
 import com.mgnt.events.responses.auth.LoginResponse;
+import com.mgnt.events.util.RequestValidators;
 
 @Service
 public class AuthenticationService {
@@ -47,6 +50,11 @@ public class AuthenticationService {
 
     long expiresAt = expiration != null ? expiration.toEpochMilli() : 0L;
     return new LoginResponse(token, "Bearer", expiresAt);
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  public void logout(String authorizationHeader) {
+    String _header = RequestValidators.requireNonNull(authorizationHeader, HttpHeaders.AUTHORIZATION);
   }
 
   private Authentication authenticateUser(String email, String password) {
