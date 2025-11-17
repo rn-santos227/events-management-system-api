@@ -1,8 +1,12 @@
 package com.mgnt.events.controllers;
 
+import java.util.Map;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,4 +30,12 @@ public class AuthenticationController {
   public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
     return ResponseEntity.ok(_authenticationService.authenticate(request));
   }
+
+  @PostMapping(Routes.LOGOUT)
+  public ResponseEntity<Map<String, String>> logout(
+    @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader
+  ) {
+    
+  }
 }
+ 
