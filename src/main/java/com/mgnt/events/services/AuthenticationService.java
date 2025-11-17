@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.enums.TokenType;
 import com.mgnt.events.models.User;
 import com.mgnt.events.models.UserToken;
@@ -58,6 +59,11 @@ public class AuthenticationService {
     String _header = RequestValidators.requireNonNull(authorizationHeader, HttpHeaders.AUTHORIZATION);
     if (!_header.startsWith("Bearer ")) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authorization header must contain a Bearer token");
+    }
+
+    String _token = _header.substring(Defaults.DEFAULT_JWT_SUBSTRING);
+    if (RequestValidators.isBlank(_token)) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authorization token must not be blank");
     }
   }
 
