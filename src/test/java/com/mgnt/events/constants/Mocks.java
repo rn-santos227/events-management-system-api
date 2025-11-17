@@ -8,12 +8,14 @@ public final class Mocks {
     public static final String PASSWORD = "password123";
     public static final String TOKEN_VALUE = "token-value";
     public static final String TOKEN_TYPE = "Bearer";
+    public static final String AUTHORIZATION_HEADER = TOKEN_TYPE + " " + TOKEN_VALUE;
 
     private Auth() {}
   }
 
   public static final class Messages {
     public static final String TEST = "this is a test";
+    public static final String LOGOUT_SUCCESS = "Successfully logged out";
 
     private Messages() {}
   }
