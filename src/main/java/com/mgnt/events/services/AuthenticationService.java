@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.enums.TokenType;
 import com.mgnt.events.models.User;
@@ -55,6 +56,9 @@ public class AuthenticationService {
   @Transactional(rollbackFor = Throwable.class)
   public void logout(String authorizationHeader) {
     String _header = RequestValidators.requireNonNull(authorizationHeader, HttpHeaders.AUTHORIZATION);
+    if (!_header.startsWith("Bearer ")) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authorization header must contain a Bearer token");
+    }
   }
 
   private Authentication authenticateUser(String email, String password) {
