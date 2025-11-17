@@ -88,6 +88,12 @@ public class AuthenticationControllerTest {
 
   @Test
   void logout_ShouldRevokeToken() throws Exception {
-    
+    _mockMvc
+      .perform(
+        post(Routes.AUTH_LOGOUT)
+          .header(HttpHeaders.AUTHORIZATION, Mocks.Auth.AUTHORIZATION_HEADER)
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath(JsonPaths.MESSAGE).value(Mocks.Messages.LOGOUT_SUCCESS));
   }
 }
