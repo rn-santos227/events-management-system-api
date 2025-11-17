@@ -35,7 +35,8 @@ public class AuthenticationController {
   public ResponseEntity<Map<String, String>> logout(
     @RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader
   ) {
-    
+    _authenticationService.logout(authorizationHeader);
+    return ResponseEntity.ok(Map.of("message", "Successfully logged out"));
   }
 }
  
