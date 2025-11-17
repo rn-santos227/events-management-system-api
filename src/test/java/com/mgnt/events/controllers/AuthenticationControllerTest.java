@@ -95,5 +95,6 @@ public class AuthenticationControllerTest {
       )
       .andExpect(status().isOk())
       .andExpect(jsonPath(JsonPaths.MESSAGE).value(Mocks.Messages.LOGOUT_SUCCESS));
+    verify(_authenticationService).logout(Mocks.Auth.AUTHORIZATION_HEADER);
   }
 }
