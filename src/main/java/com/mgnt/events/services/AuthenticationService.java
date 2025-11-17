@@ -65,6 +65,10 @@ public class AuthenticationService {
     if (RequestValidators.isBlank(_token)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Authorization token must not be blank");
     }
+
+   UserToken _userToken = _tokenRepository
+      .findByToken(_token)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid or expired token"));
   }
 
   private Authentication authenticateUser(String email, String password) {
