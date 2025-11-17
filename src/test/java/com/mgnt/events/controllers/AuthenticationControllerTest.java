@@ -15,6 +15,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
@@ -83,5 +84,10 @@ public class AuthenticationControllerTest {
     LoginRequest captured = requestCaptor.getValue();
     assertThat(captured.getEmail()).isEqualTo(Mocks.Auth.EMAIL);
     assertThat(captured.getPassword()).isEqualTo(Mocks.Auth.PASSWORD);
+  }
+
+  @Test
+  void logout_ShouldRevokeToken() throws Exception {
+    
   }
 }
