@@ -5,6 +5,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.mgnt.events.constants.Queries;
+import com.mgnt.events.models.AuditLog;
 import com.mgnt.events.repositories.AuditLogRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +21,9 @@ public class AuditLogService {
   }
 
   public void record(String action, HttpServletRequest request, int statusCode, String message) {
-
+    AuditLog auditLog = new AuditLog();
+    auditLog.setAction(action);
+    auditLog.setMethod(request.getMethod());
+    auditLog.setPath(request.getRequestURI());
   }
 }
