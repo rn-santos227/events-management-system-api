@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.repositories.AuditLogRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Service
 public class AuditLogService {
   @NonNull
@@ -15,5 +17,9 @@ public class AuditLogService {
 
   public AuditLogService(AuditLogRepository auditLogRepository) {
     this._auditLogRepository = auditLogRepository;
+  }
+
+  public void record(String action, HttpServletRequest request, int statusCode, String message) {
+
   }
 }
