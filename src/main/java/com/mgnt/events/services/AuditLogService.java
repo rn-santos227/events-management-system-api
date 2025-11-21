@@ -13,6 +13,7 @@ import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.AuditLog;
 import com.mgnt.events.models.User;
 import com.mgnt.events.repositories.AuditLogRepository;
+import com.mgnt.events.responses.audit.AuditLogResponse;
 
 @Service
 public class AuditLogService {
@@ -49,6 +50,10 @@ public class AuditLogService {
     }
 
     return null;
+  }
+
+  private AuditLogResponse toResponse(AuditLog auditLog) {
+
   }
 
   private User requireUser() {
