@@ -2,6 +2,8 @@ package com.mgnt.events.services;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.mgnt.events.constants.Queries;
@@ -29,6 +31,9 @@ public class AuditLogService {
   }
 
   private User resolveUser() {
-    
+   Authentication _authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (_authentication == null) {
+      return null;
+    }
   }
 }
