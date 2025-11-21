@@ -66,3 +66,18 @@ CREATE TABLE stored_files (
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   deleted_at TIMESTAMP
 );
+
+CREATE TABLE audit_logs (
+  id BIGSERIAL PRIMARY KEY,
+  user_id BIGINT,
+  action VARCHAR(255) NOT NULL,
+  method VARCHAR(20) NOT NULL,
+  path TEXT NOT NULL,
+  status_code INTEGER NOT NULL,
+  ip_address VARCHAR(45),
+  message TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  deleted_at TIMESTAMP,
+  CONSTRAINT fk_audit_logs_user FOREIGN KEY (user_id) REFERENCES users (id)
+);
