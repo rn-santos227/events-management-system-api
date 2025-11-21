@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.AuditLog;
+import com.mgnt.events.models.User;
 import com.mgnt.events.repositories.AuditLogRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,5 +26,9 @@ public class AuditLogService {
     auditLog.setAction(action);
     auditLog.setMethod(request.getMethod());
     auditLog.setPath(request.getRequestURI());
+  }
+
+  private User resolveUser() {
+    
   }
 }
