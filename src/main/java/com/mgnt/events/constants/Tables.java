@@ -2,6 +2,7 @@ package com.mgnt.events.constants;
 
 public class Tables {
   private Tables() {}
+  public static final String AUDIT_LOGS = "audit_logs";
   public static final String PRIVILEGES = "privileges";
   public static final String ROLES = "roles";
   public static final String ROLES_PRIVILEGES = "roles_privileges";
