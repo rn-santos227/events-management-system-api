@@ -1,6 +1,5 @@
 package com.mgnt.events.responses.audit;
 
-
 import java.time.LocalDateTime;
 
 public record AuditLogResponse(
