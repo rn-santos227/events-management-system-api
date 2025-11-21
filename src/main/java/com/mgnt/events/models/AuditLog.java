@@ -1,5 +1,6 @@
 package com.mgnt.events.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.constants.Tables;
 
 @Entity
@@ -26,4 +28,10 @@ public class AuditLog {
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = Attributes.USER_ID)
   private User user;
+
+  @Column(nullable = false, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
+  private String action;
+
+  @Column(nullable = false, length = Defaults.DEFAULT_METHOD_LENGTH)
+  private String method;
 }
