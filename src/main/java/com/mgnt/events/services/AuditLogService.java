@@ -86,6 +86,17 @@ public class AuditLogService {
     );
   }
 
+  private List<AuditLog> applyUserLimit(Long userId, @Nullable Integer limit) {
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    if (sanitizedLimit == null) {
+      return _auditLogRepository.findAllByUserId(userId, DEFAULT_SORT);
+    }
+
+    return _auditLogRepository
+      .findAllByUserId(userId, PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .getContent();
+  }
+
   private User resolveUser() {
    Authentication _authentication = SecurityContextHolder.getContext().getAuthentication();
     if (_authentication == null) {
