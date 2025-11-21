@@ -19,6 +19,7 @@ public class Routes {
   public static final String PRIVILEGES = BASE_PATH + "/privileges";
   public static final String ROLES = BASE_PATH + "/roles";
   public static final String USERS = BASE_PATH + "/users";
+  public static final String AUDIT_LOGS = BASE_PATH + "/audit-logs";
 
   public static final String APPEND_ID = "/{id}";
   public static final String DOWNLOAD = APPEND_ID + "/download";

@@ -15,7 +15,9 @@ VALUES
   ('Read File', 'files:read', 'files'),
   ('Download File', 'files:download', 'files'),
   ('Upload File', 'files:upload', 'files'),
-  ('Delete File', 'files:delete', 'files')
+  ('Delete File', 'files:delete', 'files'),
+  ('Read Audit Logs', 'audit_logs:read', 'audit_logs'),
+  ('Read Own Audit Logs', 'audit_logs:read:own', 'audit_logs')
 ON CONFLICT (action) DO NOTHING;
 
 INSERT INTO roles (name) VALUES ('ADMIN') ON CONFLICT (name) DO NOTHING;
