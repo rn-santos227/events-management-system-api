@@ -43,4 +43,8 @@ public class AuditLogService {
 
     return null;
   }
+
+  private User requireUser() {
+
+  }
 }
