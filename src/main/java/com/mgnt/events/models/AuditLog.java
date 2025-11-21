@@ -37,4 +37,7 @@ public class AuditLog {
 
   @Column(nullable = false)
   private String path;
+
+  @Column(name = Attributes.STATUS_CODE, nullable = false)
+  private int statusCode;
 }
