@@ -21,7 +21,7 @@ import com.mgnt.events.constants.Tables;
 @Table(name = Tables.AUDIT_LOGS)
 @Getter
 @Setter
-public class AuditLog {
+public class AuditLog extends AuditableEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

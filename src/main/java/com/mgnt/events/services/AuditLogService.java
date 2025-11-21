@@ -15,6 +15,7 @@ import com.mgnt.events.models.AuditLog;
 import com.mgnt.events.models.User;
 import com.mgnt.events.repositories.AuditLogRepository;
 import com.mgnt.events.responses.audit.AuditLogResponse;
+import com.mgnt.events.responses.audit.AuditLogUserResponse;
 
 @Service
 public class AuditLogService {
@@ -56,6 +57,26 @@ public class AuditLogService {
   private AuditLogResponse toResponse(AuditLog auditLog) {
     Objects.requireNonNull(auditLog, "Audit log must not be null");
     User user = auditLog.getUser();
+    AuditLogUserResponse userResponse =
+      user == null
+        ? null
+        : new AuditLogUserResponse(
+          Objects.requireNonNull(user.getId(), "User identifier must not be null"),
+          user.getEmail(),
+          user.getFullName()
+        );
+
+    return new AuditLogResponse(
+      Objects.requireNonNull(auditLog.getId(), "Audit log identifier must not be null"),
+      auditLog.getAction(),
+      auditLog.getMethod(),
+      auditLog.getPath(),
+      auditLog.getStatusCode(),
+      auditLog.getIpAddress(),
+      auditLog.getMessage(),
+      userResponse,
+      auditLog.getCreatedAt()
+    );
   }
 
   private User requireUser() {
