@@ -14,6 +14,7 @@ import lombok.Setter;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Defaults;
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
 
 @Entity
@@ -40,4 +41,10 @@ public class AuditLog {
 
   @Column(name = Attributes.STATUS_CODE, nullable = false)
   private int statusCode;
+
+  @Column(name = Attributes.IP_ADDRESS, length = Defaults.DEFAULT_IP_LENGTH)
+  private String ipAddress;
+
+  @Column(name = Attributes.MESSAGE, columnDefinition = Queries.TEXT)
+  private String message;
 }
