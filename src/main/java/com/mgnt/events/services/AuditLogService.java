@@ -66,6 +66,15 @@ public class AuditLogService {
     return applyUserLimit(userId, limit).stream().map(this::toResponse).toList();
   }
 
+  @Transactional(readOnly = true)
+  public List<AuditLogResponse> findForAuthenticatedUser(@Nullable Integer limit) {
+    User user = requireUser();
+    return applyUserLimit(Objects.requireNonNull(user.getId(), "User identifier must not be null"), limit)
+      .stream()
+      .map(this::toResponse)
+      .toList();
+  }
+
   private AuditLogResponse toResponse(AuditLog auditLog) {
     Objects.requireNonNull(auditLog, "Audit log must not be null");
     User user = auditLog.getUser();
