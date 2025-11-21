@@ -61,6 +61,11 @@ public class AuditLogService {
       .toList();
   }
 
+  @Transactional(readOnly = true)
+  public List<AuditLogResponse> findByUserId(@NonNull Long userId, @Nullable Integer limit) {
+    return applyUserLimit(userId, limit).stream().map(this::toResponse).toList();
+  }
+
   private AuditLogResponse toResponse(AuditLog auditLog) {
     Objects.requireNonNull(auditLog, "Audit log must not be null");
     User user = auditLog.getUser();
