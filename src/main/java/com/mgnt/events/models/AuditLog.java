@@ -34,4 +34,7 @@ public class AuditLog {
 
   @Column(nullable = false, length = Defaults.DEFAULT_METHOD_LENGTH)
   private String method;
+
+  @Column(nullable = false)
+  private String path;
 }
