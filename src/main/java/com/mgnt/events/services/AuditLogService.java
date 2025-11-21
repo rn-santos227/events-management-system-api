@@ -1,6 +1,7 @@
 package com.mgnt.events.services;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Objects;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -53,7 +54,8 @@ public class AuditLogService {
   }
 
   private AuditLogResponse toResponse(AuditLog auditLog) {
-
+    Objects.requireNonNull(auditLog, "Audit log must not be null");
+    User user = auditLog.getUser();
   }
 
   private User requireUser() {
