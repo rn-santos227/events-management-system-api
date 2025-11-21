@@ -1,13 +1,19 @@
 package com.mgnt.events.services;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
 import java.util.Objects;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Queries;
@@ -16,6 +22,7 @@ import com.mgnt.events.models.User;
 import com.mgnt.events.repositories.AuditLogRepository;
 import com.mgnt.events.responses.audit.AuditLogResponse;
 import com.mgnt.events.responses.audit.AuditLogUserResponse;
+import com.mgnt.events.util.RequestValidators;
 
 @Service
 public class AuditLogService {
@@ -40,18 +47,18 @@ public class AuditLogService {
     _auditLogRepository.save(auditLog);
   }
 
-  private User resolveUser() {
-   Authentication _authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (_authentication == null) {
-      return null;
+  @Transactional(readOnly = true)
+  public List<AuditLogResponse> findAll(@Nullable Integer limit) {
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    if (sanitizedLimit == null) {
+      return _auditLogRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
 
-    Object principal = _authentication.getPrincipal();
-    if (principal instanceof User user) {
-      return user;
-    }
-
-    return null;
+    return _auditLogRepository
+      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .stream()
+      .map(this::toResponse)
+      .toList();
   }
 
   private AuditLogResponse toResponse(AuditLog auditLog) {
@@ -77,6 +84,20 @@ public class AuditLogService {
       userResponse,
       auditLog.getCreatedAt()
     );
+  }
+
+  private User resolveUser() {
+   Authentication _authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (_authentication == null) {
+      return null;
+    }
+
+    Object principal = _authentication.getPrincipal();
+    if (principal instanceof User user) {
+      return user;
+    }
+
+    return null;
   }
 
   private User requireUser() {
