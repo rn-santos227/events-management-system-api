@@ -35,5 +35,12 @@ public class AuditLogService {
     if (_authentication == null) {
       return null;
     }
+
+    Object principal = _authentication.getPrincipal();
+    if (principal instanceof User user) {
+      return user;
+    }
+
+    return null;
   }
 }
