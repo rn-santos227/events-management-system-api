@@ -29,6 +29,12 @@ public class AuditLogService {
     auditLog.setAction(action);
     auditLog.setMethod(request.getMethod());
     auditLog.setPath(request.getRequestURI());
+    auditLog.setStatusCode(statusCode);
+    auditLog.setIpAddress(request.getRemoteAddr());
+    auditLog.setMessage(message);
+    auditLog.setUser(resolveUser());
+
+    _auditLogRepository.save(auditLog);
   }
 
   private User resolveUser() {
