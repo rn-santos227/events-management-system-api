@@ -31,6 +31,9 @@ public class AuditLogController {
     return _auditLogService.findAll(sanitizedLimit);
   }
 
+  private boolean hasAuthority(Authentication authentication, String authority) {
+
+  }
 
   private Long extractUserId(Authentication authentication) {
     if (authentication == null || authentication.getPrincipal() == null) {
