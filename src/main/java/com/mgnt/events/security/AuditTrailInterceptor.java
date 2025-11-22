@@ -30,6 +30,6 @@ public class AuditTrailInterceptor implements  HandlerInterceptor {
   }
 
   private String resolveAction(Object handler, HttpServletRequest request) {
-
+    return _urlPathHelper.getLookupPathForRequest(request);
   }
 }
