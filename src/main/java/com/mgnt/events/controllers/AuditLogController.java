@@ -1,6 +1,7 @@
 package com.mgnt.events.controllers;
 
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.PrivilegeActions;
 import com.mgnt.events.constants.Queries;
@@ -44,6 +46,10 @@ public class AuditLogController {
     Authentication authentication = getAuthentication();
     if (hasAuthority(authentication, PrivilegeActions.AUDIT_LOGS_READ)) {
       return _auditLogService.findByUserId(id, sanitizedLimit);
+    }
+
+    if (authentication == null || authentication.getPrincipal() == null) {
+      throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication is required");
     }
   }
 
