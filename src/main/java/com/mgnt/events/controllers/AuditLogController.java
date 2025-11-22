@@ -1,6 +1,7 @@
 package com.mgnt.events.controllers;
 
 import java.util.List;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,5 +29,10 @@ public class AuditLogController {
   public List<AuditLogResponse> findAll(@RequestParam(name = Queries.LIMIT, required = false) Integer limit) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
     return _auditLogService.findAll(sanitizedLimit);
+  }
+
+
+  private Long extractUserId(Authentication authentication) {
+
   }
 }
