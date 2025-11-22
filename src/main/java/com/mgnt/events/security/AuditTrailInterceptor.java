@@ -3,6 +3,7 @@ package com.mgnt.events.security;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,9 +25,11 @@ public class AuditTrailInterceptor implements  HandlerInterceptor {
     @NonNull HttpServletRequest request,
     @NonNull HttpServletResponse response,
     @NonNull Object handler,
-    Exception ex
+    @Nullable Exception ex
   ) throws Exception {
-
+    String action = resolveAction(handler, request);
+    String message = ex != null ? ex.getMessage() : "OK";
+    _auditLogService.record(action, request, response.getStatus(), message);
   }
 
   private String resolveAction(Object handler, @NonNull HttpServletRequest request) {
