@@ -93,8 +93,11 @@ public class RoleControllerTest {
 
   @Test
   void create_ShouldForwardRequestToService() throws Exception {
-    RoleRequest request = new RoleRequest(Mocks.Roles.NAME_ADMIN, Set.of(1L, 2L));
-    RoleResponse response = new RoleResponse(1L, Mocks.Roles.NAME_ADMIN, Set.of(), LocalDateTime.now(), LocalDateTime.now());
+    UUID privilegeOne = UUID.fromString(Mocks.Roles.PRIVILEGE_MANAGE_USERS_ID);
+    UUID privilegeTwo = UUID.fromString(Mocks.Roles.PRIVILEGE_READ_USERS_ID);
+    RoleRequest request = new RoleRequest(Mocks.Roles.NAME_ADMIN, Set.of(privilegeOne, privilegeTwo));
+    UUID roleId = UUID.fromString(Mocks.Roles.ID_ADMIN);
+    RoleResponse response = new RoleResponse(roleId, Mocks.Roles.NAME_ADMIN, Set.of(), LocalDateTime.now(), LocalDateTime.now());
     when(_roleService.create(any(RoleRequest.class))).thenReturn(response);
 
     _mockMvc
@@ -108,14 +111,14 @@ public class RoleControllerTest {
         )
       )
       .andExpect(status().isCreated())
-      .andExpect(jsonPath(JsonPaths.ID).value(1))
+      .andExpect(jsonPath(JsonPaths.ID).value(roleId.toString()))
       .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Roles.NAME_ADMIN));
 
     ArgumentCaptor<RoleRequest> captor = ArgumentCaptor.forClass(RoleRequest.class);
     verify(_roleService, times(1)).create(captor.capture());
     RoleRequest captured = captor.getValue();
     assertThat(captured.name()).isEqualTo(Mocks.Roles.NAME_ADMIN);
-    assertThat(captured.privilegeIds()).containsExactlyInAnyOrder(1L, 2L);
+    assertThat(captured.privilegeIds()).containsExactlyInAnyOrder(privilegeOne, privilegeTwo);
   }
 
   @Test
