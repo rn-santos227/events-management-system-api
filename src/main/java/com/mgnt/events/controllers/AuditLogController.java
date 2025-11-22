@@ -32,7 +32,10 @@ public class AuditLogController {
   }
 
   private boolean hasAuthority(Authentication authentication, String authority) {
-
+    return authentication != null && authentication
+      .getAuthorities()
+      .stream()
+      .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority));
   }
 
   private Long extractUserId(Authentication authentication) {
