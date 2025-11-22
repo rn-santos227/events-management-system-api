@@ -51,6 +51,8 @@ public class AuditLogController {
     if (authentication == null || authentication.getPrincipal() == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication is required");
     }
+
+    Long authenticatedUserId = extractUserId(authentication);
   }
 
   private Authentication getAuthentication() {
