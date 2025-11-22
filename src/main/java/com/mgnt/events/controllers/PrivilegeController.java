@@ -2,6 +2,7 @@ package com.mgnt.events.controllers;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,7 +39,7 @@ public class PrivilegeController {
   }
 
   @GetMapping(Routes.APPEND_ID)
-  public PrivilegeResponse findById(@PathVariable @NonNull Long id) {
+  public PrivilegeResponse findById(@PathVariable @NonNull UUID id) {
     return _privilegeService.findById(id);
   }
 
@@ -50,7 +51,7 @@ public class PrivilegeController {
 
   @PutMapping(Routes.APPEND_ID)
   public PrivilegeResponse update(
-    @PathVariable @NonNull Long id,
+    @PathVariable @NonNull UUID id,
     @Valid @RequestBody PrivilegeRequest request
   ) {
     return _privilegeService.update(id, request);
@@ -58,7 +59,7 @@ public class PrivilegeController {
 
   @DeleteMapping(Routes.APPEND_ID)
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable @NonNull Long id) {
+  public void delete(@PathVariable @NonNull UUID id) {
     _privilegeService.delete(id);
   }
 }
