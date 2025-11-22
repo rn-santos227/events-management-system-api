@@ -141,7 +141,8 @@ public class UserControllerTest {
 
   @Test
   void delete_ShouldReturnNoContent() throws Exception {
-    _mockMvc.perform(delete(Routes.USERS + Routes.APPEND_ID, 11L)).andExpect(status().isNoContent());
-    verify(_userService).delete(eq(11L));
+    UUID userId = UUID.fromString(Mocks.Users.ID_JANE);
+    _mockMvc.perform(delete(Routes.USERS + Routes.APPEND_ID, userId)).andExpect(status().isNoContent());
+    verify(_userService).delete(RequestValidators.requireNonNull(eq(userId), "User ID"));
   }
 }
