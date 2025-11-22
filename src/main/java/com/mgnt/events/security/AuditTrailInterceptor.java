@@ -12,7 +12,8 @@ import com.mgnt.events.services.AuditLogService;
 
 @Component
 public class AuditTrailInterceptor extends HandlerInterceptor {
-
+  private final AuditLogService _auditLogService;
+  private final UrlPathHelper _urlPathHelper = new UrlPathHelper();
 
   @Override
   public void afterCompletion(
