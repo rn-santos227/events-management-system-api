@@ -1,7 +1,7 @@
 package com.mgnt.events.controllers;
 
 import java.util.List;
-
+import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,7 +41,7 @@ public class UserController {
   }
 
   @GetMapping(Routes.APPEND_ID)
-  public UserResponse findById(@PathVariable @NonNull Long id) {
+  public UserResponse findById(@PathVariable @NonNull UUID id) {
     return _userService.findById(id);
   }
 
@@ -53,7 +53,7 @@ public class UserController {
 
   @PutMapping(Routes.APPEND_ID)
   public UserResponse update(
-    @PathVariable @NonNull Long id, 
+    @PathVariable @NonNull UUID id,
     @Valid @RequestBody UserUpdateRequest request
   ) {
     return _userService.update(id, request);
@@ -61,7 +61,7 @@ public class UserController {
 
   @DeleteMapping(Routes.APPEND_ID)
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable @NonNull Long id) {
+  public void delete(@PathVariable @NonNull UUID id) {
     _userService.delete(id);
   }
 }
