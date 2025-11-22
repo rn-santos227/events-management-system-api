@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -23,10 +24,9 @@ import com.mgnt.events.constants.Tables;
 @Getter
 @Setter
 public class StoredFile extends AuditableEntity {
-
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
   @Column(name = Attributes.FILE_NAME, nullable = false, length = Defaults.DEFAULT_FILE_NAME_LENGTH)
   private String fileName;

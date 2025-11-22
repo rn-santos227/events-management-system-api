@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,8 +26,8 @@ import com.mgnt.events.enums.TokenType;
 @Getter
 public class UserToken {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+ @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
   @Setter
   @Column(nullable = false, unique = false, length = Defaults.DEFAULT_TOKEN_LENGTH)

@@ -14,6 +14,7 @@ import jakarta.persistence.PreRemove;
 import jakarta.persistence.Table;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -30,8 +31,8 @@ import com.mgnt.events.constants.Tables;
 @Getter
 public class Role extends AuditableEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
   @Setter
   @Column(unique = true, nullable = false)
