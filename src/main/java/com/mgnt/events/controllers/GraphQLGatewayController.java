@@ -1,8 +1,10 @@
 package com.mgnt.events.controllers;
 
 import java.util.List;
+import java.util.UUID;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 
 import com.mgnt.events.constants.Queries;
@@ -42,7 +44,7 @@ public class GraphQLGatewayController {
   }
 
   @QueryMapping
-  public UserResponse user(@Argument long id) {
+  public UserResponse user(@Argument @NonNull UUID id) {
     return _userService.findById(id);
   }
 
@@ -53,7 +55,7 @@ public class GraphQLGatewayController {
   }
 
   @QueryMapping
-  public RoleResponse role(@Argument long id) {
+  public RoleResponse role(@Argument UUID id) {
     return _roleService.findById(id);
   }
 
@@ -64,7 +66,7 @@ public class GraphQLGatewayController {
   }
 
   @QueryMapping
-  public PrivilegeResponse privilege(@Argument long id) {
+  public PrivilegeResponse privilege(@Argument @NonNull UUID id) {
     return _privilegeService.findById(id);
   }
 
