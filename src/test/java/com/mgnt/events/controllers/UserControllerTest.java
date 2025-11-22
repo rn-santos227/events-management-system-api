@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,14 +65,16 @@ public class UserControllerTest {
 
   @Test
   void findAll_ShouldReturnUsers() throws Exception {
+    UUID userId = UUID.fromString(Mocks.Users.ID_JANE);
+    UUID roleId = UUID.fromString(Mocks.Roles.ID_ADMIN);
     UserResponse _response = new UserResponse(
-      42L,
+      userId,
       Mocks.Users.EMAIL_JANE,
       Mocks.Users.FIRST_NAME_JANE,
       Mocks.Users.LAST_NAME_JANE,
       Mocks.Users.PHONE_PRIMARY,
       true,
-      new RoleSummary(5L, Mocks.Roles.ROLE_NAME_MANAGER),
+      new RoleSummary(roleId, Mocks.Roles.ROLE_NAME_MANAGER),
       LocalDateTime.now(),
       LocalDateTime.now(),
       null
@@ -80,9 +83,9 @@ public class UserControllerTest {
     _mockMvc
       .perform(get(Routes.USERS).param(Queries.LIMIT, Mocks.Users.PAGINATION))
       .andExpect(status().isOk())
-      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(42))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(userId.toString()))
       .andExpect(jsonPath(JsonPaths.INDEX_0_EMAIL).value(Mocks.Users.EMAIL_JANE))
-      .andExpect(jsonPath(JsonPaths.INDEX_0_ROLE_ID).value(5))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ROLE_ID).value(roleId.toString()))
       .andExpect(jsonPath(JsonPaths.INDEX_0_ROLE_NAME).value(Mocks.Roles.ROLE_NAME_MANAGER));
   }
 
