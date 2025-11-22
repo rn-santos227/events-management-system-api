@@ -2,6 +2,7 @@ package com.mgnt.events.services;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -58,7 +59,7 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
-  public UserResponse findById(@NonNull Long id) {
+  public UserResponse findById(@NonNull UUID id) {
     return toResponse(getUser(id));
   }
 
@@ -69,7 +70,7 @@ public class UserService {
       throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
     }
 
-    Long roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
+    UUID roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
     Role role = getRole(roleId);
     User user = new User(
       normalizedEmail,
@@ -88,7 +89,7 @@ public class UserService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
-  public UserResponse update(@NonNull Long id, UserUpdateRequest request) {
+  public UserResponse update(@NonNull UUID id, UserUpdateRequest request) {
     User user = getUser(id);
 
     if (_userRepository.existsByEmailAndIdNot(request.email(), id)) {
@@ -100,7 +101,7 @@ public class UserService {
     user.setLastName(request.lastName());
     user.setContactNumber(request.contactNumber());
 
-    Long roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
+    UUID roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
     user.setRole(getRole(roleId));
 
     if (!RequestValidators.isBlank(request.password())) {
@@ -115,7 +116,7 @@ public class UserService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
-  public void delete(@NonNull Long id) {
+  public void delete(@NonNull UUID id) {
     User user = Objects.requireNonNull(getUser(id));
     try {
       _userRepository.delete(user);
@@ -124,7 +125,7 @@ public class UserService {
     }
   }
 
-  private User getUser(@NonNull Long id) {
+  private User getUser(@NonNull UUID id) {
     return Objects.requireNonNull(
       _userRepository
         .findById(id)
@@ -132,7 +133,7 @@ public class UserService {
     );
   }
 
-  private Role getRole(@NonNull Long id) {
+  private Role getRole(@NonNull UUID id) {
     return Objects.requireNonNull(
       _roleRepository
         .findById(id)
