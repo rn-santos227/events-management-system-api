@@ -33,6 +33,9 @@ public class AuditLogController {
 
 
   private Long extractUserId(Authentication authentication) {
+    if (authentication == null || authentication.getPrincipal() == null) {
+      return null;
+    }
 
   }
 }
