@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -26,5 +27,9 @@ public class AuditTrailInterceptor implements  HandlerInterceptor {
     Exception ex
   ) throws Exception {
 
-  }    
+  }
+
+  private String resolveAction(Object handler, HttpServletRequest request) {
+
+  }
 }
