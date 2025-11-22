@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,22 +68,25 @@ public class RoleControllerTest {
 
   @Test
   void findAll_shoudReturnRoleResponses() throws Exception {
+    UUID privilegeId = UUID.fromString(Mocks.Roles.PRIVILEGE_MANAGE_USERS_ID);
     Set<PrivilegeSummary> _privileges = new LinkedHashSet<>(
-      List.of(new PrivilegeSummary(1L, 
-        Mocks.Roles.PRIVILEGE_MANAGE_USERS, 
-        Mocks.Roles.PRIVILEGE_ACTION_WRITE, 
+      List.of(new PrivilegeSummary(
+        privilegeId,
+        Mocks.Roles.PRIVILEGE_MANAGE_USERS,
+        Mocks.Roles.PRIVILEGE_ACTION_WRITE,
         Mocks.Roles.PRIVILEGE_SCOPE_USERS
       ))
     );
 
+    UUID roleId = UUID.fromString(Mocks.Roles.ID_ADMIN);
     List<RoleResponse> responses = List.of(
-      new RoleResponse(1L, Mocks.Roles.NAME_ADMIN, _privileges, LocalDateTime.now(), LocalDateTime.now())
+      new RoleResponse(roleId, Mocks.Roles.NAME_ADMIN, _privileges, LocalDateTime.now(), LocalDateTime.now())
     );
     when(_roleService.findAll(5)).thenReturn(responses);
     _mockMvc
       .perform(get(Routes.ROLES).param(Queries.LIMIT, Mocks.Roles.PAGINATION))
       .andExpect(status().isOk())
-      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(1))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(roleId.toString()))
       .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Roles.NAME_ADMIN))
       .andExpect(jsonPath(JsonPaths.INDEX_0_PRIVILEGES).value(Mocks.Roles.PRIVILEGE_MANAGE_USERS));
   }
