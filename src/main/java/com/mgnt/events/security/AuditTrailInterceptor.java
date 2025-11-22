@@ -29,7 +29,10 @@ public class AuditTrailInterceptor implements  HandlerInterceptor {
 
   }
 
-  private String resolveAction(Object handler, HttpServletRequest request) {
+  private String resolveAction(Object handler, @NonNull HttpServletRequest request) {
+    if (handler instanceof HandlerMethod handlerMethod) {
+      return handlerMethod.getMethod().getName();
+    }
     return _urlPathHelper.getLookupPathForRequest(request);
   }
 }
