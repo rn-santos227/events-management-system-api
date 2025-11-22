@@ -1,5 +1,7 @@
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
 CREATE TABLE privileges (
-  id BIGSERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(255) NOT NULL UNIQUE,
   action VARCHAR(255) NOT NULL UNIQUE,
   resource VARCHAR(255) NOT NULL,
@@ -9,7 +11,7 @@ CREATE TABLE privileges (
 );
 
 CREATE TABLE roles (
-  id BIGSERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(255) NOT NULL UNIQUE,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -17,13 +19,13 @@ CREATE TABLE roles (
 );
 
 CREATE TABLE users (
-  id BIGSERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email VARCHAR(100) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
   first_name VARCHAR(50) NOT NULL,
   last_name VARCHAR(50) NOT NULL,
   contact_number VARCHAR(20) NOT NULL,
-  role_id BIGINT NOT NULL,
+  role_id UUID NOT NULL,
   active BOOLEAN NOT NULL DEFAULT TRUE,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -32,16 +34,16 @@ CREATE TABLE users (
 );
 
 CREATE TABLE roles_privileges (
-  role_id BIGINT NOT NULL,
-  privilege_id BIGINT NOT NULL,
+  role_id UUID NOT NULL,
+  privilege_id UUID NOT NULL,
   PRIMARY KEY (role_id, privilege_id),
   CONSTRAINT fk_roles_privileges_role FOREIGN KEY (role_id) REFERENCES roles (id),
   CONSTRAINT fk_roles_privileges_privilege FOREIGN KEY (privilege_id) REFERENCES privileges (id)
 );
 
 CREATE TABLE user_tokens (
-  id BIGSERIAL PRIMARY KEY,
-  user_id BIGINT NOT NULL,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL,
   token VARCHAR(512) NOT NULL UNIQUE,
   token_type VARCHAR(50) NOT NULL,
   revoked BOOLEAN NOT NULL DEFAULT FALSE,
@@ -54,7 +56,7 @@ CREATE TABLE user_tokens (
 );
 
 CREATE TABLE stored_files (
-  id BIGSERIAL PRIMARY KEY,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   file_name VARCHAR(255) NOT NULL,
   storage_key VARCHAR(512) NOT NULL UNIQUE,
   bucket VARCHAR(100) NOT NULL,
@@ -68,8 +70,8 @@ CREATE TABLE stored_files (
 );
 
 CREATE TABLE audit_logs (
-  id BIGSERIAL PRIMARY KEY,
-  user_id BIGINT,
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID,
   action VARCHAR(255) NOT NULL,
   method VARCHAR(20) NOT NULL,
   path TEXT NOT NULL,
