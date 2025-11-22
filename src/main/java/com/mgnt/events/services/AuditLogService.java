@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -62,7 +63,7 @@ public class AuditLogService {
   }
 
   @Transactional(readOnly = true)
-  public List<AuditLogResponse> findByUserId(@NonNull Long userId, @Nullable Integer limit) {
+  public List<AuditLogResponse> findByUserId(@NonNull UUID userId, @Nullable Integer limit) {
     return applyUserLimit(userId, limit).stream().map(this::toResponse).toList();
   }
 
@@ -100,7 +101,7 @@ public class AuditLogService {
     );
   }
 
-  private List<AuditLog> applyUserLimit(Long userId, @Nullable Integer limit) {
+  private List<AuditLog> applyUserLimit(UUID userId, @Nullable Integer limit) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
     if (sanitizedLimit == null) {
       return _auditLogRepository.findAllByUserId(userId, DEFAULT_SORT);
