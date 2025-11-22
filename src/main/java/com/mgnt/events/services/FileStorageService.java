@@ -74,8 +74,8 @@ public class FileStorageService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
-  public void delete(@NonNull Long id) {
-    StoredFile storedFile = RequestValidators.requireNonNull(getStoredFile(id), "File") ;
+  public void delete(@NonNull UUID id) {
+    StoredFile storedFile = RequestValidators.requireNonNull(getStoredFile(id), "File");
     try {
       _storedFileRepository.delete(storedFile);
     } catch (DataIntegrityViolationException exception) {
@@ -160,7 +160,7 @@ public class FileStorageService {
   }
   
   @Transactional(readOnly = true)
-  public FileDownload download(@NonNull Long id) {
+  public FileDownload download(@NonNull UUID id) {
     if (!_storageProperties.isEnabled()) {
       throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "File storage is disabled");
     }
@@ -272,7 +272,7 @@ public class FileStorageService {
     return Patterns.AWS_PATTERN.formatted(bucket, region.trim(), key);
   }
 
-  private StoredFile getStoredFile(@NonNull Long id) {
+  private StoredFile getStoredFile(@NonNull UUID id) {
     return Objects.requireNonNull(
       _storedFileRepository
         .findById(id)
