@@ -37,5 +37,11 @@ public class AuditLogController {
       return null;
     }
 
+    Object principal = authentication.getPrincipal();
+    if (principal instanceof com.mgnt.events.models.User user) {
+      return user.getId();
+    }
+
+    return null;
   }
 }
