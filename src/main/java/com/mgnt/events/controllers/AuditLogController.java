@@ -1,6 +1,7 @@
 package com.mgnt.events.controllers;
 
 import java.util.List;
+import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
@@ -39,7 +40,7 @@ public class AuditLogController {
   @GetMapping(Routes.APPEND_USER_ID)
   @RequiresPrivilege({ PrivilegeActions.AUDIT_LOGS_READ, PrivilegeActions.AUDIT_LOGS_READ_OWN })
   public List<AuditLogResponse> findByUserId(
-    @PathVariable @NonNull Long id,
+    @PathVariable @NonNull UUID id,
     @RequestParam(name = Queries.LIMIT, required = false) Integer limit
   ) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
@@ -52,7 +53,7 @@ public class AuditLogController {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication is required");
     }
 
-    Long authenticatedUserId = extractUserId(authentication);
+    UUID authenticatedUserId = extractUserId(authentication);
     if (authenticatedUserId == null || !authenticatedUserId.equals(id)) {
       throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Cannot view other users' audit logs");
     }
@@ -71,7 +72,7 @@ public class AuditLogController {
       .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority));
   }
 
-  private Long extractUserId(Authentication authentication) {
+  private UUID extractUserId(Authentication authentication) {
     if (authentication == null || authentication.getPrincipal() == null) {
       return null;
     }
