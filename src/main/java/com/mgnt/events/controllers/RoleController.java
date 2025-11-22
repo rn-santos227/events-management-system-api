@@ -2,6 +2,7 @@ package com.mgnt.events.controllers;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,7 +39,7 @@ public class RoleController {
   }
 
   @GetMapping(Routes.APPEND_ID)
-  public RoleResponse findById(@PathVariable @NonNull Long id) {
+  public RoleResponse findById(@PathVariable @NonNull UUID id) {
     return _roleService.findById(id);
   }
 
@@ -50,7 +51,7 @@ public class RoleController {
 
   @PutMapping(Routes.APPEND_ID)
   public RoleResponse update(
-    @PathVariable @NonNull Long id,
+    @PathVariable @NonNull UUID id,
     @Valid @RequestBody RoleRequest request
   ) {
     return _roleService.update(id, request);
@@ -58,7 +59,7 @@ public class RoleController {
 
   @DeleteMapping(Routes.APPEND_ID)
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable @NonNull Long id) {
+  public void delete(@PathVariable @NonNull UUID id) {
     _roleService.delete(id);
   }
 }
