@@ -123,7 +123,8 @@ public class RoleControllerTest {
 
   @Test
   void delete_ShouldReturnNoContent() throws Exception {
-    _mockMvc.perform(delete(Routes.ROLES + Routes.APPEND_ID, 7L)).andExpect(status().isNoContent());
-    verify(_roleService).delete(eq(7L));
+    UUID roleId = UUID.fromString(Mocks.Roles.ID_STAFF);
+    _mockMvc.perform(delete(Routes.ROLES + Routes.APPEND_ID, roleId)).andExpect(status().isNoContent());
+    verify(_roleService).delete(RequestValidators.requireNonNull(eq(roleId), "Role ID"));
   }
 }
