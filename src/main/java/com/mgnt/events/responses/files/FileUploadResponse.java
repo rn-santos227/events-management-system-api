@@ -1,9 +1,10 @@
 package com.mgnt.events.responses.files;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record FileUploadResponse(
-  Long id,
+  UUID id,
   String fileName,
   String storageKey,
   String bucket,

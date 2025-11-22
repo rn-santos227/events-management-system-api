@@ -1,11 +1,12 @@
 package com.mgnt.events.responses.users;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import com.mgnt.events.responses.roles.RoleSummary;
 
 public record UserResponse(
-  Long id,
+  UUID id,
   String email,
   String firstName,
   String lastName,

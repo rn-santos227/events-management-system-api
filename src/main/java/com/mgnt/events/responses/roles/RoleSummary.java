@@ -1,3 +1,5 @@
 package com.mgnt.events.responses.roles;
 
-public record RoleSummary(Long id, String name) {}
+import java.util.UUID;
+
+public record RoleSummary(  UUID id,String name) {}

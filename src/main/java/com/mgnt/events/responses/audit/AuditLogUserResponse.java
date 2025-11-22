@@ -1,7 +1,9 @@
 package com.mgnt.events.responses.audit;
 
+import java.util.UUID;
+
 public record AuditLogUserResponse(
-  Long id,
+  UUID id,
   String email,
   String fullName
 ) {}

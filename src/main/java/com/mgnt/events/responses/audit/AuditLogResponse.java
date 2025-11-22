@@ -1,9 +1,10 @@
 package com.mgnt.events.responses.audit;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record AuditLogResponse(
-  Long id,
+  UUID id,
   String action,
   String method,
   String path,
