@@ -53,6 +53,10 @@ public class AuditLogController {
     }
 
     Long authenticatedUserId = extractUserId(authentication);
+    if (authenticatedUserId == null || !authenticatedUserId.equals(id)) {
+      throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Cannot view other users' audit logs");
+    }
+
   }
 
   private Authentication getAuthentication() {
