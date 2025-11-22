@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
@@ -54,7 +55,7 @@ public class RoleService {
   }
 
   @Transactional(readOnly = true)
-  public RoleResponse findById(Long id) {
+  public RoleResponse findById(UUID id) {
     Role role = _roleRepository
       .findWithPrivilegesById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
@@ -70,7 +71,7 @@ public class RoleService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
-  public RoleResponse update(@NonNull Long id, RoleRequest request) {
+  public RoleResponse update(@NonNull UUID id, RoleRequest request) {
     Role role = Objects.requireNonNull(getRole(id));
     validateNameUniqueness(request.name(), id);
 
@@ -81,7 +82,7 @@ public class RoleService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
-  public void delete(@NonNull Long id) {
+  public void delete(@NonNull UUID id) {
     Role role = Objects.requireNonNull(getRole(id));
     try {
       _roleRepository.delete(role);
@@ -96,7 +97,7 @@ public class RoleService {
     }
   }
 
-  private Role getRole(@NonNull Long id) {
+  private Role getRole(@NonNull UUID id) {
     return Objects.requireNonNull(
       _roleRepository
         .findWithPrivilegesById(id)
@@ -104,7 +105,7 @@ public class RoleService {
     );
   }
 
-  private void validateNameUniqueness(String name, Long excludeId) {
+  private void validateNameUniqueness(String name, UUID excludeId) {
     _roleRepository
       .findByNameIgnoreCase(name)
       .filter(existing -> !existing.getId().equals(excludeId))
@@ -113,7 +114,7 @@ public class RoleService {
       });
   }
 
-  private Set<Privilege> resolvePrivileges(Set<Long> privilegeIds) {
+  private Set<Privilege> resolvePrivileges(Set<UUID> privilegeIds) {
     if (privilegeIds == null || RequestValidators.isBlank(privilegeIds)) {
       return new LinkedHashSet<>();
     }
@@ -123,11 +124,13 @@ public class RoleService {
       .stream()
       .map(privilege -> Objects.requireNonNull(privilege, "Privilege must not be null"))
       .toList();
-    Set<Long> foundIds = privileges
+
+    Set<UUID> foundIds = privileges
       .stream()
       .map(privilege -> Objects.requireNonNull(privilege.getId(), "Privilege identifier must not be null"))
       .collect(Collectors.toSet());
-    List<Long> missing = privilegeIds
+
+    List<UUID> missing = privilegeIds
       .stream()
       .filter(id -> !foundIds.contains(id))
       .toList();
