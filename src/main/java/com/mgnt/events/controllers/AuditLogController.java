@@ -57,6 +57,7 @@ public class AuditLogController {
       throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Cannot view other users' audit logs");
     }
 
+    return _auditLogService.findForAuthenticatedUser(sanitizedLimit);
   }
 
   private Authentication getAuthentication() {
