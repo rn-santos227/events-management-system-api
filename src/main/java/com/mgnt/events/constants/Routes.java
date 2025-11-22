@@ -22,5 +22,6 @@ public class Routes {
   public static final String AUDIT_LOGS = BASE_PATH + "/audit-logs";
 
   public static final String APPEND_ID = "/{id}";
+  public static final String APPEND_USER_ID = "/users" + APPEND_ID;
   public static final String DOWNLOAD = APPEND_ID + "/download";
 }
