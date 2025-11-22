@@ -97,18 +97,18 @@ public class UserControllerTest {
       Mocks.Users.FIRST_NAME_JOHN,
       Mocks.Users.LAST_NAME_JOHN,
       Mocks.Users.PHONE_SECONDARY,
-      7L,
+      UUID.fromString(Mocks.Roles.ID_STAFF),
       Boolean.TRUE
     );
 
     UserResponse _response = new UserResponse(
-      101L,
+      UUID.fromString(Mocks.Users.ID_JOHN),
       Mocks.Users.EMAIL_JOHN,
       Mocks.Users.FIRST_NAME_JOHN,
       Mocks.Users.LAST_NAME_JOHN,
       Mocks.Users.PHONE_SECONDARY,
       true,
-      new RoleSummary(7L, Mocks.Roles.ROLE_NAME_STAFF),
+      new RoleSummary(UUID.fromString(Mocks.Roles.ID_STAFF), Mocks.Roles.ROLE_NAME_STAFF),
       LocalDateTime.now(),
       LocalDateTime.now(),
       null
@@ -127,7 +127,7 @@ public class UserControllerTest {
         )
       )
       .andExpect(status().isCreated())
-      .andExpect(jsonPath(JsonPaths.ID).value(101))
+      .andExpect(jsonPath(JsonPaths.ID).value(Mocks.Users.ID_JOHN))
       .andExpect(jsonPath(JsonPaths.EMAIL).value(Mocks.Users.EMAIL_JOHN));
 
     ArgumentCaptor<UserCreateRequest> captor = ArgumentCaptor.forClass(UserCreateRequest.class);
@@ -135,7 +135,7 @@ public class UserControllerTest {
 
     UserCreateRequest captured = captor.getValue();
     assertThat(captured.email()).isEqualTo(Mocks.Users.EMAIL_JOHN);
-    assertThat(captured.roleId()).isEqualTo(7L);
+    assertThat(captured.roleId()).isEqualTo(UUID.fromString(Mocks.Roles.ID_STAFF));
     assertThat(captured.active()).isTrue();
   }
 
