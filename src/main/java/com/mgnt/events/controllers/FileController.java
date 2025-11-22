@@ -1,7 +1,7 @@
 package com.mgnt.events.controllers;
 
 import java.util.List;
-
+import java.util.UUID;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -49,7 +49,7 @@ public class FileController {
   }
 
   @GetMapping(Routes.DOWNLOAD)
-  public ResponseEntity<Resource> download(@PathVariable @NonNull Long id) {
+  public ResponseEntity<Resource> download(@PathVariable @NonNull UUID id) {
     FileStorageService.FileDownload _download = _fileStorageService.download(id);
     return ResponseEntity
       .ok()
@@ -64,7 +64,7 @@ public class FileController {
 
   @DeleteMapping(Routes.APPEND_ID)
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void delete(@PathVariable @NonNull Long id) {
+  public void delete(@PathVariable @NonNull UUID id) {
     _fileStorageService.delete(id);
   }
 }
