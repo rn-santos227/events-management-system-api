@@ -2,6 +2,7 @@ package com.mgnt.events.services;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
@@ -45,7 +46,7 @@ public class PrivilegeService {
   }
 
   @Transactional(readOnly = true)
-  public PrivilegeResponse findById(@NonNull Long id) {
+  public PrivilegeResponse findById(@NonNull UUID id) {
     return toResponse(getPrivilege(id));
   }
 
@@ -58,7 +59,7 @@ public class PrivilegeService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
-  public PrivilegeResponse update(@NonNull Long id, PrivilegeRequest request) {
+  public PrivilegeResponse update(@NonNull UUID id, PrivilegeRequest request) {
     Privilege privilege = getPrivilege(id);
     validateUniqueness(request.name(), request.action(), id);
 
@@ -70,7 +71,7 @@ public class PrivilegeService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
-  public void delete(@NonNull Long id) {
+  public void delete(@NonNull UUID id) {
     Privilege privilege = Objects.requireNonNull(getPrivilege(id));
     try {
       _privilegeRepository.delete(privilege);
@@ -89,13 +90,13 @@ public class PrivilegeService {
     }
   }
 
-  private Privilege getPrivilege(@NonNull Long id) {
+  private Privilege getPrivilege(@NonNull UUID id) {
     return _privilegeRepository
       .findById(id)
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Privilege not found"));
   }
 
-  private void validateUniqueness(String name, String action, Long excludeId) {
+  private void validateUniqueness(String name, String action, UUID excludeId) {
     _privilegeRepository
       .findByNameIgnoreCase(name)
       .filter(existing -> !existing.getId().equals(excludeId))
