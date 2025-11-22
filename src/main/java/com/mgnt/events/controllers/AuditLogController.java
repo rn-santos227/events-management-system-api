@@ -1,9 +1,11 @@
 package com.mgnt.events.controllers;
 
 import java.util.List;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +32,15 @@ public class AuditLogController {
   public List<AuditLogResponse> findAll(@RequestParam(name = Queries.LIMIT, required = false) Integer limit) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
     return _auditLogService.findAll(sanitizedLimit);
+  }
+
+  @GetMapping(Routes.APPEND_USER_ID)
+  @RequiresPrivilege({ PrivilegeActions.AUDIT_LOGS_READ, PrivilegeActions.AUDIT_LOGS_READ_OWN })
+  public List<AuditLogResponse> findByUserId(
+    @PathVariable @NonNull Long id,
+    @RequestParam(name = Queries.LIMIT, required = false) Integer limit
+  ) {
+    
   }
 
   private Authentication getAuthentication() {
