@@ -40,7 +40,7 @@ public class AuditLogController {
     @PathVariable @NonNull Long id,
     @RequestParam(name = Queries.LIMIT, required = false) Integer limit
   ) {
-    
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
   }
 
   private Authentication getAuthentication() {
