@@ -12,6 +12,7 @@ import com.mgnt.events.constants.Routes;
 import com.mgnt.events.responses.audit.AuditLogResponse;
 import com.mgnt.events.security.annotations.RequiresPrivilege;
 import com.mgnt.events.services.AuditLogService;
+import com.mgnt.events.util.RequestValidators;
 
 @RestController
 @RequestMapping(Routes.AUDIT_LOGS)
@@ -25,6 +26,7 @@ public class AuditLogController {
   @GetMapping
   @RequiresPrivilege({ PrivilegeActions.AUDIT_LOGS_READ })
   public List<AuditLogResponse> findAll(@RequestParam(name = Queries.LIMIT, required = false) Integer limit) {
-
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    return _auditLogService.findAll(sanitizedLimit);
   }
 }
