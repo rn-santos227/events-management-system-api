@@ -41,6 +41,10 @@ public class AuditLogController {
     @RequestParam(name = Queries.LIMIT, required = false) Integer limit
   ) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    Authentication authentication = getAuthentication();
+    if (hasAuthority(authentication, PrivilegeActions.AUDIT_LOGS_READ)) {
+      return _auditLogService.findByUserId(id, sanitizedLimit);
+    }
   }
 
   private Authentication getAuthentication() {
