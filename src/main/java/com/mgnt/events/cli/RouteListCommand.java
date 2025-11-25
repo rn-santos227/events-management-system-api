@@ -5,6 +5,9 @@ import java.util.Objects;
 import org.springframework.graphql.execution.GraphQlSource;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import graphql.schema.GraphQLNamedOutputType;
+import graphql.schema.GraphQLOutputType;
+
 public class RouteListCommand {
   private RouteListCommand() {}
 
@@ -20,6 +23,12 @@ public class RouteListCommand {
 
   }
 
+  private static String resolveTypeName(GraphQLOutputType type) {
+    if (type instanceof GraphQLNamedOutputType namedType) {
+      return namedType.getName();
+    }
+    return type.toString();
+  }
 
   private record RouteDetail(String type, String method, String path, String handler) {}
 }
