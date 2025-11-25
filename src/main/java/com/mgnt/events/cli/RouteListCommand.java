@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 import org.springframework.graphql.execution.GraphQlSource;
@@ -30,7 +31,21 @@ public class RouteListCommand {
   private static void printRestRoutes(RequestMappingHandlerMapping mapping) {
     Objects.requireNonNull(mapping, "Request mapping handler must not be null");
   }
+  
+  private static Set<String> extractPaths(RequestMappingInfo info) {
+    Objects.requireNonNull(info, "Request mapping info must not be null");
 
+    var patternsCondition = info.getPatternsCondition();
+    if (patternsCondition == null || patternsCondition.getPatterns() == null) {
+      return Collections.emptySet();
+    }
+
+    return patternsCondition
+      .getPatterns()
+      .stream()
+      .map(Object::toString)
+      .collect(Collectors.toSet());
+  }
 
   private static Set<String> extractMethods(RequestMappingInfo info) {
     Objects.requireNonNull(info, "Request mapping info must not be null");
