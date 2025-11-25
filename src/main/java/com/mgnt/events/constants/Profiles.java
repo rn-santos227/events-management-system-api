@@ -4,4 +4,5 @@ public class Profiles {
   Profiles() {}
   public static final String LOCAL = "local";
   public static final String GLOBAL = "!local";
+  public static final String TEST = "test";
 }
