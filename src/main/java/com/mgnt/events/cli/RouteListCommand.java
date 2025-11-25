@@ -1,5 +1,7 @@
 package com.mgnt.events.cli;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -35,6 +37,17 @@ public class RouteListCommand {
       System.out.println("No GraphQL queries configured.");
       return;
     }
+
+    List<String> lines = queryType
+      .getFieldDefinitions()
+      .stream()
+      .sorted(Comparator.comparing(GraphQLFieldDefinition::getName))
+      .map(RouteListCommand::formatGraphqlField)
+      .toList();
+
+    System.out.println("GraphQL Queries");
+    System.out.println("---------------");
+    lines.forEach(System.out::println);
   }
 
   private static String formatGraphqlField(GraphQLFieldDefinition field) {
