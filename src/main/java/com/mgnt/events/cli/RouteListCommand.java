@@ -11,6 +11,8 @@ import com.mgnt.events.constants.Patterns;
 import graphql.schema.GraphQLArgument;
 import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLNamedOutputType;
+import graphql.schema.GraphQLObjectType;
+import graphql.schema.GraphQLSchema;
 import graphql.schema.GraphQLType;
 
 public class RouteListCommand {
@@ -25,7 +27,14 @@ public class RouteListCommand {
   }
 
   private static void printGraphqlRoutes(GraphQlSource graphQlSource) {
+    Objects.requireNonNull(graphQlSource, "GraphQL source must not be null");
 
+    GraphQLSchema schema = graphQlSource.schema();
+    GraphQLObjectType queryType = schema.getQueryType();
+    if (queryType == null) {
+      System.out.println("No GraphQL queries configured.");
+      return;
+    }
   }
 
   private static String formatGraphqlField(GraphQLFieldDefinition field) {
