@@ -8,9 +8,13 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 
 import com.mgnt.events.constants.Queries;
+import com.mgnt.events.responses.audit.AuditLogResponse;
+import com.mgnt.events.responses.files.FileUploadResponse;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
 import com.mgnt.events.responses.roles.RoleResponse;
 import com.mgnt.events.responses.users.UserResponse;
+import com.mgnt.events.services.AuditLogService;
+import com.mgnt.events.services.FileStorageService;
 import com.mgnt.events.services.PrivilegeService;
 import com.mgnt.events.services.RoleService;
 import com.mgnt.events.services.UserService;
@@ -18,18 +22,24 @@ import com.mgnt.events.util.RequestValidators;
 
 @Controller
 public class GraphQLGatewayController {
-  private final UserService _userService;
-  private final RoleService _roleService;
+  private final AuditLogService _auditLogService;
+  private final FileStorageService _fileStorageService;
   private final PrivilegeService _privilegeService;
+  private final RoleService _roleService;
+  private final UserService _userService;
 
   public GraphQLGatewayController(
-    UserService userService,
+   AuditLogService auditLogService,
+    FileStorageService fileStorageService,
+    PrivilegeService privilegeService,
     RoleService roleService,
-    PrivilegeService privilegeService
+    UserService userService
   ) {
-    this._userService = userService;
-    this._roleService = roleService;
+    this._auditLogService = auditLogService;
+    this._fileStorageService = fileStorageService;
     this._privilegeService = privilegeService;
+    this._roleService = roleService;
+    this._userService = userService;
   }
 
   @QueryMapping
@@ -38,14 +48,37 @@ public class GraphQLGatewayController {
   }
 
   @QueryMapping
-  public List<UserResponse> users(@Argument Integer limit) {
+  public List<AuditLogResponse> auditLogs(@Argument Integer limit) {
     Integer sanitizedLimit = sanitizeLimit(limit);
-    return _userService.findAll(sanitizedLimit);
+    return _auditLogService.findAll(sanitizedLimit);
   }
 
   @QueryMapping
-  public UserResponse user(@Argument @NonNull UUID id) {
-    return _userService.findById(id);
+  public List<AuditLogResponse> auditLogsByUser(@Argument @NonNull UUID userId, @Argument Integer limit) {
+    Integer sanitizedLimit = sanitizeLimit(limit);
+    return _auditLogService.findByUserId(userId, sanitizedLimit);
+  }
+
+  @QueryMapping
+  public List<FileUploadResponse> files(@Argument Integer limit) {
+    Integer sanitizedLimit = sanitizeLimit(limit);
+    return _fileStorageService.findAll(sanitizedLimit);
+  }
+
+  @QueryMapping
+  public FileUploadResponse file(@Argument @NonNull UUID id) {
+    return _fileStorageService.findById(id);
+  }
+
+  @QueryMapping
+  public List<PrivilegeResponse> privileges(@Argument Integer limit) {
+    Integer sanitizedLimit = sanitizeLimit(limit);
+    return _privilegeService.findAll(sanitizedLimit);
+  }
+
+  @QueryMapping
+  public PrivilegeResponse privilege(@Argument @NonNull UUID id) {
+    return _privilegeService.findById(id);
   }
 
   @QueryMapping
@@ -60,14 +93,14 @@ public class GraphQLGatewayController {
   }
 
   @QueryMapping
-  public List<PrivilegeResponse> privileges(@Argument Integer limit) {
+  public List<UserResponse> users(@Argument Integer limit) {
     Integer sanitizedLimit = sanitizeLimit(limit);
-    return _privilegeService.findAll(sanitizedLimit);
+    return _userService.findAll(sanitizedLimit);
   }
 
   @QueryMapping
-  public PrivilegeResponse privilege(@Argument @NonNull UUID id) {
-    return _privilegeService.findById(id);
+  public UserResponse user(@Argument @NonNull UUID id) {
+    return _userService.findById(id);
   }
 
   private Integer sanitizeLimit(Integer limit) {
