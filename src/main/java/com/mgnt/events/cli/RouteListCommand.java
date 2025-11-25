@@ -4,15 +4,16 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
 import org.springframework.graphql.execution.GraphQlSource;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.mgnt.events.constants.Patterns;
-import com.mgnt.events.util.RequestValidators;
 
 import graphql.schema.GraphQLArgument;
 import graphql.schema.GraphQLFieldDefinition;
@@ -30,6 +31,30 @@ public class RouteListCommand {
 
   private static void printRestRoutes(RequestMappingHandlerMapping mapping) {
     Objects.requireNonNull(mapping, "Request mapping handler must not be null");
+
+    List<RouteDetail> routes = new ArrayList<>();
+    for (var entry : mapping.getHandlerMethods().entrySet()) {
+      RequestMappingInfo info = entry.getKey();
+      HandlerMethod method = entry.getValue();
+
+      Set<String> paths = extractPaths(info);
+      Set<String> methods = extractMethods(info);
+
+      if (methods.isEmpty()) {
+        methods = Set.of("ANY");
+      }
+
+      for (String path : paths) {
+        routes.add(new RouteDetail("REST", String.join(",", methods), path, method.toString()));
+      }
+    }
+
+    routes.sort(Comparator.comparing(RouteDetail::path));
+
+    System.out.println("HTTP Routes");
+    System.out.println("------------");
+    routes.forEach(route -> System.out.printf("%-6s %-8s %-40s %s%n", route.type(), route.method(), route.path(), route.handler()));
+    System.out.println();
   }
   
   private static Set<String> extractPaths(RequestMappingInfo info) {
