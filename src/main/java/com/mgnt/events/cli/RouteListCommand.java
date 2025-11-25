@@ -19,4 +19,7 @@ public class RouteListCommand {
   private static void printGraphqlRoutes(GraphQlSource graphQlSource) {
 
   }
+
+
+  private record RouteDetail(String type, String method, String path, String handler) {}
 }
