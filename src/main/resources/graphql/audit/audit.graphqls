@@ -1,0 +1,22 @@
+extend type Query {
+  auditLogs(limit: Int): [AuditLog!]!
+  auditLogsByUser(userId: ID!, limit: Int): [AuditLog!]!
+}
+
+type AuditLog {
+  id: ID!
+  action: String
+  method: String
+  path: String
+  statusCode: Int
+  ipAddress: String
+  message: String
+  user: AuditLogUser
+  createdAt: String
+}
+
+type AuditLogUser {
+  id: ID!
+  email: String
+  fullName: String
+}

@@ -73,6 +73,11 @@ public class FileStorageService {
       .toList();
   }
 
+  @Transactional(readOnly = true)
+  public FileUploadResponse findById(@NonNull UUID id) {
+    return toResponse(getStoredFile(id));
+  }
+
   @Transactional(rollbackFor = Throwable.class)
   public void delete(@NonNull UUID id) {
     StoredFile storedFile = RequestValidators.requireNonNull(getStoredFile(id), "File");
