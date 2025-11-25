@@ -3,12 +3,15 @@ package com.mgnt.events.cli;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.graphql.execution.GraphQlSource;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import com.mgnt.events.constants.Patterns;
+import com.mgnt.events.util.RequestValidators;
 
 import graphql.schema.GraphQLArgument;
 import graphql.schema.GraphQLFieldDefinition;
@@ -26,6 +29,18 @@ public class RouteListCommand {
 
   private static void printRestRoutes(RequestMappingHandlerMapping mapping) {
     Objects.requireNonNull(mapping, "Request mapping handler must not be null");
+  }
+
+
+  private static Set<String> extractMethods(RequestMappingInfo info) {
+    Objects.requireNonNull(info, "Request mapping info must not be null");
+
+    return info
+      .getMethodsCondition()
+      .getMethods()
+      .stream()
+      .map(Enum::name)
+      .collect(Collectors.toSet());
   }
 
   private static void printGraphqlRoutes(GraphQlSource graphQlSource) {
