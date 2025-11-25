@@ -1,11 +1,15 @@
 package com.mgnt.events.cli;
 
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.graphql.execution.GraphQlSource;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.mgnt.events.constants.Patterns;
+
 import graphql.schema.GraphQLArgument;
+import graphql.schema.GraphQLFieldDefinition;
 import graphql.schema.GraphQLNamedOutputType;
 import graphql.schema.GraphQLType;
 
@@ -24,8 +28,19 @@ public class RouteListCommand {
 
   }
 
+  private static String formatGraphqlField(GraphQLFieldDefinition field) {
+    String arguments = field
+      .getArguments()
+      .stream()
+      .map(RouteListCommand::formatGraphqlArgument)
+      .collect(Collectors.joining(", "));
+
+    String returnType = resolveTypeName(field.getType());
+    return Patterns.GRAPHQL_ROUTE_PATTERN.formatted(field.getName(), arguments, returnType);
+  }
+
   private static String formatGraphqlArgument(GraphQLArgument argument) {
-    return "%s: %s".formatted(argument.getName(), resolveTypeName(argument.getType()));
+    return Patterns.GRAPHQL_TYPE_PATTERN.formatted(argument.getName(), resolveTypeName(argument.getType()));
   }
 
   private static String resolveTypeName(GraphQLType type) {
