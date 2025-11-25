@@ -2,7 +2,6 @@ package com.mgnt.events.controllers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -125,6 +124,6 @@ public class RoleControllerTest {
   void delete_ShouldReturnNoContent() throws Exception {
     UUID roleId = UUID.fromString(Mocks.Roles.ID_STAFF);
     _mockMvc.perform(delete(Routes.ROLES + Routes.APPEND_ID, roleId)).andExpect(status().isNoContent());
-    verify(_roleService).delete(RequestValidators.requireNonNull(eq(roleId), "Role ID"));
+    verify(_roleService).delete(RequestValidators.requireNonNull(roleId, "Role ID"));
   }
 }
