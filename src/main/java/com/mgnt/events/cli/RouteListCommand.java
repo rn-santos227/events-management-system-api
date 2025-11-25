@@ -8,11 +8,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
+import org.springframework.boot.WebApplicationType;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.graphql.execution.GraphQlSource;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.mgnt.events.EventsApiApplication;
 import com.mgnt.events.constants.Patterns;
 
 import graphql.schema.GraphQLArgument;
@@ -26,7 +30,18 @@ public class RouteListCommand {
   private RouteListCommand() {}
 
   public static void main(String[] args) {
+    ConfigurableApplicationContext context = new SpringApplicationBuilder(EventsApiApplication.class)
+      .web(WebApplicationType.SERVLET)
+      .logStartupInfo(false)
+      .properties("server.port=0")
+      .run();
 
+    try {
+      printRestRoutes(context.getBean(RequestMappingHandlerMapping.class));
+      printGraphqlRoutes(context.getBean(GraphQlSource.class));
+    } finally {
+      context.close();
+    }
   }
 
   private static void printRestRoutes(RequestMappingHandlerMapping mapping) {

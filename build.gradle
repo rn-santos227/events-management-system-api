@@ -98,3 +98,12 @@ tasks.register('seedUser', JavaExec) {
 
   systemProperty 'spring.profiles.active', project.findProperty('seedProfile') ?: 'local'
 }
+
+tasks.register('listRoutes', JavaExec) {
+  group = 'application'
+  description = 'Displays available REST and GraphQL routes.'
+  mainClass = 'com.mgnt.events.cli.RouteListCommand'
+  classpath = sourceSets.main.runtimeClasspath
+
+  systemProperty 'spring.profiles.active', project.findProperty('routesProfile') ?: 'local'
+}
