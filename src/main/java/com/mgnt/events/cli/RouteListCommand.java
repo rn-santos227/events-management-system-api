@@ -37,7 +37,7 @@ public class RouteListCommand {
       .run();
 
     try {
-      printRestRoutes(context.getBean(RequestMappingHandlerMapping.class));
+      printRestRoutes(context.getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class));
       printGraphqlRoutes(context.getBean(GraphQlSource.class));
     } finally {
       context.close();
@@ -68,7 +68,7 @@ public class RouteListCommand {
 
     System.out.println("HTTP Routes");
     System.out.println("------------");
-    routes.forEach(route -> System.out.printf("%-6s %-8s %-40s %s%n", route.type(), route.method(), route.path(), route.handler()));
+    routes.forEach(route -> System.out.printf(Patterns.ROUTES_PATTERN, route.type(), route.method(), route.path(), route.handler()));
     System.out.println();
   }
   
