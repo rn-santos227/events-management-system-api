@@ -9,5 +9,7 @@ import com.mgnt.events.responses.files.StoredFileSummary;
 
 public record AccommodationResponse(
   UUID id,
-  String name
+  String name,
+  String address,
+  String contactPerson
 ) {}
