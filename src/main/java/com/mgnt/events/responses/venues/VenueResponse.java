@@ -13,5 +13,7 @@ public record VenueResponse(
   String address,
   String contactPerson,
   String contactNumber,
-  String email
+  String email,
+  VenueType type,
+  BigDecimal latitude
 ) {}
