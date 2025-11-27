@@ -11,5 +11,7 @@ public record VenueResponse(
   UUID id,
   String name,
   String address,
-  String contactPerson
+  String contactPerson,
+  String contactNumber,
+  String email
 ) {}
