@@ -15,5 +15,9 @@ public record VenueResponse(
   String contactNumber,
   String email,
   VenueType type,
-  BigDecimal latitude
+  BigDecimal latitude,
+  BigDecimal longitude,
+  StoredFileSummary image,
+  LocalDateTime createdAt,
+  LocalDateTime updatedAt
 ) {}
