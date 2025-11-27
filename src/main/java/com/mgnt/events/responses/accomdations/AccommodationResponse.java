@@ -8,5 +8,6 @@ import com.mgnt.events.enums.AccommodationType;
 import com.mgnt.events.responses.files.StoredFileSummary;
 
 public record AccommodationResponse(
-
+  UUID id,
+  String name
 ) {}
