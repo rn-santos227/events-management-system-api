@@ -11,5 +11,7 @@ public record AccommodationResponse(
   UUID id,
   String name,
   String address,
-  String contactPerson
+  String contactPerson,
+  String email,
+  AccommodationType type
 ) {}
