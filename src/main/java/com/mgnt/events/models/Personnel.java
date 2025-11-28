@@ -36,4 +36,12 @@ public class Personnel extends AuditableEntity {
 
   @Column(name = Attributes.FUNCTION, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
   private String function;
+
+  public Personnel() {}
+
+  public Personnel(String name, String contactNumber, String function) {
+    this.name = name;
+    this.contactNumber = contactNumber;
+    this.function = function;
+  }
 }
