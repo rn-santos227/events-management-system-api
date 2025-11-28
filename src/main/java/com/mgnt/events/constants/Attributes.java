@@ -5,6 +5,9 @@ public class Attributes {
   public static final String USER_ID = "user_id";
   public static final String ROLE_ID = "role_id";
   public static final String PRIVILEGE_ID = "privilege_id";
+  public static final String CATEGORY_ID = "category_id";
+  public static final String PERSONNEL_ID = "personnel_id";
+  public static final String IMAGE_ID = "image_id";
 
   public static final String ACTION = "action";
   public static final String BUCKET = "bucket";
