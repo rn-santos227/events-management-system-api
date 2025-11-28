@@ -29,5 +29,8 @@ public class Personnel extends AuditableEntity {
   private UUID id;
 
   @Column(name = Attributes.NAME, nullable = false, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
-  private String name;
+  private String full_name;
+
+  @Column(name = Attributes.CONTACT_NUMBER, nullable = false, length = Defaults.DEFAULT_PHONE_LENGTH)
+  private String contactNumber;
 }
