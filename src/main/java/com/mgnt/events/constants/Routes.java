@@ -15,7 +15,10 @@ public class Routes {
   public static final String LOGOUT = "/logout";
   public static final String AUTH_LOGOUT = AUTH + LOGOUT;
 
+  public static final String ACCOMMODATIONS = BASE_PATH + "/accommodations";
   public static final String FILES = BASE_PATH + "/files";
+  public static final String CATEGORIES = BASE_PATH + "/categories";
+  public static final String PERSONNEL = BASE_PATH + "/personnel";
   public static final String PRIVILEGES = BASE_PATH + "/privileges";
   public static final String ROLES = BASE_PATH + "/roles";
   public static final String USERS = BASE_PATH + "/users";
