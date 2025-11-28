@@ -9,7 +9,7 @@ _CREATE TABLE categories (
 
 CREATE TABLE personnel (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name VARCHAR(255) NOT NULL,
+  full_name VARCHAR(255) NOT NULL,
   contact_number VARCHAR(20) NOT NULL,
   function VARCHAR(255),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
