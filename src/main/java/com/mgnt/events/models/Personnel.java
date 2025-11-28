@@ -17,6 +17,12 @@ import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
 
+@Entity
+@Table(name = Tables.PERSONNEL)
+@SQLDelete(sql = Queries.DELETE_PERSONNEL)
+@SQLRestriction(Queries.DELETE_RESTRICTION)
+@Getter
+@Setter
 public class Personnel extends AuditableEntity {
 
 }
