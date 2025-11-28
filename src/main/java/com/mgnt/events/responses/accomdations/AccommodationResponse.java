@@ -15,5 +15,8 @@ public record AccommodationResponse(
   String email,
   AccommodationType type,
   BigDecimal latitude,
-  BigDecimal longitude
+  BigDecimal longitude,
+  StoredFileSummary image,
+  LocalDateTime createdAt,
+  LocalDateTime updatedAt
 ) {}
