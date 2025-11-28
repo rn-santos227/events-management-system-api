@@ -23,5 +23,20 @@ import com.mgnt.events.constants.Tables;
 @Getter
 @Setter
 public class Category extends AuditableEntity {
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
+  @Column(name = Attributes.NAME, nullable = false, unique = true)
+  private String name;
+
+  @Column(name = Attributes.DESCRIPTION)
+  private String description;
+
+  public Category() {}
+
+  public Category(String name, String description) {
+    this.name = name;
+    this.description = description;
+  }
 }
