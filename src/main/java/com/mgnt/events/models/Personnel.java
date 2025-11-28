@@ -33,4 +33,7 @@ public class Personnel extends AuditableEntity {
 
   @Column(name = Attributes.CONTACT_NUMBER, nullable = false, length = Defaults.DEFAULT_PHONE_LENGTH)
   private String contactNumber;
+
+  @Column(name = Attributes.FUNCTION, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
+  private String function;
 }
