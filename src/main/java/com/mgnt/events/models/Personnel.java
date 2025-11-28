@@ -24,5 +24,7 @@ import com.mgnt.events.constants.Tables;
 @Getter
 @Setter
 public class Personnel extends AuditableEntity {
-
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 }
