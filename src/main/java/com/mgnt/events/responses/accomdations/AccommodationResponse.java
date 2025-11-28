@@ -13,5 +13,7 @@ public record AccommodationResponse(
   String address,
   String contactPerson,
   String email,
-  AccommodationType type
+  AccommodationType type,
+  BigDecimal latitude,
+  BigDecimal longitude
 ) {}
