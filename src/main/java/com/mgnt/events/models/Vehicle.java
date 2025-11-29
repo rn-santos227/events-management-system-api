@@ -36,6 +36,9 @@ public class Vehicle extends AuditableEntity {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
+  @Column(name = Attributes.NAME, nullable = false, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
+  private String name;
+
   @Enumerated(EnumType.STRING)
   @Column(name = Attributes.TYPE, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
   private VehicleType type;
