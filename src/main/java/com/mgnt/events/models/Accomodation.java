@@ -35,4 +35,8 @@ public class Accomodation extends AuditableEntity {
 
   @Column(name = Attributes.ADDRESS, nullable = false)
   private String address;
+
+  @Column(name = Attributes.CONTACT_PERSON, nullable = false, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
+  private String contactPerson;
+
 }
