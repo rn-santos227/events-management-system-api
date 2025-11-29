@@ -32,4 +32,8 @@ public class Venue extends AuditableEntity{
 
   @Column(name = Attributes.NAME, nullable = false, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
   private String name;
+
+  @Column(name = Attributes.ADDRESS, nullable = false)
+  private String address;
+
 }
