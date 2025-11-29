@@ -1,5 +1,6 @@
 package com.mgnt.events.models;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import org.hibernate.annotations.SQLDelete;
@@ -48,4 +49,7 @@ public class Venue extends AuditableEntity{
   @Enumerated(EnumType.STRING)
   @Column(name = Attributes.TYPE, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
   private VenueType type;
+
+  @Column(name = Attributes.LATITUDE, precision = 9, scale = 6)
+  private BigDecimal latitude;
 }
