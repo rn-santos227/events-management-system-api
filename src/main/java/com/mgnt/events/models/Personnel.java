@@ -1,0 +1,47 @@
+package com.mgnt.events.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.util.UUID;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+
+import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.constants.Defaults;
+import com.mgnt.events.constants.Queries;
+import com.mgnt.events.constants.Tables;
+
+@Entity
+@Table(name = Tables.PERSONNEL)
+@SQLDelete(sql = Queries.DELETE_PERSONNEL)
+@SQLRestriction(Queries.DELETE_RESTRICTION)
+@Getter
+@Setter
+public class Personnel extends AuditableEntity {
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
+
+  @Column(name = Attributes.NAME, nullable = false, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
+  private String full_name;
+
+  @Column(name = Attributes.CONTACT_NUMBER, nullable = false, length = Defaults.DEFAULT_PHONE_LENGTH)
+  private String contactNumber;
+
+  @Column(name = Attributes.FUNCTION, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
+  private String function;
+
+  public Personnel() {}
+
+  public Personnel(String name, String contactNumber, String function) {
+    this.name = name;
+    this.contactNumber = contactNumber;
+    this.function = function;
+  }
+}
