@@ -41,4 +41,7 @@ public class Vehicle extends AuditableEntity {
   @Enumerated(EnumType.STRING)
   @Column(name = Attributes.STATUS, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
   private VehicleStatus status = VehicleStatus.AVAILABLE;
+
+  @Column(name = Attributes.CONTACT_NUMBER, nullable = false, length = Defaults.DEFAULT_PHONE_LENGTH)
+  private String contactNumber;
 }
