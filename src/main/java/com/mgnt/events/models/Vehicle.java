@@ -44,4 +44,7 @@ public class Vehicle extends AuditableEntity {
 
   @Column(name = Attributes.CONTACT_NUMBER, nullable = false, length = Defaults.DEFAULT_PHONE_LENGTH)
   private String contactNumber;
+
+  @Column(name = Attributes.CONTACT_NUMBER, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
+  private String plateNumber;
 }
