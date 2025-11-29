@@ -9,6 +9,7 @@ import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
+import com.mgnt.events.enums.VehicleStatus;
 import com.mgnt.events.enums.VehicleType;
 
 import jakarta.persistence.Column;
@@ -36,4 +37,8 @@ public class Vehicle extends AuditableEntity {
   @Enumerated(EnumType.STRING)
   @Column(name = Attributes.TYPE, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
   private VehicleType type;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = Attributes.STATUS, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
+  private VehicleStatus status = VehicleStatus.AVAILABLE;
 }

@@ -31,6 +31,7 @@ public class Attributes {
   public static final String NOTES = "notes";
   public static final String STATUS = "status";
   public static final String PATH = "path";
+  public static final String PLATE_NUMBER = "plate_number";
   public static final String ROLE = "role";
   public static final String STATUS_CODE = "status_code";
   public static final String STORAGE_KEY = "storage_key";
