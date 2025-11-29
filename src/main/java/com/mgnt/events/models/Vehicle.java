@@ -56,4 +56,13 @@ public class Vehicle extends AuditableEntity {
   @ManyToOne
   @JoinColumn(name = Attributes.PERSONNEL_ID)
   private Personnel assignedPersonnel;
+
+  public Vehicle() {}
+  public Vehicle(String name, VehicleType type, VehicleStatus status, String contactNumber, String plateNumber) {
+    this.name = name;
+    this.type = type;
+    this.status = status;
+    this.contactNumber = contactNumber;
+    this.plateNumber = plateNumber;
+  }
 }
