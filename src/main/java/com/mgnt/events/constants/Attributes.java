@@ -20,6 +20,7 @@ public class Attributes {
   public static final String FILE_NAME = "file_name";
   public static final String FILE_SIZE = "file_size";
   public static final String FIRST_NAME = "first_name";
+  public static final String FULL_NANE = "full_name";
   public static final String IP_ADDRESS = "ip_address";
   public static final String LAST_NAME = "last_name";
   public static final String LATITUDE = "latitude";

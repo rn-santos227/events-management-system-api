@@ -39,8 +39,8 @@ public class Personnel extends AuditableEntity {
 
   public Personnel() {}
 
-  public Personnel(String name, String contactNumber, String function) {
-    this.name = name;
+  public Personnel(String full_name, String contactNumber, String function) {
+    this.full_name = full_name;
     this.contactNumber = contactNumber;
     this.function = function;
   }
