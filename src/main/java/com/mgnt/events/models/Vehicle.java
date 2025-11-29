@@ -19,6 +19,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,4 +49,8 @@ public class Vehicle extends AuditableEntity {
 
   @Column(name = Attributes.CONTACT_NUMBER, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
   private String plateNumber;
+
+  @ManyToOne
+  @JoinColumn(name = Attributes.PERSONNEL_ID)
+  private Personnel assignedPersonnel;
 }
