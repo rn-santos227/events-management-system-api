@@ -9,9 +9,12 @@ import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
+import com.mgnt.events.enums.VenueType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,4 +44,8 @@ public class Venue extends AuditableEntity{
 
   @Column(name = Attributes.CONTACT_NUMBER, length = Defaults.DEFAULT_PHONE_LENGTH)
   private String contactNumber;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = Attributes.TYPE, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
+  private VenueType type;
 }
