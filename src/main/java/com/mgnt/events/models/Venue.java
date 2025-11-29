@@ -61,4 +61,12 @@ public class Venue extends AuditableEntity{
   @ManyToOne
   @JoinColumn(name = Attributes.IMAGE_ID)
   private StoredFile image;
+
+  public Venue() {}
+  public Venue(String name, String address, String contactPerson, VenueType type) {
+    this.name = name;
+    this.address = address;
+    this.contactPerson = contactPerson;
+    this.type = type;
+  }
 }
