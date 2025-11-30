@@ -55,4 +55,7 @@ public class Accomodation extends AuditableEntity {
 
   @Column(name = Attributes.LATITUDE, precision = 9, scale = 6)
   private BigDecimal latitude;
+
+  @Column(name = Attributes.LONGITUDE, precision = 9, scale = 6)
+  private BigDecimal longitude;
 }
