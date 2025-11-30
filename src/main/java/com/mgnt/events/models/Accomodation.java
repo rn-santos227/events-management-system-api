@@ -9,9 +9,12 @@ import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
+import com.mgnt.events.enums.AccomodationType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -44,4 +47,8 @@ public class Accomodation extends AuditableEntity {
 
  @Column(name = Attributes.EMAIL, length = Defaults.DEFAULT_EMAIL_LENGTH)
   private String email;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = Attributes.TYPE, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
+  private AccomodationType type;
 }
