@@ -41,4 +41,7 @@ public class Accomodation extends AuditableEntity {
 
   @Column(name = Attributes.CONTACT_NUMBER, length = Defaults.DEFAULT_PHONE_LENGTH)
   private String contactNumber;
+
+ @Column(name = Attributes.EMAIL, length = Defaults.DEFAULT_EMAIL_LENGTH)
+  private String email;
 }
