@@ -9,5 +9,6 @@ import com.mgnt.events.enums.VehicleStatus;
 import com.mgnt.events.enums.VehicleType;
 
 public record VehicleRequest(
-  @NotBlank(message = "Name is required") @Size(max = 255, message = "Name is too long") String name
+  @NotBlank(message = "Name is required") @Size(max = 255, message = "Name is too long") String name,
+  @NotNull(message = "Type is required") VehicleType type
 ) {}
