@@ -10,7 +10,7 @@ import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
-import com.mgnt.events.enums.AccomodationType;
+import com.mgnt.events.enums.AccommodationType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +31,7 @@ import lombok.Setter;
 @SQLRestriction(Queries.DELETE_RESTRICTION)
 @Getter
 @Setter
-public class Accomodation extends AuditableEntity {
+public class Accommodation extends AuditableEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
@@ -53,7 +53,7 @@ public class Accomodation extends AuditableEntity {
 
   @Enumerated(EnumType.STRING)
   @Column(name = Attributes.TYPE, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
-  private AccomodationType type;
+  private AccommodationType type;
 
   @Column(name = Attributes.LATITUDE, precision = 9, scale = 6)
   private BigDecimal latitude;
@@ -64,4 +64,21 @@ public class Accomodation extends AuditableEntity {
   @ManyToOne
   @JoinColumn(name = Attributes.IMAGE_ID)
   private StoredFile image;
+
+  public Accommodation() {}
+  public Accommodation(
+    String name,
+    String address,
+    String contactPerson,
+    String contactNumber,
+    String email,
+    AccommodationType type)
+  {
+    this.name = name;
+    this.address = address;
+    this.contactPerson = contactPerson;
+    this.contactNumber = contactNumber;
+    this.email = email;
+    this.type = type;
+  }
 }
