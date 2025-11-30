@@ -12,6 +12,7 @@ CREATE TABLE personnel (
   full_name VARCHAR(255) NOT NULL,
   contact_number VARCHAR(20) NOT NULL,
   function VARCHAR(255),
+  email VARCHAR(100) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   deleted_at TIMESTAMP
@@ -37,6 +38,7 @@ CREATE TABLE venues (
   address TEXT NOT NULL,
   contact_person VARCHAR(255) NOT NULL,
   contact_number VARCHAR(20),
+  email VARCHAR(100) NOT NULL,
   type VARCHAR(50) NOT NULL,
   latitude NUMERIC(9,6),
   longitude NUMERIC(9,6),
@@ -53,6 +55,7 @@ CREATE TABLE accommodations (
   address TEXT NOT NULL,
   contact_person VARCHAR(255) NOT NULL,
   contact_number VARCHAR(20),
+  email VARCHAR(100) NOT NULL,
   type VARCHAR(50) NOT NULL,
   latitude NUMERIC(9,6),
   longitude NUMERIC(9,6),
