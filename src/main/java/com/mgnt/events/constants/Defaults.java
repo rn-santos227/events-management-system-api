@@ -15,5 +15,6 @@ public class Defaults {
   public static final int DEFAULT_PHONE_LENGTH = 20;
   public static final int DEFAULT_STORAGE_KEY_LENGTH = 512;
   public static final int DEFAULT_TOKEN_LENGTH = 512;
+  public static final int DEFAULT_TEXT_SIZE = 1024;
   public static final int DEFAULT_URL_LENGTH = 2048;
 }
