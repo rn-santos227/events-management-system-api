@@ -14,5 +14,6 @@ public record VehicleRequest(
   @NotNull(message = "Type is required") VehicleType type,
   @NotNull(message = "Status is required") VehicleStatus status,
   @NotBlank(message = "Plate number is required") @Size(max = 50, message = "Plate number is too long") String plateNumber,
-  @NotBlank(message = "Contact number is required") @Size(max = 20, message = "Contact number is too long") String contactNumber
+  @NotBlank(message = "Contact number is required") @Size(max = 20, message = "Contact number is too long") String contactNumber,
+  UUID assignedPersonnelId
 ) {}
