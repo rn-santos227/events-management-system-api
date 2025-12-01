@@ -58,6 +58,15 @@ public class CategoryService {
   public CategoryResponse create(CategoryRequest request) {
 
   }
+
+  private void validateNameUniqueness(String name, UUID excludeId) {
+    _categoryRepository
+      .findByNameIgnoreCase(name)
+      .filter(existing -> excludeId == null || !existing.getId().equals(excludeId))
+      .ifPresent(existing -> {
+        throw new ResponseStatusException(HttpStatus.CONFLICT, "Category name already exists");
+      });
+  }
   
   private CategoryResponse toResponse(Category category) {
     Category ensuredCategory = Objects.requireNonNull(category, "Category must not be null");
