@@ -56,7 +56,9 @@ public class CategoryService {
 
   @Transactional(rollbackFor = Throwable.class)
   public CategoryResponse create(CategoryRequest request) {
-
+    validateNameUniqueness(request.name(), null);
+    Category category = new Category(request.name(), request.description());
+    return toResponse(_categoryRepository.save(category));
   }
 
   private void validateNameUniqueness(String name, UUID excludeId) {
