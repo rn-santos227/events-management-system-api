@@ -21,5 +21,8 @@ public record VenueRequest(
   @NotNull(message = "Type is required") VenueType type,
   @DecimalMin(value = Defaults.DEG_90_NEGATIVE, message = "Latitude must be greater than or equal to -90")
   @DecimalMax(value = Defaults.DEG_90_POSITIVE, message = "Latitude must be less than or equal to 90")
-  BigDecimal latitude
+  BigDecimal latitude,
+  @DecimalMin(value = Defaults.DEG_180_NEGATIVE, message = "Longitude must be greater than or equal to -180")
+  @DecimalMax(value = Defaults.DEG_180_POSITIVE, message = "Longitude must be less than or equal to 180")
+  BigDecimal longitude
 ) {}
