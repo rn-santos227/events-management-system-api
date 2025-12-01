@@ -61,6 +61,19 @@ public class CategoryService {
     return toResponse(_categoryRepository.save(category));
   }
 
+  @Transactional(rollbackFor = Throwable.class)
+  public CategoryResponse update(UUID id, CategoryRequest request) {
+    Category category = _categoryRepository
+      .findById(RequestValidators.requireNonNull(id, "ID must no be null"))
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+
+    validateNameUniqueness(request.name(), id);
+    category.setName(request.name());
+    category.setDescription(request.description());
+
+    return toResponse(_categoryRepository.save(category));
+  }
+
   private void validateNameUniqueness(String name, UUID excludeId) {
     _categoryRepository
       .findByNameIgnoreCase(name)
