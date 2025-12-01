@@ -16,6 +16,7 @@ import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Category;
 import com.mgnt.events.repositories.CategoryRepository;
+import com.mgnt.events.requests.categories.CategoryRequest;
 import com.mgnt.events.responses.categories.CategoryResponse;
 import com.mgnt.events.util.RequestValidators;
 
@@ -51,6 +52,11 @@ public class CategoryService {
       .findById(RequestValidators.requireNonNull(id, "ID must no be null"))
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
     return toResponse(Objects.requireNonNull(category));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  public CategoryResponse create(CategoryRequest request) {
+
   }
   
   private CategoryResponse toResponse(Category category) {
