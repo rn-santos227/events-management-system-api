@@ -2,6 +2,7 @@ package com.mgnt.events.services;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -40,6 +41,11 @@ public class CategoryService {
       .stream()
       .map(this::toResponse)
       .toList();
+  }
+
+  @Transactional(readOnly = true)
+  public CategoryResponse findById(UUID id) {
+
   }
   
   private CategoryResponse toResponse(Category category) {
