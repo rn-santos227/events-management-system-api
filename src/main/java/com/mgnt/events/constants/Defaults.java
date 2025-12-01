@@ -17,4 +17,9 @@ public class Defaults {
   public static final int DEFAULT_TOKEN_LENGTH = 512;
   public static final int DEFAULT_TEXT_SIZE = 1024;
   public static final int DEFAULT_URL_LENGTH = 2048;
+
+  public static final String DEG_90_POSITIVE = "90.0";
+  public static final String DEG_90_NEGATIVE = "-90.0";
+  public static final String DEG_180_POSITIVE = "180.0";
+  public static final String DEG_180_NEGATIVE = "-180.0";
 }
