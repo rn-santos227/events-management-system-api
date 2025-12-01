@@ -3,6 +3,7 @@ package com.mgnt.events.services;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,11 @@ public class CategoryService {
       return _categoryRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
 
+    return _categoryRepository
+      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .stream()
+      .map(this::toResponse)
+      .toList();
   }
   
   private CategoryResponse toResponse(Category category) {
