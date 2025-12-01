@@ -6,8 +6,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.enums.AccommodationType;
@@ -24,5 +24,6 @@ public record AccommodationRequest(
   BigDecimal latitude,
   @DecimalMin(value = Defaults.DEG_180_NEGATIVE, message = "Longitude must be greater than or equal to -180")
   @DecimalMax(value = Defaults.DEG_180_POSITIVE, message = "Longitude must be less than or equal to 180")
-  BigDecimal longitude
+  BigDecimal longitude,
+  UUID imageId
 ) {}
