@@ -30,9 +30,13 @@ public class CategoryService {
   @Transactional(readOnly = true)
   public List<CategoryResponse> findAll(@Nullable Integer limit) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    if (sanitizedLimit == null) {
+      return _categoryRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    }
+
   }
   
-  private CategoryResponse toRespose(Category category) {
+  private CategoryResponse toResponse(Category category) {
     Category ensuredCategory = Objects.requireNonNull(category, "Category must not be null");
     return new CategoryResponse(
       Objects.requireNonNull(ensuredCategory.getId(), "Category identifier must not be null"),
