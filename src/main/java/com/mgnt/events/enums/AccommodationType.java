@@ -1,6 +1,6 @@
 package com.mgnt.events.enums;
 
-public enum  AccomodationType {
+public enum  AccommodationType {
   HOTEL,
   HOSTEL,
   APARTMENT,
