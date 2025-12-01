@@ -6,9 +6,11 @@ import java.util.UUID;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
@@ -45,7 +47,10 @@ public class CategoryService {
 
   @Transactional(readOnly = true)
   public CategoryResponse findById(UUID id) {
-
+    Category category = _categoryRepository
+      .findById(RequestValidators.requireNonNull(id, "ID must no be null"))
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+    return toResponse(Objects.requireNonNull(category));
   }
   
   private CategoryResponse toResponse(Category category) {
