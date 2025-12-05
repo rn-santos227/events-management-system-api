@@ -8,7 +8,7 @@ public record PersonnelResponse(
   String name,
   String contactNumber,
   String email,
-  String function,
+  String role,
   LocalDateTime createdAt,
   LocalDateTime updatedAt
 ) {}

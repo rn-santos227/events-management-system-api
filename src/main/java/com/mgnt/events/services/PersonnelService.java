@@ -23,5 +23,8 @@ public class PersonnelService {
 
   private PersonnelResponse toRespose(Personnel personnel) {
     Personnel ensuredPersonnel = Objects.requireNonNull(personnel, "Personnel must not be null");
+    return new PersonnelResponse(
+      Objects.requireNonNull(ensuredPersonnel.getId(), "Personnel identifier must not be null")
+    );
   }
 }
