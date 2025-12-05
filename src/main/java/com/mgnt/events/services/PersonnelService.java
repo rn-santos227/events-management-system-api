@@ -17,6 +17,7 @@ import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Personnel;
 import com.mgnt.events.repositories.PersonnelRepository;
+import com.mgnt.events.requests.personnel.PersonnelRequest;
 import com.mgnt.events.responses.personnel.PersonnelResponse;
 import com.mgnt.events.util.RequestValidators;
 
@@ -52,6 +53,12 @@ public class PersonnelService {
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"));
     return toResponse(Objects.requireNonNull(personnel));
+  }
+
+
+  @Transactional(rollbackFor = Throwable.class)
+  public PersonnelResponse create(PersonnelRequest request) {
+    
   }
 
   private PersonnelResponse toResponse(Personnel personnel) {
