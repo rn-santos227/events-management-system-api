@@ -76,7 +76,14 @@ public class CategoryService {
 
   @Transactional(rollbackFor = Throwable.class)
   public void delete(UUID id) {
-
+    Category category = _categoryRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+    _categoryRepository.delete(
+      RequestValidators.requireNonNull(category, "Category must not be null")
+    );
   }
 
   private void validateNameUniqueness(String name, UUID excludeId) {
