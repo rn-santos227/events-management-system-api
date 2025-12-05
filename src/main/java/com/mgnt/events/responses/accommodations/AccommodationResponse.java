@@ -1,4 +1,4 @@
-package com.mgnt.events.responses.accomdations;
+package com.mgnt.events.responses.accommodations;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
