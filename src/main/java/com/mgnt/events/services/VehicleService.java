@@ -31,6 +31,9 @@ public class VehicleService {
   }
 
   private VehiclePersonnelSummary toPersonnelSummary(Personnel personnel) {
-
+    if (personnel == null) {
+      return null;
+    }
+    Personnel ensuredPersonnel = Objects.requireNonNull(personnel, "Personnel must not be null");
   }
 }
