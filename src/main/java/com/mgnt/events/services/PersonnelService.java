@@ -6,10 +6,12 @@ import java.util.UUID;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
@@ -44,7 +46,12 @@ public class PersonnelService {
 
   @Transactional(readOnly = true)
   public PersonnelResponse findById(UUID id) {
-
+    Personnel personnel = _personnelRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"));
+    return toResponse(Objects.requireNonNull(personnel));
   }
 
   private PersonnelResponse toResponse(Personnel personnel) {
