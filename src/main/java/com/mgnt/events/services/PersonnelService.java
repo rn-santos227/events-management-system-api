@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Personnel;
 import com.mgnt.events.repositories.PersonnelRepository;
 import com.mgnt.events.responses.personnel.PersonnelResponse;
+import com.mgnt.events.util.RequestValidators;
 
 @Service
 public class PersonnelService {
@@ -26,10 +28,13 @@ public class PersonnelService {
 
   @Transactional(readOnly = true)
   public List<PersonnelResponse> findAll(@Nullable Integer limit) {
-
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    if (sanitizedLimit == null) {
+      return _personnelRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    }
   }
 
-  private PersonnelResponse toRespose(Personnel personnel) {
+  private PersonnelResponse toResponse(Personnel personnel) {
     Personnel ensuredPersonnel = Objects.requireNonNull(personnel, "Personnel must not be null");
     return new PersonnelResponse(
       Objects.requireNonNull(ensuredPersonnel.getId(), "Personnel identifier must not be null"),
