@@ -55,10 +55,15 @@ public class PersonnelService {
     return toResponse(Objects.requireNonNull(personnel));
   }
 
-
   @Transactional(rollbackFor = Throwable.class)
   public PersonnelResponse create(PersonnelRequest request) {
-    
+    Personnel personnel = new Personnel(
+      request.name(),
+      request.contactNumber(),
+      request.email(),
+      request.role()
+    );
+    return toResponse(_personnelRepository.save(personnel));
   }
 
   private PersonnelResponse toResponse(Personnel personnel) {
