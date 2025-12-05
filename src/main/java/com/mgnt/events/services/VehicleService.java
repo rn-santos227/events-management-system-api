@@ -2,6 +2,8 @@ package com.mgnt.events.services;
 
 import java.util.List;
 import java.util.Objects;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -9,12 +11,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Personnel;
 import com.mgnt.events.models.Vehicle;
 import com.mgnt.events.repositories.PersonnelRepository;
 import com.mgnt.events.repositories.VehicleRepository;
 import com.mgnt.events.responses.vehicles.VehiclePersonnelSummary;
 import com.mgnt.events.responses.vehicles.VehicleResponse;
+import com.mgnt.events.util.RequestValidators;
 
 @Service
 public class VehicleService {
@@ -31,7 +35,16 @@ public class VehicleService {
 
   @Transactional(readOnly = true)
   public List<VehicleResponse> findAll(@Nullable Integer limit) {
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    if (sanitizedLimit == null) {
+      return _vehicleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
+    }
 
+    return _vehicleRepository
+      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .stream()
+      .map(this::toResponse)
+      .toList();
   }
 
   private VehicleResponse toResponse(Vehicle vehicle) {
