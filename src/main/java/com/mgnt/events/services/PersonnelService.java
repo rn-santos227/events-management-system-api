@@ -85,7 +85,14 @@ public class PersonnelService {
 
   @Transactional(rollbackFor = Throwable.class)
   public void delete(UUID id) {
-
+    Personnel personnel = _personnelRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"));
+    _personnelRepository.delete(
+      RequestValidators.requireNonNull(personnel, "Personnel must not be null")
+    );
   }
 
   private PersonnelResponse toResponse(Personnel personnel) {
