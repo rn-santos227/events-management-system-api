@@ -1,11 +1,15 @@
 package com.mgnt.events.services;
 
+import java.util.Objects;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.models.Personnel;
 import com.mgnt.events.repositories.PersonnelRepository;
+import com.mgnt.events.responses.personnel.PersonnelResponse;
 
 @Service
 public class PersonnelService {
@@ -15,5 +19,9 @@ public class PersonnelService {
 
   public PersonnelService(PersonnelRepository personnelRepository) {
     this._personnelRepository = personnelRepository;
+  }
+
+  private PersonnelResponse toRespose(Personnel personnel) {
+    Personnel ensuredPersonnel = Objects.requireNonNull(personnel, "Personnel must not be null");
   }
 }
