@@ -74,6 +74,11 @@ public class CategoryService {
     return toResponse(_categoryRepository.save(category));
   }
 
+  @Transactional(rollbackFor = Throwable.class)
+  public void delete(UUID id) {
+
+  }
+
   private void validateNameUniqueness(String name, UUID excludeId) {
     _categoryRepository
       .findByNameIgnoreCase(name)
