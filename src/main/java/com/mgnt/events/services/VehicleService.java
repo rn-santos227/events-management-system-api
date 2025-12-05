@@ -1,9 +1,12 @@
 package com.mgnt.events.services;
 
+import java.util.List;
 import java.util.Objects;
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.models.Personnel;
@@ -24,6 +27,11 @@ public class VehicleService {
   public VehicleService(VehicleRepository vehicleRepository, PersonnelRepository personnelRepository) {
     this._vehicleRepository = vehicleRepository;
     this._personnelRepository = personnelRepository;
+  }
+
+  @Transactional(readOnly = true)
+  public List<VehicleResponse> findAll(@Nullable Integer limit) {
+
   }
 
   private VehicleResponse toResponse(Vehicle vehicle) {
