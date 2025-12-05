@@ -3,6 +3,8 @@ package com.mgnt.events.services;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -32,6 +34,17 @@ public class PersonnelService {
     if (sanitizedLimit == null) {
       return _personnelRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
+
+   return _personnelRepository
+      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .stream()
+      .map(this::toResponse)
+      .toList();
+  }
+
+  @Transactional(readOnly = true)
+  public PersonnelResponse findById(UUID id) {
+
   }
 
   private PersonnelResponse toResponse(Personnel personnel) {
