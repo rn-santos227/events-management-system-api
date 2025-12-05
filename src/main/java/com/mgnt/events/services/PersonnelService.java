@@ -83,6 +83,11 @@ public class PersonnelService {
     return toResponse(_personnelRepository.save(personnel));
   }
 
+  @Transactional(rollbackFor = Throwable.class)
+  public void delete(UUID id) {
+
+  }
+
   private PersonnelResponse toResponse(Personnel personnel) {
     Personnel ensuredPersonnel = Objects.requireNonNull(personnel, "Personnel must not be null");
     return new PersonnelResponse(
