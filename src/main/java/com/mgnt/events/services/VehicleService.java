@@ -35,5 +35,11 @@ public class VehicleService {
       return null;
     }
     Personnel ensuredPersonnel = Objects.requireNonNull(personnel, "Personnel must not be null");
+    return new VehiclePersonnelSummary(
+      Objects.requireNonNull(ensuredPersonnel.getId(), "Personnel identifier must not be null"),
+      ensuredPersonnel.getFullName(),
+      ensuredPersonnel.getContactNumber(),
+      ensuredPersonnel.getRole()
+    );
   }
 }
