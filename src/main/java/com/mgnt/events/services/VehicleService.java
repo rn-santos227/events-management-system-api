@@ -5,8 +5,10 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.models.Vehicle;
 import com.mgnt.events.repositories.PersonnelRepository;
 import com.mgnt.events.repositories.VehicleRepository;
+import com.mgnt.events.responses.vehicles.VehicleResponse;
 
 @Service
 public class VehicleService {
@@ -19,5 +21,9 @@ public class VehicleService {
   public VehicleService(VehicleRepository vehicleRepository, PersonnelRepository personnelRepository) {
     this._vehicleRepository = vehicleRepository;
     this._personnelRepository = personnelRepository;
+  }
+
+  private VehicleResponse toResponse(Vehicle vehicle) {
+
   }
 }
