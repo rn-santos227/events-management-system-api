@@ -28,6 +28,17 @@ public class VehicleService {
 
   private VehicleResponse toResponse(Vehicle vehicle) {
     Vehicle ensuredVehicle = Objects.requireNonNull(vehicle, "Vehicle must not be null");
+    return new VehicleResponse(
+      Objects.requireNonNull(ensuredVehicle.getId(), "Vehicle identifier must not be null"),
+      ensuredVehicle.getName(),
+      ensuredVehicle.getType(),
+      ensuredVehicle.getStatus(),
+      ensuredVehicle.getPlateNumber(),
+      ensuredVehicle.getContactNumber(),
+      toPersonnelSummary(ensuredVehicle.getAssignedPersonnel()),
+      ensuredVehicle.getCreatedAt(),
+      ensuredVehicle.getUpdatedAt()
+    );
   }
 
   private VehiclePersonnelSummary toPersonnelSummary(Personnel personnel) {
