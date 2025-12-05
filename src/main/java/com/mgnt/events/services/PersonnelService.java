@@ -58,7 +58,7 @@ public class PersonnelService {
   @Transactional(rollbackFor = Throwable.class)
   public PersonnelResponse create(PersonnelRequest request) {
     Personnel personnel = new Personnel(
-      request.name(),
+      request.fullName(),
       request.contactNumber(),
       request.email(),
       request.role()
@@ -74,6 +74,11 @@ public class PersonnelService {
         RequestValidators.requireNonNull(id, "ID must not be null")
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"));
+
+    personnel.setFullName(request.fullName());
+    personnel.setContactNumber(request.contactNumber());
+    personnel.setEmail(request.email());
+    personnel.setRole(request.role());
   }
 
   private PersonnelResponse toResponse(Personnel personnel) {
