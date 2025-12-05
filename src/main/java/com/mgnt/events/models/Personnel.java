@@ -29,19 +29,23 @@ public class Personnel extends AuditableEntity {
   private UUID id;
 
   @Column(name = Attributes.NAME, nullable = false, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
-  private String full_name;
+  private String fullName;
 
   @Column(name = Attributes.CONTACT_NUMBER, nullable = false, length = Defaults.DEFAULT_PHONE_LENGTH)
   private String contactNumber;
 
   @Column(name = Attributes.FUNCTION, length = Defaults.DEFAULT_MAX_STRING_LENGTH)
-  private String function;
+  private String role;
+
+  @Column(name = Attributes.EMAIL, length = Defaults.DEFAULT_EMAIL_LENGTH)
+  private String email;
 
   public Personnel() {}
 
-  public Personnel(String full_name, String contactNumber, String function) {
-    this.full_name = full_name;
+  public Personnel(String fullName, String contactNumber, String role, String email) {
+    this.fullName = fullName;
     this.contactNumber = contactNumber;
-    this.function = function;
+    this.role = role;
+    this.email = email;
   }
 }
