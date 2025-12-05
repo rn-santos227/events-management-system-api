@@ -6,9 +6,11 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.models.Personnel;
 import com.mgnt.events.models.Vehicle;
 import com.mgnt.events.repositories.PersonnelRepository;
 import com.mgnt.events.repositories.VehicleRepository;
+import com.mgnt.events.responses.vehicles.VehiclePersonnelSummary;
 import com.mgnt.events.responses.vehicles.VehicleResponse;
 
 @Service
@@ -26,5 +28,9 @@ public class VehicleService {
 
   private VehicleResponse toResponse(Vehicle vehicle) {
     Vehicle ensuredVehicle = Objects.requireNonNull(vehicle, "Vehicle must not be null");
+  }
+
+  private VehiclePersonnelSummary toPersonnelSummary(Personnel personnel) {
+
   }
 }
