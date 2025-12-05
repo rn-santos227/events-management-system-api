@@ -1,10 +1,13 @@
 package com.mgnt.events.services;
 
+import java.util.List;
 import java.util.Objects;
-
+import java.util.UUID;
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.models.Personnel;
@@ -19,6 +22,11 @@ public class PersonnelService {
 
   public PersonnelService(PersonnelRepository personnelRepository) {
     this._personnelRepository = personnelRepository;
+  }
+
+  @Transactional(readOnly = true)
+  public List<PersonnelResponse> findAll(@Nullable Integer limit) {
+
   }
 
   private PersonnelResponse toRespose(Personnel personnel) {
