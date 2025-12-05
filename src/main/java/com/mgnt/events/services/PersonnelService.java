@@ -79,6 +79,8 @@ public class PersonnelService {
     personnel.setContactNumber(request.contactNumber());
     personnel.setEmail(request.email());
     personnel.setRole(request.role());
+
+    return toResponse(_personnelRepository.save(personnel));
   }
 
   private PersonnelResponse toResponse(Personnel personnel) {
