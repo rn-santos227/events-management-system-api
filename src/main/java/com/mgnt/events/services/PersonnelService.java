@@ -69,7 +69,11 @@ public class PersonnelService {
 
   @Transactional(rollbackFor = Throwable.class)
   public PersonnelResponse update(UUID id, PersonnelRequest request) {
-
+    Personnel personnel = _personnelRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"));
   }
 
   private PersonnelResponse toResponse(Personnel personnel) {
