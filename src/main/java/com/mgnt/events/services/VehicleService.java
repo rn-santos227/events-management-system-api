@@ -1,5 +1,6 @@
 package com.mgnt.events.services;
 
+import java.util.Objects;
 import org.springframework.data.domain.Sort;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,6 @@ public class VehicleService {
   }
 
   private VehicleResponse toResponse(Vehicle vehicle) {
-
+    Vehicle ensuredVehicle = Objects.requireNonNull(vehicle, "Vehicle must not be null");
   }
 }
