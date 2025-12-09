@@ -48,6 +48,9 @@ public class Venue extends AuditableEntity{
   @Column(name = Attributes.CONTACT_NUMBER, length = Defaults.DEFAULT_PHONE_LENGTH)
   private String contactNumber;
 
+  @Column(name = Attributes.EMAIL, length = Defaults.DEFAULT_EMAIL_LENGTH)
+  private String email;
+
   @Enumerated(EnumType.STRING)
   @Column(name = Attributes.TYPE, nullable = false, length = Defaults.DEFAULT_MID_STRING_LENGTH)
   private VenueType type;
