@@ -2,13 +2,16 @@ package com.mgnt.events.services;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
@@ -76,5 +79,15 @@ public class VenueService {
       ensuredFile.getFileName(),
       ensuredFile.getUrl()
     );
+  }
+
+  private StoredFile resolveImage(UUID imageId) {
+    if (imageId == null) {
+      return null;
+    }
+
+    return _storedFileRepository
+      .findById(imageId)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image not found"));
   }
 }
