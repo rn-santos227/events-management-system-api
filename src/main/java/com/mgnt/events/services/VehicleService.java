@@ -19,6 +19,7 @@ import com.mgnt.events.models.Personnel;
 import com.mgnt.events.models.Vehicle;
 import com.mgnt.events.repositories.PersonnelRepository;
 import com.mgnt.events.repositories.VehicleRepository;
+import com.mgnt.events.requests.vehicles.VehicleRequest;
 import com.mgnt.events.responses.vehicles.VehiclePersonnelSummary;
 import com.mgnt.events.responses.vehicles.VehicleResponse;
 import com.mgnt.events.util.RequestValidators;
@@ -58,6 +59,11 @@ public class VehicleService {
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
     return toResponse(Objects.requireNonNull(vehicle));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  public VehicleResponse create(VehicleRequest request) {
+
   }
 
   private VehicleResponse toResponse(Vehicle vehicle) {
