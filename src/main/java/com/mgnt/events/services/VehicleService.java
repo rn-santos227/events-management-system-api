@@ -108,6 +108,18 @@ public class VehicleService {
     );
   }
 
+  @Transactional(rollbackFor = Throwable.class)
+  public void delete(UUID id) {
+    Vehicle vehicle = _vehicleRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
+    _vehicleRepository.delete(
+      RequestValidators.requireNonNull(vehicle, "Vehicle must not be null")
+    );
+  }
+
   private VehiclePersonnelSummary toPersonnelSummary(Personnel personnel) {
     if (personnel == null) {
       return null;
