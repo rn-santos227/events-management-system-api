@@ -70,6 +70,9 @@ public class VehicleService {
       request.plateNumber(),
       request.contactNumber()
     );
+
+    vehicle.setAssignedPersonnel(resolvePersonnel(request.assignedPersonnelId()));
+    return toResponse(_vehicleRepository.save(vehicle));
   }
 
   private VehicleResponse toResponse(Vehicle vehicle) {
