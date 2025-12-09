@@ -6,10 +6,12 @@ import java.util.UUID;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
@@ -50,7 +52,12 @@ public class VehicleService {
 
   @Transactional(readOnly = true)
   public VehicleResponse findById(UUID id) {
-
+    Vehicle vehicle = _vehicleRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
+    return toResponse(Objects.requireNonNull(vehicle));
   }
 
   private VehicleResponse toResponse(Vehicle vehicle) {
