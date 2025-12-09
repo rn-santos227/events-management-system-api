@@ -2,6 +2,7 @@ package com.mgnt.events.services;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -45,6 +46,11 @@ public class VehicleService {
       .stream()
       .map(this::toResponse)
       .toList();
+  }
+
+  @Transactional(readOnly = true)
+  public VehicleResponse findById(UUID id) {
+
   }
 
   private VehicleResponse toResponse(Vehicle vehicle) {
