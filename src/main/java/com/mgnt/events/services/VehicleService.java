@@ -102,4 +102,8 @@ public class VehicleService {
       ensuredPersonnel.getRole()
     );
   }
+
+  private Personnel resolvePersonnel(UUID personnelId) {
+
+  }
 }
