@@ -63,7 +63,13 @@ public class VehicleService {
 
   @Transactional(rollbackFor = Throwable.class)
   public VehicleResponse create(VehicleRequest request) {
-
+    Vehicle vehicle = new Vehicle(
+      request.name(),
+      request.type(),
+      request.status(),
+      request.plateNumber(),
+      request.contactNumber()
+    );
   }
 
   private VehicleResponse toResponse(Vehicle vehicle) {
