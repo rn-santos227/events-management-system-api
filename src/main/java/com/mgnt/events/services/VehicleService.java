@@ -77,7 +77,20 @@ public class VehicleService {
 
   @Transactional(rollbackFor = Throwable.class)
   public VehicleResponse update(UUID id, VehicleRequest request) {
+    Vehicle vehicle = _vehicleRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
 
+    vehicle.setName(request.name());
+    vehicle.setType(request.type());
+    vehicle.setStatus(request.status());
+    vehicle.setPlateNumber(request.plateNumber());
+    vehicle.setContactNumber(request.contactNumber());
+    vehicle.setAssignedPersonnel(resolvePersonnel(request.assignedPersonnelId()));
+
+    return toResponse(_vehicleRepository.save(vehicle));
   }
 
   private VehicleResponse toResponse(Vehicle vehicle) {
