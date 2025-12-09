@@ -75,6 +75,11 @@ public class VehicleService {
     return toResponse(_vehicleRepository.save(vehicle));
   }
 
+  @Transactional(rollbackFor = Throwable.class)
+  public VehicleResponse update(UUID id, VehicleRequest request) {
+
+  }
+
   private VehicleResponse toResponse(Vehicle vehicle) {
     Vehicle ensuredVehicle = Objects.requireNonNull(vehicle, "Vehicle must not be null");
     return new VehicleResponse(
