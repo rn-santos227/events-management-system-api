@@ -104,6 +104,12 @@ public class VehicleService {
   }
 
   private Personnel resolvePersonnel(UUID personnelId) {
+    if (personnelId == null) {
+      return null;
+    }
 
+    return _personnelRepository
+      .findById(personnelId)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Assigned personnel not found"));
   }
 }
