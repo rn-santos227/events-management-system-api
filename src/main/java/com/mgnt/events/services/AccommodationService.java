@@ -79,6 +79,9 @@ public class AccommodationService {
       request.type()
     );
 
+    accommodation.setLatitude(request.latitude());
+    accommodation.setLongitude(request.longitude());
+    accommodation.setImage(resolveImage(request.imageId()));
     return toResponse(_accommodationRepository.save(accommodation));
   }
 
