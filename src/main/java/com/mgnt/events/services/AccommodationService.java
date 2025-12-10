@@ -1,5 +1,6 @@
 package com.mgnt.events.services;
 
+import java.util.Objects;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.lang.NonNull;
@@ -31,5 +32,11 @@ public class AccommodationService {
       return null;
     }
 
+    StoredFile ensuredFile = Objects.requireNonNull(image, "Stored file must not be null");
+    return new StoredFileSummary(
+      Objects.requireNonNull(ensuredFile.getId(), "Stored file identifier must not be null"),
+      ensuredFile.getFileName(),
+      ensuredFile.getUrl()
+    );
   }
 }
