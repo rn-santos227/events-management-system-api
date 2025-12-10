@@ -96,7 +96,11 @@ public class VenueService {
 
   @Transactional(rollbackFor = Throwable.class)
   public void delete(UUID id) {
-
+    Venue venue = _venueRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
 
   }
 
