@@ -47,6 +47,15 @@ public class AccommodationService {
 
   private AccommodationResponse toResponse(Accommodation accommodation) {
     Accommodation ensuredAccommodation = Objects.requireNonNull(accommodation, "Accommodation must not be null");
+    return new AccommodationResponse(
+      Objects.requireNonNull(ensuredAccommodation.getId(), "Accommodation identifier must not be null"),
+      ensuredAccommodation.getName(),
+      ensuredAccommodation.getAddress(),
+      ensuredAccommodation.getContactPerson(),
+      ensuredAccommodation.getContactNumber(),
+      ensuredAccommodation.getEmail(),
+
+    );
   }
 
   private StoredFile resolveImage(UUID imageId) {
