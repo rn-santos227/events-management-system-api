@@ -87,7 +87,9 @@ public class VenueService {
     venue.setContactNumber(request.contactNumber());
     venue.setEmail(request.email());
     venue.setType(request.type());
-
+    venue.setLatitude(request.latitude());
+    venue.setLongitude(request.longitude());
+    venue.setImage(resolveImage(request.imageId()));
 
     return toResponse(_venueRepository.save(venue));
   }
