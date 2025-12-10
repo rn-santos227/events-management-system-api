@@ -68,8 +68,14 @@ public class VenueService {
     venue.setEmail(request.email());
     venue.setLatitude(request.latitude());
     venue.setLongitude(request.longitude());
-    venue.setImage(resolveImage(request.imageId()));  
+    venue.setImage(resolveImage(request.imageId()));
+  
     return toResponse(_venueRepository.save(venue));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  public VenueResponse update(UUID id, VenueRequest request) {
+
   }
 
   private VenueResponse toResponse(Venue venue) {
