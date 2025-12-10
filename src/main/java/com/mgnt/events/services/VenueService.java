@@ -50,6 +50,11 @@ public class VenueService {
       .toList();
   }
 
+  @Transactional(readOnly = true)
+  public VenueResponse findById(UUID id) {
+
+  }
+
   private VenueResponse toResponse(Venue venue) {
     Venue ensuredVenue = Objects.requireNonNull(venue, "Venue must not be null");
     return new VenueResponse(
