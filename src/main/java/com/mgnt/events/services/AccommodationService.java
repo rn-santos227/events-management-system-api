@@ -1,20 +1,25 @@
 package com.mgnt.events.services;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Accommodation;
 import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.AccommodationRepository;
 import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.responses.accommodations.AccommodationResponse;
 import com.mgnt.events.responses.files.StoredFileSummary;
+import com.mgnt.events.util.RequestValidators;
 
 @Service
 public class AccommodationService {
@@ -30,6 +35,11 @@ public class AccommodationService {
   ) {
     this._accommodationRepository = accommodationRepository;
     this._storedFileRepository = storedFileRepository;
+  }
+
+  @Transactional(readOnly = true)
+  public List<AccommodationResponse> findAll(@Nullable Integer limit) {
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
   }
 
   private StoredFileSummary toStoredFileSummary(StoredFile image) {
