@@ -1,6 +1,7 @@
 package com.mgnt.events.services;
 
 import java.util.Objects;
+import java.util.UUID;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.lang.NonNull;
@@ -38,5 +39,9 @@ public class AccommodationService {
       ensuredFile.getFileName(),
       ensuredFile.getUrl()
     );
+  }
+
+  private StoredFile resolveImage(UUID imageId) {
+
   }
 }
