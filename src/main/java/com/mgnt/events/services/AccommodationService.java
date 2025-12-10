@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.lang.NonNull;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.AccommodationRepository;
 import com.mgnt.events.repositories.StoredFileRepository;
+import com.mgnt.events.responses.files.StoredFileSummary;
 
 @Service
 public class AccommodationService {
@@ -22,5 +24,12 @@ public class AccommodationService {
   ) {
     this._accommodationRepository = accommodationRepository;
     this._storedFileRepository = storedFileRepository;
+  }
+
+  private StoredFileSummary toStoredFileSummary(StoredFile image) {
+    if (image == null) {
+      return null;
+    }
+
   }
 }
