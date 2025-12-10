@@ -83,6 +83,9 @@ public class VenueService {
 
     venue.setName(request.name());
     venue.setAddress(request.address());
+    venue.setContactPerson(request.contactPerson());
+    venue.setContactNumber(request.contactNumber());
+
 
     return toResponse(_venueRepository.save(venue));
   }
