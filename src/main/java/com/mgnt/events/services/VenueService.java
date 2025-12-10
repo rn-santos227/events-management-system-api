@@ -19,6 +19,7 @@ import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.models.Venue;
 import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.repositories.VenueRepository;
+import com.mgnt.events.requests.venues.VenueRequest;
 import com.mgnt.events.responses.files.StoredFileSummary;
 import com.mgnt.events.responses.venues.VenueResponse;
 import com.mgnt.events.util.RequestValidators;
@@ -58,6 +59,10 @@ public class VenueService {
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
     return toResponse(Objects.requireNonNull(venue));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  public VenueResponse create(VenueRequest request) {
 
   }
 
