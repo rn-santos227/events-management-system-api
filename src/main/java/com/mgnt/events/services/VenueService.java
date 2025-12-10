@@ -85,6 +85,8 @@ public class VenueService {
     venue.setAddress(request.address());
     venue.setContactPerson(request.contactPerson());
     venue.setContactNumber(request.contactNumber());
+    venue.setEmail(request.email());
+    venue.setType(request.type());
 
 
     return toResponse(_venueRepository.save(venue));
