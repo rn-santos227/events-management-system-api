@@ -3,7 +3,9 @@ package com.mgnt.events.services;
 import java.util.Objects;
 import java.util.UUID;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.lang.NonNull;
 
 import com.mgnt.events.constants.Attributes;
@@ -42,6 +44,12 @@ public class AccommodationService {
   }
 
   private StoredFile resolveImage(UUID imageId) {
+    if (imageId == null) {
+      return null;
+    }
 
+    return _storedFileRepository
+      .findById(imageId)
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Image not found"));
   }
 }
