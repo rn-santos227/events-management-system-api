@@ -54,6 +54,9 @@ public class AccommodationService {
       ensuredAccommodation.getContactPerson(),
       ensuredAccommodation.getContactNumber(),
       ensuredAccommodation.getEmail(),
+      ensuredAccommodation.getType(),
+      ensuredAccommodation.getLatitude(),
+      ensuredAccommodation.getLongitude(),
 
     );
   }
