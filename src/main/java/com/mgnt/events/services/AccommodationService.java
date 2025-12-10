@@ -57,7 +57,9 @@ public class AccommodationService {
       ensuredAccommodation.getType(),
       ensuredAccommodation.getLatitude(),
       ensuredAccommodation.getLongitude(),
-
+      toStoredFileSummary(ensuredAccommodation.getImage()),
+      ensuredAccommodation.getCreatedAt(),
+      ensuredAccommodation.getUpdatedAt()
     );
   }
 
