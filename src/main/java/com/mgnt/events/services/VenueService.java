@@ -52,6 +52,12 @@ public class VenueService {
 
   @Transactional(readOnly = true)
   public VenueResponse findById(UUID id) {
+    Venue venue = _venueRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
+    return toResponse(Objects.requireNonNull(venue));
 
   }
 
