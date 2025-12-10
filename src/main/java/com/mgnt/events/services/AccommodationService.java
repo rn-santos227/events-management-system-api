@@ -70,7 +70,16 @@ public class AccommodationService {
 
   @Transactional(rollbackFor = Throwable.class)
   public AccommodationResponse create(AccommodationRequest request) {
+    Accommodation accommodation = new Accommodation(
+      request.name(),
+      request.address(),
+      request.contactPerson(),
+      request.contactNumber(),
+      request.email(),
+      request.type()
+    );
 
+    return toResponse(_accommodationRepository.save(accommodation));
   }
 
   private StoredFileSummary toStoredFileSummary(StoredFile image) {
