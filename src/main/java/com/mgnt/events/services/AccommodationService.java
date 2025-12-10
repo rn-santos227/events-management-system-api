@@ -9,9 +9,11 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.lang.NonNull;
 
 import com.mgnt.events.constants.Attributes;
+import com.mgnt.events.models.Accommodation;
 import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.AccommodationRepository;
 import com.mgnt.events.repositories.StoredFileRepository;
+import com.mgnt.events.responses.accommodations.AccommodationResponse;
 import com.mgnt.events.responses.files.StoredFileSummary;
 
 @Service
@@ -41,6 +43,10 @@ public class AccommodationService {
       ensuredFile.getFileName(),
       ensuredFile.getUrl()
     );
+  }
+
+  private AccommodationResponse toResponse(Accommodation accommodation) {
+    Accommodation ensuredAccommodation = Objects.requireNonNull(accommodation, "Accommodation must not be null");
   }
 
   private StoredFile resolveImage(UUID imageId) {
