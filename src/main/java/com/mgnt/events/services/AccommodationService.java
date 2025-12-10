@@ -57,6 +57,16 @@ public class AccommodationService {
       .toList();
   }
 
+  @Transactional(readOnly = true)
+  public AccommodationResponse findById(UUID id) {
+    Accommodation accommodation = _accommodationRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accommodation not found"));
+    return toResponse(Objects.requireNonNull(accommodation));
+  }
+
   private StoredFileSummary toStoredFileSummary(StoredFile image) {
     if (image == null) {
       return null;
