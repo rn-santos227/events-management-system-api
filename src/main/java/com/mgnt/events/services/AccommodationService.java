@@ -19,6 +19,7 @@ import com.mgnt.events.models.Accommodation;
 import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.AccommodationRepository;
 import com.mgnt.events.repositories.StoredFileRepository;
+import com.mgnt.events.requests.accommodations.AccommodationRequest;
 import com.mgnt.events.responses.accommodations.AccommodationResponse;
 import com.mgnt.events.responses.files.StoredFileSummary;
 import com.mgnt.events.util.RequestValidators;
@@ -65,6 +66,11 @@ public class AccommodationService {
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accommodation not found"));
     return toResponse(Objects.requireNonNull(accommodation));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  public AccommodationResponse create(AccommodationRequest request) {
+
   }
 
   private StoredFileSummary toStoredFileSummary(StoredFile image) {
