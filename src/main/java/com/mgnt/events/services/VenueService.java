@@ -63,7 +63,10 @@ public class VenueService {
 
   @Transactional(rollbackFor = Throwable.class)
   public VenueResponse create(VenueRequest request) {
+    Venue venue = new Venue(request.name(), request.address(), request.contactPerson(), request.type());
 
+  
+    return toResponse(_venueRepository.save(venue));
   }
 
   private VenueResponse toResponse(Venue venue) {
