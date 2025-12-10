@@ -3,6 +3,8 @@ package com.mgnt.events.services;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -40,6 +42,19 @@ public class AccommodationService {
   @Transactional(readOnly = true)
   public List<AccommodationResponse> findAll(@Nullable Integer limit) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+   if (sanitizedLimit == null) {
+      return _accommodationRepository
+        .findAll(DEFAULT_SORT)
+        .stream()
+        .map(this::toResponse)
+        .toList();
+    }
+
+    return _accommodationRepository
+      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .stream()
+      .map(this::toResponse)
+      .toList();
   }
 
   private StoredFileSummary toStoredFileSummary(StoredFile image) {
