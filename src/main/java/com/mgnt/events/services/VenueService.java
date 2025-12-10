@@ -81,6 +81,10 @@ public class VenueService {
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
 
+    venue.setName(request.name());
+    venue.setAddress(request.address());
+
+    return toResponse(_venueRepository.save(venue));
   }
 
   private VenueResponse toResponse(Venue venue) {
