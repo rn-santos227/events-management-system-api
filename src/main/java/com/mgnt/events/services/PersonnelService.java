@@ -90,9 +90,10 @@ public class PersonnelService {
         RequestValidators.requireNonNull(id, "ID must not be null")
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"));
-    _personnelRepository.delete(
-      RequestValidators.requireNonNull(personnel, "Personnel must not be null")
-    );
+
+    if(personnel != null) {
+      _personnelRepository.delete(personnel);
+    }
   }
 
   private PersonnelResponse toResponse(Personnel personnel) {
