@@ -87,6 +87,11 @@ public class AccommodationService {
 
   @Transactional(rollbackFor = Throwable.class)
   public AccommodationResponse update(UUID id, AccommodationRequest request) {
+    Accommodation accommodation = _accommodationRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accommodation not found"));
 
   }
 
