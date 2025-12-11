@@ -17,6 +17,7 @@ import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Personnel;
 import com.mgnt.events.repositories.PersonnelRepository;
+import com.mgnt.events.repositories.VehicleRepository;
 import com.mgnt.events.requests.personnel.PersonnelRequest;
 import com.mgnt.events.responses.personnel.PersonnelResponse;
 import com.mgnt.events.util.RequestValidators;
@@ -25,10 +26,16 @@ import com.mgnt.events.util.RequestValidators;
 public class PersonnelService {
   @NonNull
   private static final Sort DEFAULT_SORT = Sort.by(Sort.Direction.ASC, Attributes.NAME);
-  private final PersonnelRepository _personnelRepository;
 
-  public PersonnelService(PersonnelRepository personnelRepository) {
+  private final PersonnelRepository _personnelRepository;
+  private final VehicleRepository _vehicleRepository;
+
+  public PersonnelService(
+    PersonnelRepository personnelRepository,
+    VehicleRepository vehicleRepository
+  ) {
     this._personnelRepository = personnelRepository;
+    this._vehicleRepository = vehicleRepository;
   }
 
   @Transactional(readOnly = true)
