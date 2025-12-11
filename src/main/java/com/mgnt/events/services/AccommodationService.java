@@ -108,7 +108,11 @@ public class AccommodationService {
 
   @Transactional(rollbackFor = Throwable.class)
   public void delete(UUID id) {
-
+    Accommodation accommodation = _accommodationRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
   }
 
   private StoredFileSummary toStoredFileSummary(StoredFile image) {
