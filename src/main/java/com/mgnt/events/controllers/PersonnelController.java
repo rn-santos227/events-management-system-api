@@ -23,8 +23,6 @@ import com.mgnt.events.responses.personnel.PersonnelResponse;
 import com.mgnt.events.services.PersonnelService;
 import com.mgnt.events.util.RequestValidators;
 
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping(Routes.PERSONNEL)
 public class PersonnelController {
@@ -46,5 +44,10 @@ public class PersonnelController {
   @ResponseStatus(HttpStatus.CREATED)
   public PersonnelResponse create(@Valid @RequestBody PersonnelRequest request) {
     return _personnelService.create(request);
+  }
+
+  @PutMapping(Routes.APPEND_ID)
+  public PersonnelResponse update(@PathVariable @NonNull UUID id, @Valid @RequestBody PersonnelRequest request) {
+    return _personnelService.update(id, request);
   }
 }
