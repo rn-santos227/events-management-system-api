@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,5 +56,11 @@ public class CategoryController {
   @PutMapping(Routes.APPEND_ID)
   public CategoryResponse update(@PathVariable @NonNull UUID id, @Valid @RequestBody CategoryRequest request) {
     return _categoryService.update(id, request);
+  }
+
+  @DeleteMapping(Routes.APPEND_ID)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable @NonNull UUID id) {
+    _categoryService.delete(id);
   }
 }
