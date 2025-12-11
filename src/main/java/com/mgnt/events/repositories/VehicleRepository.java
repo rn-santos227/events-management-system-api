@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.mgnt.events.models.Vehicle;
 
 @Repository
-public interface VehicleRepository extends JpaRepository<Vehicle, UUID> {}
+public interface VehicleRepository extends JpaRepository<Vehicle, UUID> {
+  boolean existsByAssignedPersonnelIdAndDeletedAtIsNull(UUID personnelId);
+}
