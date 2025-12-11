@@ -96,6 +96,10 @@ public class AccommodationService {
     accommodation.setName(request.name());
     accommodation.setAddress(request.address());
     accommodation.setContactPerson(request.contactPerson());
+    accommodation.setContactNumber(request.contactNumber());
+    accommodation.setEmail(request.email());
+    accommodation.setType(request.type());
+
 
     return toResponse(_accommodationRepository.save(accommodation));
   }
