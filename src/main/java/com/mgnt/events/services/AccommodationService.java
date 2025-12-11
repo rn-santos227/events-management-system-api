@@ -99,7 +99,9 @@ public class AccommodationService {
     accommodation.setContactNumber(request.contactNumber());
     accommodation.setEmail(request.email());
     accommodation.setType(request.type());
-
+    accommodation.setLatitude(request.latitude());
+    accommodation.setLongitude(request.longitude());
+    accommodation.setImage(resolveImage(request.imageId()));
 
     return toResponse(_accommodationRepository.save(accommodation));
   }
