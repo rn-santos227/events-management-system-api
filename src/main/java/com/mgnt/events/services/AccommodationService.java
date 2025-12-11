@@ -106,6 +106,11 @@ public class AccommodationService {
     return toResponse(_accommodationRepository.save(accommodation));
   }
 
+  @Transactional(rollbackFor = Throwable.class)
+  public void delete(UUID id) {
+
+  }
+
   private StoredFileSummary toStoredFileSummary(StoredFile image) {
     if (image == null) {
       return null;
