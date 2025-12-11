@@ -112,7 +112,11 @@ public class AccommodationService {
       .findById(
         RequestValidators.requireNonNull(id, "ID must not be null")
       )
-      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accommodation not found"));
+      
+    if (accommodation != null) {
+      _accommodationRepository.delete(accommodation);
+    }
   }
 
   private StoredFileSummary toStoredFileSummary(StoredFile image) {
