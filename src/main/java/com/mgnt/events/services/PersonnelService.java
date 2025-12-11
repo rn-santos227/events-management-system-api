@@ -97,6 +97,13 @@ public class PersonnelService {
         RequestValidators.requireNonNull(id, "ID must not be null")
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"));
+    
+      if (_vehicleRepository.existsByAssignedPersonnelIdAndDeletedAtIsNull(id)) {
+      throw new ResponseStatusException(
+        HttpStatus.CONFLICT,
+        "Personnel assigned to a vehicle cannot be deleted"
+      );
+    }
 
     if(personnel != null) {
       _personnelRepository.delete(personnel);
