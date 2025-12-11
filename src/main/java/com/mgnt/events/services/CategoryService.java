@@ -1,9 +1,9 @@
 package com.mgnt.events.services;
 
+import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,6 @@ import com.mgnt.events.repositories.CategoryRepository;
 import com.mgnt.events.requests.categories.CategoryRequest;
 import com.mgnt.events.responses.categories.CategoryResponse;
 import com.mgnt.events.util.RequestValidators;
-
-import jakarta.annotation.Nullable;
 
 @Service
 public class CategoryService {
