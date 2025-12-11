@@ -115,9 +115,10 @@ public class VehicleService {
         RequestValidators.requireNonNull(id, "ID must not be null")
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
-    _vehicleRepository.delete(
-      RequestValidators.requireNonNull(vehicle, "Vehicle must not be null")
-    );
+
+    if(vehicle != null) {
+      _vehicleRepository.delete(vehicle);
+    }
   }
 
   private VehiclePersonnelSummary toPersonnelSummary(Personnel personnel) {
