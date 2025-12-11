@@ -101,9 +101,10 @@ public class VenueService {
         RequestValidators.requireNonNull(id, "ID must not be null")
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"));
-    _venueRepository.delete(
-        RequestValidators.requireNonNull(venue, "Venue must not be null")
-    );
+
+    if(venue != null) {
+      _venueRepository.delete(venue);
+    }
   }
 
   private VenueResponse toResponse(Venue venue) {
