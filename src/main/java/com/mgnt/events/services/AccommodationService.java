@@ -85,6 +85,11 @@ public class AccommodationService {
     return toResponse(_accommodationRepository.save(accommodation));
   }
 
+  @Transactional(rollbackFor = Throwable.class)
+  public AccommodationResponse update(UUID id, AccommodationRequest request) {
+
+  }
+
   private StoredFileSummary toStoredFileSummary(StoredFile image) {
     if (image == null) {
       return null;
