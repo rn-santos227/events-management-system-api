@@ -50,4 +50,10 @@ public class PersonnelController {
   public PersonnelResponse update(@PathVariable @NonNull UUID id, @Valid @RequestBody PersonnelRequest request) {
     return _personnelService.update(id, request);
   }
+
+  @DeleteMapping(Routes.APPEND_ID)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable @NonNull UUID id) {
+    _personnelService.delete(id);
+  }
 }
