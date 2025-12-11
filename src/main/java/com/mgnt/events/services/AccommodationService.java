@@ -93,6 +93,11 @@ public class AccommodationService {
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accommodation not found"));
 
+    accommodation.setName(request.name());
+    accommodation.setAddress(request.address());
+    accommodation.setContactPerson(request.contactPerson());
+
+    return toResponse(_accommodationRepository.save(accommodation));
   }
 
   private StoredFileSummary toStoredFileSummary(StoredFile image) {
