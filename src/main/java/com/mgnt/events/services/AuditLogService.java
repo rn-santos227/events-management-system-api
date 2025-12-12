@@ -1,11 +1,16 @@
 package com.mgnt.events.services;
 
-import jakarta.servlet.http.HttpServletRequest;
+import static com.mgnt.events.constants.Cache.AUDIT_LOGS;
+import static com.mgnt.events.constants.Cache.AUDIT_LOGS_BY_USER;
+import static com.mgnt.events.constants.Cache.KEY;
+import static com.mgnt.events.constants.Cache.KEY_ALL;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -35,6 +40,7 @@ public class AuditLogService {
     this._auditLogRepository = auditLogRepository;
   }
 
+  @CacheEvict(cacheNames = { AUDIT_LOGS, AUDIT_LOGS_BY_USER }, allEntries = true)
   public void record(String action, HttpServletRequest request, int statusCode, String message) {
     AuditLog auditLog = new AuditLog();
     auditLog.setAction(action);

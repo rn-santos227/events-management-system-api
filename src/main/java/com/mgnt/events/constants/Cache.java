@@ -5,6 +5,8 @@ public final class Cache {
 
   public static final String ACCOMMODATIONS = "accommodations";
   public static final String ACCOMMODATION_BY_ID = "accommodation-by-id";
+  public static final String AUDIT_LOGS = "audit-logs";
+  public static final String AUDIT_LOGS_BY_USER = "audit-logs-by-user";
   public static final String CATEGORIES = "categories";
   public static final String CATEGORY_BY_ID = "category-by-id";
   public static final String PERSONNEL = "personnel";
@@ -13,5 +15,7 @@ public final class Cache {
   public static final String VEHICLE_BY_ID = "vehicle-by-id";
   public static final String VENUES = "venues";
   public static final String VENUE_BY_ID = "venue-by-id";
+
   public static final String KEY = "T(String).format('%s:%s', #limit?:'all', #page?:'all')";
+  public static final String KEY_ALL = "#limit?:'all'";
 }
