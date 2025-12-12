@@ -51,9 +51,9 @@ public class AccommodationService {
     cacheNames = ACCOMMODATIONS,
     key = KEY
   )
-  public List<AccommodationResponse> findAll(@Nullable Integer limit) {
+  public List<AccommodationResponse> findAll(@Nullable Integer limit, @Nullable Integer page) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
-   if (sanitizedLimit == null) {
+    if (sanitizedLimit == null) {
       return _accommodationRepository
         .findAll(DEFAULT_SORT)
         .stream()

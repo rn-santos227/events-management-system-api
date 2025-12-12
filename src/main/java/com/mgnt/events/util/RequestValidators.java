@@ -46,7 +46,7 @@ public final class RequestValidators {
     }
     return requirePositive(value, attributeName);
   }
-
+  
   public static int requirePositive(Integer value, String attributeName, HttpStatus status) {
     if (status == null) {
       throw new IllegalArgumentException("HttpStatusCode must not be null");
@@ -65,6 +65,15 @@ public final class RequestValidators {
         String.format("%s must be greater than zero", attributeName)
       );
     }
+    return value;
+  }
+
+
+  public static int requireNonNegative(
+    Integer value,
+    String attributeName,
+    HttpStatus status
+  ) {
     return value;
   }
 
