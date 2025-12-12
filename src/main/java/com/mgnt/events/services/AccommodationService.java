@@ -53,6 +53,9 @@ public class AccommodationService {
   )
   public List<AccommodationResponse> findAll(@Nullable Integer limit, @Nullable Integer page) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    Integer sanitizedPage =
+      sanitizedLimit == null ? null : RequestValidators.requireNonNegativeOrNull(page, Queries.PAGE);
+
     if (sanitizedLimit == null) {
       return _accommodationRepository
         .findAll(DEFAULT_SORT)
@@ -61,8 +64,9 @@ public class AccommodationService {
         .toList();
     }
 
+    int resolvedPage = sanitizedPage != null ? sanitizedPage.intValue() : 0;
     return _accommodationRepository
-      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .findAll(PageRequest.of(resolvedPage, sanitizedLimit, DEFAULT_SORT))
       .stream()
       .map(this::toResponse)
       .toList();
