@@ -15,6 +15,11 @@ public final class PrivilegeActions {
   public static final String FILES_UPLOAD = "files:upload";
   public static final String FILES_DELETE = "files:delete";
 
+  public static final String ACCOMMODATIONS_CREATE = "accommodations:create";
+  public static final String ACCOMMODATIONS_READ = "accommodations:read";
+  public static final String ACCOMMODATIONS_UPDATE = "accommodations:update";
+  public static final String ACCOMMODATIONS_DELETE = "accommodations:delete";
+
   public static final String CATEGORIES_CREATE = "categories:create";
   public static final String CATEGORIES_READ = "categories:read";
   public static final String CATEGORIES_UPDATE = "categories:update";
