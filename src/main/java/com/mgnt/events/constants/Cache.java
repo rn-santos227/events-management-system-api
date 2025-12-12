@@ -18,4 +18,5 @@ public final class Cache {
 
   public static final String KEY = "T(String).format('%s:%s', #limit?:'all', #page?:'all')";
   public static final String KEY_ALL = "#limit?:'all'";
+  public static final String KEY_USER = "T(String).format('%s:%s', T(java.util.Objects).requireNonNull(#root.target.requireUser()).getId(), #limit?:'all')";
 }

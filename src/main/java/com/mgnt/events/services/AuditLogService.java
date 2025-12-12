@@ -4,6 +4,7 @@ import static com.mgnt.events.constants.Cache.AUDIT_LOGS;
 import static com.mgnt.events.constants.Cache.AUDIT_LOGS_BY_USER;
 import static com.mgnt.events.constants.Cache.KEY;
 import static com.mgnt.events.constants.Cache.KEY_ALL;
+import static com.mgnt.events.constants.Cache.KEY_USER;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -55,6 +56,7 @@ public class AuditLogService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = AUDIT_LOGS, key = KEY_ALL)
   public List<AuditLogResponse> findAll(@Nullable Integer limit) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
     if (sanitizedLimit == null) {
@@ -69,11 +71,13 @@ public class AuditLogService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = AUDIT_LOGS_BY_USER, key = KEY)
   public List<AuditLogResponse> findByUserId(@NonNull UUID userId, @Nullable Integer limit) {
     return applyUserLimit(userId, limit).stream().map(this::toResponse).toList();
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = AUDIT_LOGS_BY_USER, key = KEY_USER)
   public List<AuditLogResponse> findForAuthenticatedUser(@Nullable Integer limit) {
     User user = requireUser();
     return applyUserLimit(Objects.requireNonNull(user.getId(), "User identifier must not be null"), limit)
