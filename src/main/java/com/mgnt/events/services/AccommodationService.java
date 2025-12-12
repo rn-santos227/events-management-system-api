@@ -83,6 +83,7 @@ public class AccommodationService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { ACCOMMODATIONS, ACCOMMODATION_BY_ID }, allEntries = true)
   public AccommodationResponse create(AccommodationRequest request) {
     Accommodation accommodation = new Accommodation(
       request.name(),
