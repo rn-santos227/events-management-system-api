@@ -13,4 +13,5 @@ public final class Cache {
   public static final String VEHICLE_BY_ID = "vehicle-by-id";
   public static final String VENUES = "venues";
   public static final String VENUE_BY_ID = "venue-by-id";
+  public static final String KEY = "T(String).format('%s:%s', #limit?:'all', #page?:'all')";
 }
