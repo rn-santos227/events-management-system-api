@@ -74,6 +74,24 @@ public final class RequestValidators {
     String attributeName,
     HttpStatus status
   ) {
+    if (status == null) {
+      throw new IllegalArgumentException("HttpStatusCode must not be null");
+    }
+
+    if (value == null) {
+      throw new ResponseStatusException(
+        status,
+        String.format("%s must not be null", attributeName)
+      );
+    }
+
+    if (value.intValue() < 0) {
+      throw new ResponseStatusException(
+        status,
+        String.format("%s must be zero or greater", attributeName)
+      );
+    }
+
     return value;
   }
 
