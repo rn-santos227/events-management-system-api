@@ -69,6 +69,11 @@ public final class RequestValidators {
   }
 
 
+  @Nullable
+  public static Integer requireNonNegativeOrNull(@Nullable Integer value, String attributeName) {
+
+  }
+
   public static int requireNonNegative(
     Integer value,
     String attributeName,
