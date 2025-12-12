@@ -68,10 +68,16 @@ public final class RequestValidators {
     return value;
   }
 
+  public static int requireNonNegative(Integer value, String attributeName) {
+    return requireNonNegative(value, attributeName, HttpStatus.BAD_REQUEST);
+  }
 
   @Nullable
   public static Integer requireNonNegativeOrNull(@Nullable Integer value, String attributeName) {
-
+    if (value == null) {
+      return null;
+    }
+    return requireNonNegative(value, attributeName);
   }
 
   public static int requireNonNegative(
