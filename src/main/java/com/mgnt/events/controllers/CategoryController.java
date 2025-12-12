@@ -36,10 +36,12 @@ public class CategoryController {
 
   @GetMapping
   public List<CategoryResponse> findAll(
-    @RequestParam(name = Queries.LIMIT, required = false) Integer limit
+    @RequestParam(name = Queries.LIMIT, required = false) Integer limit,
+    @RequestParam(name = Queries.PAGE, required = false) Integer page
   ) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
-    return _categoryService.findAll(sanitizedLimit);
+    Integer sanitizedPage = RequestValidators.requireNonNegativeOrNull(page, Queries.PAGE);
+    return _categoryService.findAll(sanitizedLimit, sanitizedPage);
   }
 
   @GetMapping(Routes.APPEND_ID)
