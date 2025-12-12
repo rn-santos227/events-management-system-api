@@ -29,4 +29,9 @@ public final class PrivilegeActions {
   public static final String VEHICLES_READ = "vehicles:read";
   public static final String VEHICLES_UPDATE = "vehicles:update";
   public static final String VEHICLES_DELETE = "vehicles:delete";
+
+  public static final String VENUES_CREATE = "venues:create";
+  public static final String VENUES_READ = "venues:read";
+  public static final String VENUES_UPDATE = "venues:update";
+  public static final String VENUES_DELETE = "venues:delete";
 }
