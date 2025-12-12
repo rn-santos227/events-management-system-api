@@ -101,6 +101,7 @@ public class AccommodationService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { ACCOMMODATIONS, ACCOMMODATION_BY_ID }, allEntries = true)
   public AccommodationResponse update(UUID id, AccommodationRequest request) {
     Accommodation accommodation = _accommodationRepository
       .findById(
