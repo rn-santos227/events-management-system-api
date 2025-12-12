@@ -34,10 +34,12 @@ public class AccommodationController {
 
   @GetMapping
   public List<AccommodationResponse> findAll(
-    @RequestParam(name = Queries.LIMIT, required = false) Integer limit
+    @RequestParam(name = Queries.LIMIT, required = false) Integer limit,
+    @RequestParam(name = Queries.PAGE, required = false) Integer page
   ) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
-    return _accommodationService.findAll(sanitizedLimit);
+    Integer sanitizedPage = RequestValidators.requireNonNegativeOrNull(page, Queries.PAGE);
+    return _accommodationService.findAll(sanitizedLimit, sanitizedPage);
   }
 
   @GetMapping(Routes.APPEND_ID)
