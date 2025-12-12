@@ -56,6 +56,7 @@ public class CategoryService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = CATEGORY_BY_ID, key = "#id")
   public CategoryResponse findById(UUID id) {
     Category category = _categoryRepository
       .findById(RequestValidators.requireNonNull(id, "ID must no be null"))
@@ -64,6 +65,7 @@ public class CategoryService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { CATEGORIES, CATEGORY_BY_ID }, allEntries = true)
   public CategoryResponse create(CategoryRequest request) {
     validateNameUniqueness(request.name(), null);
     Category category = new Category(request.name(), request.description());
@@ -71,6 +73,7 @@ public class CategoryService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { CATEGORIES, CATEGORY_BY_ID }, allEntries = true)
   public CategoryResponse update(UUID id, CategoryRequest request) {
     Category category = _categoryRepository
       .findById(RequestValidators.requireNonNull(id, "ID must no be null"))
@@ -84,6 +87,7 @@ public class CategoryService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { CATEGORIES, CATEGORY_BY_ID }, allEntries = true)
   public void delete(UUID id) {
     Category category = _categoryRepository
       .findById(
