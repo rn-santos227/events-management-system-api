@@ -123,6 +123,7 @@ public class AccommodationService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { ACCOMMODATIONS, ACCOMMODATION_BY_ID }, allEntries = true)
   public void delete(UUID id) {
     Accommodation accommodation = _accommodationRepository
       .findById(
