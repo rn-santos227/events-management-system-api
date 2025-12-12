@@ -47,10 +47,7 @@ public class AccommodationService {
   }
 
   @Transactional(readOnly = true)
-  @Cacheable(
-    cacheNames = ACCOMMODATIONS,
-    key = KEY
-  )
+  @Cacheable(cacheNames = ACCOMMODATIONS, key = KEY)
   public List<AccommodationResponse> findAll(@Nullable Integer limit, @Nullable Integer page) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
     Integer sanitizedPage =

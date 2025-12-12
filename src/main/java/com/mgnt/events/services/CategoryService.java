@@ -1,9 +1,15 @@
 package com.mgnt.events.services;
 
+import static com.mgnt.events.constants.Cache.CATEGORIES;
+import static com.mgnt.events.constants.Cache.CATEGORY_BY_ID;
+import static com.mgnt.events.constants.Cache.KEY;
+
 import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -31,8 +37,12 @@ public class CategoryService {
   }
 
   @Transactional(readOnly = true)
-  public List<CategoryResponse> findAll(@Nullable Integer limit) {
+  @Cacheable(cacheNames = CATEGORIES, key = KEY)
+  public List<CategoryResponse> findAll(@Nullable Integer limit, @Nullable Integer page) {  
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    Integer sanitizedPage =
+      sanitizedLimit == null ? null : RequestValidators.requireNonNegativeOrNull(page, Queries.PAGE);
+
     if (sanitizedLimit == null) {
       return _categoryRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
