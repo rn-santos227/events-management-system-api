@@ -20,4 +20,10 @@ public final class PrivilegeActions {
   public static final String CATEGORIES_UPDATE = "categories:update";
   public static final String CATEGORIES_DELETE = "categories:delete";
 
+  public static final String PERSONNEL_CREATE = "personnel:create";
+  public static final String PERSONNEL_READ = "personnel:read";
+  public static final String PERSONNEL_UPDATE = "personnel:update";
+  public static final String PERSONNEL_DELETE = "personnel:delete";
+
+
 }
