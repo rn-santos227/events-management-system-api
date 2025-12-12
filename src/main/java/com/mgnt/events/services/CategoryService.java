@@ -47,8 +47,9 @@ public class CategoryService {
       return _categoryRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
 
+    int resolvedPage = sanitizedPage != null ? sanitizedPage.intValue() : 0;
     return _categoryRepository
-      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+     .findAll(PageRequest.of(resolvedPage, sanitizedLimit, DEFAULT_SORT))
       .stream()
       .map(this::toResponse)
       .toList();
