@@ -1,9 +1,15 @@
 package com.mgnt.events.services;
 
+import static com.mgnt.events.constants.Cache.VEHICLE_BY_ID;
+import static com.mgnt.events.constants.Cache.VEHICLES;
+import static com.mgnt.events.constants.Cache.KEY;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -38,20 +44,26 @@ public class VehicleService {
   }
 
   @Transactional(readOnly = true)
-  public List<VehicleResponse> findAll(@Nullable Integer limit) {
+  @Cacheable(cacheNames = VEHICLES, key = KEY)
+  public List<VehicleResponse> findAll(@Nullable Integer limit, @Nullable Integer page) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    Integer sanitizedPage =
+      sanitizedLimit == null ? null : RequestValidators.requireNonNegativeOrNull(page, Queries.PAGE);
     if (sanitizedLimit == null) {
       return _vehicleRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
 
+    int resolvedPage = sanitizedPage != null ? sanitizedPage.intValue() : 0;
+
     return _vehicleRepository
-      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .findAll(PageRequest.of(resolvedPage, sanitizedLimit, DEFAULT_SORT))
       .stream()
       .map(this::toResponse)
       .toList();
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = VEHICLE_BY_ID, key = "#id")
   public VehicleResponse findById(UUID id) {
     Vehicle vehicle = _vehicleRepository
       .findById(
@@ -62,6 +74,7 @@ public class VehicleService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { VEHICLES, VEHICLE_BY_ID }, allEntries = true)
   public VehicleResponse create(VehicleRequest request) {
     Vehicle vehicle = new Vehicle(
       request.name(),
@@ -76,6 +89,7 @@ public class VehicleService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { VEHICLES, VEHICLE_BY_ID }, allEntries = true)
   public VehicleResponse update(UUID id, VehicleRequest request) {
     Vehicle vehicle = _vehicleRepository
       .findById(
@@ -109,6 +123,7 @@ public class VehicleService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { VEHICLES, VEHICLE_BY_ID }, allEntries = true)
   public void delete(UUID id) {
     Vehicle vehicle = _vehicleRepository
       .findById(
