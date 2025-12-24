@@ -63,6 +63,7 @@ public class PersonnelService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = PERSONNEL_BY_ID, key = "#id")
   public PersonnelResponse findById(UUID id) {
     Personnel personnel = _personnelRepository
       .findById(
@@ -73,6 +74,7 @@ public class PersonnelService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { PERSONNEL, PERSONNEL_BY_ID }, allEntries = true)
   public PersonnelResponse create(PersonnelRequest request) {
     Personnel personnel = new Personnel(
       request.fullName(),
@@ -85,6 +87,7 @@ public class PersonnelService {
 
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { PERSONNEL, PERSONNEL_BY_ID }, allEntries = true)
   public PersonnelResponse update(UUID id, PersonnelRequest request) {
     Personnel personnel = _personnelRepository
       .findById(
@@ -101,6 +104,7 @@ public class PersonnelService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { PERSONNEL, PERSONNEL_BY_ID }, allEntries = true)
   public void delete(UUID id) {
     Personnel personnel = _personnelRepository
       .findById(
