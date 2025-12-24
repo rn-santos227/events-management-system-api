@@ -34,10 +34,12 @@ public class PersonnelController {
 
   @GetMapping
   public List<PersonnelResponse> findAll(
-    @RequestParam(name = Queries.LIMIT, required = true) Integer limit
+    @RequestParam(name = Queries.LIMIT, required = false) Integer limit,
+    @RequestParam(name = Queries.PAGE, required = false) Integer page
   ) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
-    return _personnelService.findAll(sanitizedLimit);
+    Integer sanitizedPage = RequestValidators.requireNonNegativeOrNull(page, Queries.PAGE);
+    return _personnelService.findAll(sanitizedLimit, sanitizedPage);
   }
 
   @PostMapping
