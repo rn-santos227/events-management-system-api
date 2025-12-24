@@ -45,14 +45,18 @@ public class PersonnelService {
 
   @Transactional(readOnly = true)
   @Cacheable(cacheNames = PERSONNEL, key = KEY)
-  public List<PersonnelResponse> findAll(@Nullable Integer limit) {
+  public List<PersonnelResponse> findAll(@Nullable Integer limit, @Nullable Integer page) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    Integer sanitizedPage =
+      sanitizedLimit == null ? null : RequestValidators.requireNonNegativeOrNull(page, Queries.PAGE);
+
     if (sanitizedLimit == null) {
       return _personnelRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
 
-   return _personnelRepository
-      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+    int resolvedPage = sanitizedPage != null ? sanitizedPage.intValue() : 0;
+    return _personnelRepository
+      .findAll(PageRequest.of(resolvedPage, sanitizedLimit, DEFAULT_SORT))
       .stream()
       .map(this::toResponse)
       .toList();
