@@ -1,9 +1,14 @@
 package com.mgnt.events.services;
 
+import static com.mgnt.events.constants.Cache.PERSONNEL;
+import static com.mgnt.events.constants.Cache.PERSONNEL_BY_ID;
+import static com.mgnt.events.constants.Cache.KEY;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -39,6 +44,7 @@ public class PersonnelService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = PERSONNEL, key = KEY)
   public List<PersonnelResponse> findAll(@Nullable Integer limit) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
     if (sanitizedLimit == null) {
