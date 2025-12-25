@@ -87,6 +87,7 @@ public class VenueService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { VENUES, VENUE_BY_ID }, allEntries = true)
   public VenueResponse update(UUID id, VenueRequest request) {
     Venue venue = _venueRepository
       .findById(
