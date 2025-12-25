@@ -63,14 +63,13 @@ public class RoleService {
   }
 
   @Transactional(readOnly = true)
-  public RoleResponse findById(UUID id) {
-    Role role = _roleRepository
-      .findWithPrivilegesById(id)
-      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"));
-    return toResponse(Objects.requireNonNull(role));
+  @Cacheable(cacheNames = ROLE_BY_ID, key = KEY_ID)
+  public RoleResponse findById(@NonNull UUID id) {
+    return toResponse(getRole(id));
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { ROLES, ROLE_BY_ID }, allEntries = true)
   public RoleResponse create(RoleRequest request) {
     validateNameUniqueness(request.name(), null);
     Role role = new Role(request.name());
@@ -79,6 +78,7 @@ public class RoleService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { ROLES, ROLE_BY_ID }, allEntries = true)
   public RoleResponse update(@NonNull UUID id, RoleRequest request) {
     Role role = Objects.requireNonNull(getRole(id));
     validateNameUniqueness(request.name(), id);
@@ -90,6 +90,7 @@ public class RoleService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { ROLES, ROLE_BY_ID }, allEntries = true)
   public void delete(@NonNull UUID id) {
     Role role = Objects.requireNonNull(getRole(id));
     try {
@@ -108,7 +109,7 @@ public class RoleService {
   private Role getRole(@NonNull UUID id) {
     return Objects.requireNonNull(
       _roleRepository
-        .findWithPrivilegesById(id)
+        .findWithPrivilegesById(RequestValidators.requireNonNull(id, "Role ID must not be null"))
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role not found"))
     );
   }
