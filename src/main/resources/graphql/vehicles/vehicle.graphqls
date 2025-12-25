@@ -1,13 +1,33 @@
 extend type Query {
-  personnel(limit: Int, page: Int): [Personnel!]!
+  vehicles(limit: Int, page: Int): [Vehicle!]!
 }
 
-type Personnel {
+type Vehicle {
   id: ID!
   name: String
+  type: VehicleType
+  status: VehicleStatus
+  plateNumber: String
   contactNumber: String
-  email: String
-  role: String
+  assignedPersonnel: VehiclePersonnelSummary
   createdAt: String
   updatedAt: String
+}
+
+enum VehicleType {
+  SEDAN
+  VAN
+  BUS
+  SUV
+  TRUCK
+  MINIVAN
+  COACH
+  OTHER
+}
+
+enum VehicleStatus {
+  AVAILABLE
+  IN_USE
+  MAINTENANCE
+  OUT_OF_SERVICE
 }

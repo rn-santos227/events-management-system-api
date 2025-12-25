@@ -1,0 +1,28 @@
+extend type Query {
+  venues(limit: Int, page: Int): [Venue!]!
+}
+
+type Venue {
+  id: ID!
+  name: String
+  address: String
+  contactPerson: String
+  contactNumber: String
+  email: String
+  type: VenueType
+  latitude: Float
+  longitude: Float
+  image: StoredFileSummary
+  createdAt: String
+  updatedAt: String
+}
+
+enum VenueType {
+  CONFERENCE_HALL
+  AUDITORIUM
+  CLASSROOM
+  OUTDOOR
+  HOTEL
+  VIRTUAL
+  OTHER
+}
