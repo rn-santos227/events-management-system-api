@@ -1,0 +1,28 @@
+extend type Query {
+  accommodations(limit: Int, page: Int): [Accommodation!]!
+}
+
+type Accommodation {
+  id: ID!
+  name: String
+  address: String
+  contactPerson: String
+  contactNumber: String
+  email: String
+  type: AccommodationType
+  latitude: Float
+  longitude: Float
+  image: StoredFileSummary
+  createdAt: String
+  updatedAt: String
+}
+
+enum AccommodationType {
+  HOTEL
+  HOSTEL
+  APARTMENT
+  RESORT
+  LODGE
+  MOTEL
+  OTHER
+}
