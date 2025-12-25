@@ -1,0 +1,13 @@
+extend type Query {
+  personnel(limit: Int, page: Int): [Personnel!]!
+}
+
+type Personnel {
+  id: ID!
+  name: String
+  contactNumber: String
+  email: String
+  role: String
+  createdAt: String
+  updatedAt: String
+}
