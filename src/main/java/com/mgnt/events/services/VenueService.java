@@ -74,6 +74,7 @@ public class VenueService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { VENUES, VENUE_BY_ID }, allEntries = true)
   public VenueResponse create(VenueRequest request) {
     Venue venue = new Venue(request.name(), request.address(), request.contactPerson(), request.type());
     venue.setContactNumber(request.contactNumber());
