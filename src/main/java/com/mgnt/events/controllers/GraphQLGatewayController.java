@@ -156,6 +156,13 @@ public class GraphQLGatewayController {
     return _vehicleService.findAll(sanitizedLimit, sanitizedPage);
   }
 
+  @QueryMapping
+  public List<VenueResponse> venues(@Argument Integer limit, @Argument Integer page) {
+    Integer sanitizedLimit = sanitizeLimit(limit);
+    Integer sanitizedPage = sanitizePage(page);
+    return _venueService.findAll(sanitizedLimit, sanitizedPage);
+  }
+
   private Integer sanitizeLimit(Integer limit) {
     return RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
   }
