@@ -128,6 +128,12 @@ public class GraphQLGatewayController {
     return _userService.findById(id);
   }
 
+  @QueryMapping
+  public List<AccommodationResponse> accommodations(@Argument Integer limit, @Argument Integer page) {
+    Integer sanitizedLimit = sanitizeLimit(limit);
+    Integer sanitizedPage = sanitizePage(page);
+    return _accommodationService.findAll(sanitizedLimit, sanitizedPage);
+  }
 
   @QueryMapping
   public List<CategoryResponse> categories(@Argument Integer limit, @Argument Integer page) {
