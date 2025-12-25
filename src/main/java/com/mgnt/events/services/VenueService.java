@@ -2,6 +2,7 @@ package com.mgnt.events.services;
 
 import static com.mgnt.events.constants.Cache.VENUE_BY_ID;
 import static com.mgnt.events.constants.Cache.KEY_ALL;
+import static com.mgnt.events.constants.Cache.KEY_ID;
 import static com.mgnt.events.constants.Cache.VENUES;
 
 import java.util.List;
@@ -62,6 +63,7 @@ public class VenueService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = VENUE_BY_ID, key = KEY_ID)
   public VenueResponse findById(UUID id) {
     Venue venue = _venueRepository
       .findById(
