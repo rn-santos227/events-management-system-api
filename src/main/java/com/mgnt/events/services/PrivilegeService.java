@@ -54,11 +54,13 @@ public class PrivilegeService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = PRIVILEGE_BY_ID, key = KEY_ID)
   public PrivilegeResponse findById(@NonNull UUID id) {
     return toResponse(getPrivilege(id));
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { PRIVILEGES, PRIVILEGE_BY_ID }, allEntries = true)
   public PrivilegeResponse create(PrivilegeRequest request) {
     validateUniqueness(request.name(), request.action(), null);
 
@@ -67,6 +69,7 @@ public class PrivilegeService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { PRIVILEGES, PRIVILEGE_BY_ID }, allEntries = true)
   public PrivilegeResponse update(@NonNull UUID id, PrivilegeRequest request) {
     Privilege privilege = getPrivilege(id);
     validateUniqueness(request.name(), request.action(), id);
@@ -79,6 +82,7 @@ public class PrivilegeService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { PRIVILEGES, PRIVILEGE_BY_ID }, allEntries = true)
   public void delete(@NonNull UUID id) {
     Privilege privilege = Objects.requireNonNull(getPrivilege(id));
     try {
