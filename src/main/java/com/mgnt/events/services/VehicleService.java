@@ -3,6 +3,7 @@ package com.mgnt.events.services;
 import static com.mgnt.events.constants.Cache.VEHICLE_BY_ID;
 import static com.mgnt.events.constants.Cache.VEHICLES;
 import static com.mgnt.events.constants.Cache.KEY;
+import static com.mgnt.events.constants.Cache.KEY_ID;
 
 import java.util.List;
 import java.util.Objects;
@@ -63,7 +64,7 @@ public class VehicleService {
   }
 
   @Transactional(readOnly = true)
-  @Cacheable(cacheNames = VEHICLE_BY_ID, key = "#id")
+  @Cacheable(cacheNames = VEHICLE_BY_ID, key = KEY_ID)
   public VehicleResponse findById(UUID id) {
     Vehicle vehicle = _vehicleRepository
       .findById(

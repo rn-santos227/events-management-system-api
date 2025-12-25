@@ -3,6 +3,7 @@ package com.mgnt.events.services;
 import static com.mgnt.events.constants.Cache.PERSONNEL;
 import static com.mgnt.events.constants.Cache.PERSONNEL_BY_ID;
 import static com.mgnt.events.constants.Cache.KEY;
+import static com.mgnt.events.constants.Cache.KEY_ID;
 
 import java.util.List;
 import java.util.Objects;
@@ -63,7 +64,7 @@ public class PersonnelService {
   }
 
   @Transactional(readOnly = true)
-  @Cacheable(cacheNames = PERSONNEL_BY_ID, key = "#id")
+  @Cacheable(cacheNames = PERSONNEL_BY_ID, key = KEY_ID)
   public PersonnelResponse findById(UUID id) {
     Personnel personnel = _personnelRepository
       .findById(

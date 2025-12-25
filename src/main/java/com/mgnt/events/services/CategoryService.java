@@ -3,6 +3,7 @@ package com.mgnt.events.services;
 import static com.mgnt.events.constants.Cache.CATEGORIES;
 import static com.mgnt.events.constants.Cache.CATEGORY_BY_ID;
 import static com.mgnt.events.constants.Cache.KEY;
+import static com.mgnt.events.constants.Cache.KEY_ID;
 
 import jakarta.annotation.Nullable;
 import java.util.List;
@@ -56,7 +57,7 @@ public class CategoryService {
   }
 
   @Transactional(readOnly = true)
-  @Cacheable(cacheNames = CATEGORY_BY_ID, key = "#id")
+  @Cacheable(cacheNames = CATEGORY_BY_ID, key = KEY_ID)
   public CategoryResponse findById(UUID id) {
     Category category = _categoryRepository
       .findById(RequestValidators.requireNonNull(id, "ID must no be null"))
