@@ -131,4 +131,8 @@ public class GraphQLGatewayController {
   private Integer sanitizeLimit(Integer limit) {
     return RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
   }
+
+  private Integer sanitizePage(Integer page) {
+    return RequestValidators.requireNonNegativeOrNull(page, Queries.PAGE);
+  }
 }
