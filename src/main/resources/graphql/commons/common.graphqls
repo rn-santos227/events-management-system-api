@@ -1,0 +1,12 @@
+type StoredFileSummary {
+  id: ID!
+  fileName: String
+  url: String
+}
+
+type VehiclePersonnelSummary {
+  id: ID!
+  name: String
+  contactNumber: String
+  function: String
+}
