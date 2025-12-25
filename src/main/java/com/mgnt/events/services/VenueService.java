@@ -109,6 +109,7 @@ public class VenueService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { VENUES, VENUE_BY_ID }, allEntries = true)
   public void delete(UUID id) {
     Venue venue = _venueRepository
       .findById(
