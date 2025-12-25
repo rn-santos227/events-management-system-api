@@ -8,37 +8,62 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 
 import com.mgnt.events.constants.Queries;
+import com.mgnt.events.responses.accommodations.AccommodationResponse;
 import com.mgnt.events.responses.audit.AuditLogResponse;
+import com.mgnt.events.responses.categories.CategoryResponse;
 import com.mgnt.events.responses.files.FileUploadResponse;
+import com.mgnt.events.responses.personnel.PersonnelResponse;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
 import com.mgnt.events.responses.roles.RoleResponse;
 import com.mgnt.events.responses.users.UserResponse;
+import com.mgnt.events.responses.vehicles.VehicleResponse;
+import com.mgnt.events.responses.venues.VenueResponse;
+import com.mgnt.events.services.AccommodationService;
 import com.mgnt.events.services.AuditLogService;
+import com.mgnt.events.services.CategoryService;
 import com.mgnt.events.services.FileStorageService;
+import com.mgnt.events.services.PersonnelService;
 import com.mgnt.events.services.PrivilegeService;
 import com.mgnt.events.services.RoleService;
+import com.mgnt.events.services.VehicleService;
+import com.mgnt.events.services.VenueService;
 import com.mgnt.events.services.UserService;
 import com.mgnt.events.util.RequestValidators;
 
 @Controller
 public class GraphQLGatewayController {
   private final AuditLogService _auditLogService;
+  private final AccommodationService _accommodationService;
+  private final CategoryService _categoryService;
   private final FileStorageService _fileStorageService;
+  private final PersonnelService _personnelService;
   private final PrivilegeService _privilegeService;
   private final RoleService _roleService;
+  private final VehicleService _vehicleService;
+  private final VenueService _venueService;
   private final UserService _userService;
 
   public GraphQLGatewayController(
-   AuditLogService auditLogService,
+    AuditLogService auditLogService,
+    AccommodationService accommodationService,
+    CategoryService categoryService,
     FileStorageService fileStorageService,
+    PersonnelService personnelService,
     PrivilegeService privilegeService,
     RoleService roleService,
+    VehicleService vehicleService,
+    VenueService venueService,
     UserService userService
   ) {
     this._auditLogService = auditLogService;
+    this._accommodationService = accommodationService;
+    this._categoryService = categoryService;
     this._fileStorageService = fileStorageService;
+    this._personnelService = personnelService;
     this._privilegeService = privilegeService;
     this._roleService = roleService;
+    this._vehicleService = vehicleService;
+    this._venueService = venueService;
     this._userService = userService;
   }
 
