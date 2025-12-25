@@ -3,6 +3,7 @@ package com.mgnt.events.services;
 import static com.mgnt.events.constants.Cache.ACCOMMODATION_BY_ID;
 import static com.mgnt.events.constants.Cache.ACCOMMODATIONS;
 import static com.mgnt.events.constants.Cache.KEY;
+import static com.mgnt.events.constants.Cache.KEY_ID;
 
 import java.util.List;
 import java.util.Objects;
@@ -70,6 +71,7 @@ public class AccommodationService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = ACCOMMODATION_BY_ID, key = KEY_ID)
   public AccommodationResponse findById(UUID id) {
     Accommodation accommodation = _accommodationRepository
       .findById(
