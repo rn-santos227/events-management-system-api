@@ -142,6 +142,13 @@ public class GraphQLGatewayController {
     return _categoryService.findAll(sanitizedLimit, sanitizedPage);
   }
 
+  @QueryMapping
+  public List<PersonnelResponse> personnel(@Argument Integer limit, @Argument Integer page) {
+    Integer sanitizedLimit = sanitizeLimit(limit);
+    Integer sanitizedPage = sanitizePage(page);
+    return _personnelService.findAll(sanitizedLimit, sanitizedPage);
+  }
+
   private Integer sanitizeLimit(Integer limit) {
     return RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
   }
