@@ -11,6 +11,8 @@ public final class Cache {
   public static final String CATEGORY_BY_ID = "category-by-id";
   public static final String PERSONNEL = "personnel";
   public static final String PERSONNEL_BY_ID = "personnel-by-id";
+  public static final String USERS = "users";
+  public static final String USER_BY_ID = "user-by-id";
   public static final String VEHICLES = "vehicles";
   public static final String VEHICLE_BY_ID = "vehicle-by-id";
   public static final String VENUES = "venues";

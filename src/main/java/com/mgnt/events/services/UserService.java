@@ -1,8 +1,14 @@
 package com.mgnt.events.services;
 
+import static com.mgnt.events.constants.Cache.USER_BY_ID;
+import static com.mgnt.events.constants.Cache.USERS;
+import static com.mgnt.events.constants.Cache.KEY;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
