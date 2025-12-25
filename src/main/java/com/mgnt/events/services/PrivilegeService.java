@@ -1,9 +1,16 @@
 package com.mgnt.events.services;
 
+import static com.mgnt.events.constants.Cache.KEY_ALL;
+import static com.mgnt.events.constants.Cache.KEY_ID;
+import static com.mgnt.events.constants.Cache.PRIVILEGES;
+import static com.mgnt.events.constants.Cache.PRIVILEGE_BY_ID;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -33,6 +40,7 @@ public class PrivilegeService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = PRIVILEGES, key = KEY_ALL)
   public List<PrivilegeResponse> findAll(@Nullable Integer limit) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
     if (sanitizedLimit == null) {
