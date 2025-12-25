@@ -1,5 +1,10 @@
 package com.mgnt.events.services;
 
+import static com.mgnt.events.constants.Cache.KEY_ALL;
+import static com.mgnt.events.constants.Cache.KEY_ID;
+import static com.mgnt.events.constants.Cache.ROLE_BY_ID;
+import static com.mgnt.events.constants.Cache.ROLES;
+
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -7,6 +12,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -41,6 +48,7 @@ public class RoleService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = ROLES, key = KEY_ALL)
   public List<RoleResponse> findAll(@Nullable Integer limit) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
     if (sanitizedLimit == null) {
