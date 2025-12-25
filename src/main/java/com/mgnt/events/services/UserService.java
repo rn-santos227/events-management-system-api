@@ -127,6 +127,7 @@ public class UserService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { USERS, USER_BY_ID }, allEntries = true)
   public void delete(@NonNull UUID id) {
     User user = Objects.requireNonNull(getUser(id));
     try {
