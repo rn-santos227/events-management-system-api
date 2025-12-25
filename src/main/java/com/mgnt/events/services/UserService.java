@@ -3,6 +3,7 @@ package com.mgnt.events.services;
 import static com.mgnt.events.constants.Cache.USER_BY_ID;
 import static com.mgnt.events.constants.Cache.USERS;
 import static com.mgnt.events.constants.Cache.KEY_ALL;
+import static com.mgnt.events.constants.Cache.KEY_ID;
 
 import java.util.List;
 import java.util.Objects;
@@ -66,11 +67,13 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = USER_BY_ID, key = KEY_ID)
   public UserResponse findById(@NonNull UUID id) {
     return toResponse(getUser(id));
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { USERS, USER_BY_ID }, allEntries = true)
   public UserResponse create(UserCreateRequest request) {
     String normalizedEmail = normalizeEmail(request.email());
     if (_userRepository.existsByEmail(normalizedEmail)) {
