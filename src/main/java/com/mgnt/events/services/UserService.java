@@ -2,7 +2,7 @@ package com.mgnt.events.services;
 
 import static com.mgnt.events.constants.Cache.USER_BY_ID;
 import static com.mgnt.events.constants.Cache.USERS;
-import static com.mgnt.events.constants.Cache.KEY;
+import static com.mgnt.events.constants.Cache.KEY_ALL;
 
 import java.util.List;
 import java.util.Objects;
@@ -51,6 +51,7 @@ public class UserService {
   }
 
   @Transactional(readOnly = true)
+  @Cacheable(cacheNames = USERS, key = KEY_ALL)
   public List<UserResponse> findAll(@Nullable Integer limit) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
     if (sanitizedLimit == null) {
