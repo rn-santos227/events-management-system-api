@@ -1,9 +1,14 @@
 package com.mgnt.events.services;
 
+import static com.mgnt.events.constants.Cache.VENUE_BY_ID;
+import static com.mgnt.events.constants.Cache.KEY_ALL;
+import static com.mgnt.events.constants.Cache.VENUES;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -38,14 +43,19 @@ public class VenueService {
   }
 
   @Transactional(readOnly = true)
-  public List<VenueResponse> findAll(@Nullable Integer limit) {
+  @Cacheable(cacheNames = VENUES, key = KEY_ALL)
+  public List<VenueResponse> findAll(@Nullable Integer limit, @Nullable Integer page) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    Integer sanitizedPage =
+      sanitizedLimit == null ? null : RequestValidators.requireNonNegativeOrNull(page, Queries.PAGE);
     if (sanitizedLimit == null) {
       return _venueRepository.findAll(DEFAULT_SORT).stream().map(this::toResponse).toList();
     }
 
+    int resolvedPage = sanitizedPage != null ? sanitizedPage.intValue() : 0;
+
     return _venueRepository
-      .findAll(PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .findAll(PageRequest.of(resolvedPage, sanitizedLimit, DEFAULT_SORT))
       .stream()
       .map(this::toResponse)
       .toList();
