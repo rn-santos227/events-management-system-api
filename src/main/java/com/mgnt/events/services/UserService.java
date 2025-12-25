@@ -99,6 +99,7 @@ public class UserService {
   }
 
   @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { USERS, USER_BY_ID }, allEntries = true)
   public UserResponse update(@NonNull UUID id, UserUpdateRequest request) {
     User user = getUser(id);
 
