@@ -3,6 +3,20 @@ package com.mgnt.events.constants;
 public final class Mocks {
   private Mocks() {}
 
+  public static final class Accommodations {
+    public static final String NAME = "City Hotel";
+    public static final String ADDRESS = "123 Main St";
+    public static final String CONTACT_PERSON = "Alex Doe";
+    public static final String CONTACT_NUMBER = "555-1111";
+    public static final String EMAIL = "hotel@example.com";
+    public static final String LATITUDE = "10.123";
+    public static final String LONGITUDE = "20.456";
+    public static final String PAGINATION_LIMIT = "5";
+    public static final String PAGINATION_PAGE = "1";
+
+    private Accommodations() {}
+  }
+
   public static final class Auth {
     public static final String EMAIL = "user@example.com";
     public static final String PASSWORD = "password123";
