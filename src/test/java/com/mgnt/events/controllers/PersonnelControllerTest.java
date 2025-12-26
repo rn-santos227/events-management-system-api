@@ -18,9 +18,11 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -119,6 +121,9 @@ public class PersonnelControllerTest {
       .andExpect(status().isCreated())
       .andExpect(jsonPath(JsonPaths.ID).value(personnelId.toString()))
       .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Personnel.FULL_NAME));
+
+    ArgumentCaptor<PersonnelRequest> captor = ArgumentCaptor.forClass(PersonnelRequest.class);
+    verify(_personnelService, times(1)).create(captor.capture());
 
   }
 }
