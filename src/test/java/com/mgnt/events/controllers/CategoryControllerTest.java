@@ -109,5 +109,9 @@ public class CategoryControllerTest {
       .andExpect(status().isCreated())
       .andExpect(jsonPath(JsonPaths.ID).value(categoryId.toString()))
       .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Categories.NAME));
+
+    ArgumentCaptor<CategoryRequest> captor = ArgumentCaptor.forClass(CategoryRequest.class);
+    verify(_categoryService, times(1)).create(captor.capture());
+
   }
 }
