@@ -80,4 +80,9 @@ public class CategoryControllerTest {
       .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(categoryId.toString()))
       .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Categories.NAME));
   }
+
+  @Test
+  void create_ShouldForwardRequestToService() throws Exception {
+
+  }
 }
