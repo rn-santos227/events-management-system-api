@@ -1,5 +1,7 @@
 package com.mgnt.events.controllers;
 
+import static org.mockito.Mockito.when;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -71,6 +73,8 @@ public class VehicleControllerTest {
         LocalDateTime.now()
       )
     );
+
+    when(_vehicleService.findAll(5, 0)).thenReturn(responses);
   }
 }
 
