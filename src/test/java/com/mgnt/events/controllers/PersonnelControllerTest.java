@@ -27,7 +27,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.JsonPaths;
 import com.mgnt.events.constants.Mocks;
+import com.mgnt.events.constants.Queries;
+import com.mgnt.events.constants.Routes;
 import com.mgnt.events.responses.personnel.PersonnelResponse;
 import com.mgnt.events.services.PersonnelService;
 import com.mgnt.events.util.RequestValidators;
@@ -72,5 +75,15 @@ public class PersonnelControllerTest {
     );
 
     when(_personnelService.findAll(5, 0)).thenReturn(responses);
+
+    _mockMvc
+      .perform(
+        get(Routes.PERSONNEL)
+          .param(Queries.LIMIT, Mocks.Personnel.PAGINATION_LIMIT)
+          .param(Queries.PAGE, Mocks.Personnel.PAGINATION_PAGE)
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(personnelId.toString()))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Personnel.FULL_NAME));
   }
 }
