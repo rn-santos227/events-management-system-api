@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.Mocks;
+import com.mgnt.events.responses.categories.CategoryResponse;
 import com.mgnt.events.services.CategoryService;
 import com.mgnt.events.util.RequestValidators;
 
@@ -43,7 +45,15 @@ public class CategoryControllerTest {
   @Test
   void findAll_ShouldReturnCategoryResponses() throws Exception {
     UUID categoryId = UUID.randomUUID();
+    List<CategoryResponse> responses = List.of(
+      new CategoryResponse(
+        categoryId,
+        Mocks.Categories.NAME,
+        Mocks.Categories.DESCRIPTION,
+        LocalDateTime.now(),
+        LocalDateTime.now()
+      )
+    );
+
   }
 }
-
-
