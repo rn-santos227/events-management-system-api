@@ -3,6 +3,7 @@ package com.mgnt.events.controllers;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -13,9 +14,11 @@ import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -126,6 +129,14 @@ public class VehicleControllerTest {
     );
 
     when(_vehicleService.create(any(VehicleRequest.class))).thenReturn(response);
+    _mockMvc
+      .perform(
+        post(Routes.VEHICLES)
+        .contentType(RequestValidators.requireNonNull(MediaType.APPLICATION_JSON, "Media Type"))
+        .content(RequestValidators.requireNonNull(_objectMapper.writeValueAsString(request), "Request"))
+      )
+      .andExpect(status().isCreated())
+      .andExpect(jsonPath(JsonPaths.ID).value(vehicleId.toString()))
+      .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Vehicles.NAME));
   }
 }
-
