@@ -1,5 +1,9 @@
 package com.mgnt.events.controllers;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +16,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.Mocks;
+import com.mgnt.events.responses.personnel.PersonnelResponse;
 import com.mgnt.events.services.PersonnelService;
 import com.mgnt.events.util.RequestValidators;
 
@@ -42,5 +48,16 @@ public class PersonnelControllerTest {
   @Test
   void findAll_ShouldReturnPersonnelResponses() throws Exception {
     UUID personnelId = UUID.randomUUID();
+    List<PersonnelResponse> responses = List.of(
+      new PersonnelResponse(
+        personnelId,
+        Mocks.Personnel.FULL_NAME,
+        Mocks.Personnel.CONTACT_NUMBER,
+        Mocks.Personnel.EMAIL,
+        Mocks.Personnel.ROLE,
+        LocalDateTime.now(),
+        LocalDateTime.now()
+      )
+    );
   }
 }
