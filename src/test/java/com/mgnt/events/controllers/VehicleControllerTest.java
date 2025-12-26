@@ -27,6 +27,7 @@ import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
 import com.mgnt.events.enums.VehicleStatus;
 import com.mgnt.events.enums.VehicleType;
+import com.mgnt.events.requests.vehicles.VehicleRequest;
 import com.mgnt.events.responses.vehicles.VehiclePersonnelSummary;
 import com.mgnt.events.responses.vehicles.VehicleResponse;
 import com.mgnt.events.services.VehicleService;
@@ -95,7 +96,15 @@ public class VehicleControllerTest {
 
   @Test
   void create_ShouldForwardRequestToService() throws Exception {
-
+    UUID assignedPersonnelId = UUID.randomUUID();
+    VehicleRequest request = new VehicleRequest(
+      Mocks.Vehicles.NAME,
+      VehicleType.VAN,
+      VehicleStatus.AVAILABLE,
+      Mocks.Vehicles.PLATE_NUMBER,
+      Mocks.Vehicles.CONTACT_NUMBER,
+      assignedPersonnelId
+    );
   }
 }
 
