@@ -116,4 +116,9 @@ public class CategoryControllerTest {
     assertThat(captured.name()).isEqualTo(Mocks.Categories.NAME);
     assertThat(captured.description()).isEqualTo(Mocks.Categories.DESCRIPTION);
   }
+
+  @Test
+  void delete_ShouldReturnNoContent() throws Exception {
+
+  }
 }
