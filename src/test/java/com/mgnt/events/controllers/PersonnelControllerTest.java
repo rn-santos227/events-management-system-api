@@ -110,6 +110,15 @@ public class PersonnelControllerTest {
 
     when(_personnelService.create(any(PersonnelRequest.class))).thenReturn(response);
 
-    
+    _mockMvc
+      .perform(
+        post(Routes.PERSONNEL)
+        .contentType(RequestValidators.requireNonNull(MediaType.APPLICATION_JSON, "Media Type"))
+        .content(RequestValidators.requireNonNull(_objectMapper.writeValueAsString(request), "Request"))
+      )
+      .andExpect(status().isCreated())
+      .andExpect(jsonPath(JsonPaths.ID).value(personnelId.toString()))
+      .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Personnel.FULL_NAME));
+
   }
 }
