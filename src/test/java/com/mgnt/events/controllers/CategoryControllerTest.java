@@ -38,6 +38,7 @@ import com.mgnt.events.responses.categories.CategoryResponse;
 import com.mgnt.events.services.CategoryService;
 import com.mgnt.events.util.RequestValidators;
 
+@ExtendWith(MockitoExtension.class)
 public class CategoryControllerTest {
   private MockMvc _mockMvc;
   private ObjectMapper _objectMapper;
@@ -119,6 +120,10 @@ public class CategoryControllerTest {
 
   @Test
   void delete_ShouldReturnNoContent() throws Exception {
-
+    UUID categoryId = UUID.randomUUID();
+    _mockMvc
+      .perform(delete(Routes.CATEGORIES + Routes.APPEND_ID, categoryId))
+      .andExpect(status().isNoContent());
+    verify(_categoryService).delete(RequestValidators.requireNonNull(categoryId, "Category ID"));
   }
 }
