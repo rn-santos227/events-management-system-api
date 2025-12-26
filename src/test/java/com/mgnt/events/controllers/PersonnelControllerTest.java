@@ -128,4 +128,9 @@ public class PersonnelControllerTest {
     assertThat(captured.fullName()).isEqualTo(Mocks.Personnel.FULL_NAME);
     assertThat(captured.contactNumber()).isEqualTo(Mocks.Personnel.CONTACT_NUMBER);
   }
+
+  @Test
+  void delete_ShouldReturnNoContent() throws Exception {
+    UUID personnelId = UUID.randomUUID();
+  }
 }
