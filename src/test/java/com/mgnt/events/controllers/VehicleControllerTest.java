@@ -1,6 +1,8 @@
 package com.mgnt.events.controllers;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -138,5 +140,9 @@ public class VehicleControllerTest {
       .andExpect(status().isCreated())
       .andExpect(jsonPath(JsonPaths.ID).value(vehicleId.toString()))
       .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Vehicles.NAME));
+
+    ArgumentCaptor<VehicleRequest> captor = ArgumentCaptor.forClass(VehicleRequest.class);
+    verify(_vehicleService, times(1)).create(captor.capture());
+
   }
 }
