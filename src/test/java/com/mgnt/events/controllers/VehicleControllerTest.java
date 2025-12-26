@@ -1,6 +1,9 @@
 package com.mgnt.events.controllers;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +21,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.JsonPaths;
 import com.mgnt.events.constants.Mocks;
+import com.mgnt.events.constants.Queries;
+import com.mgnt.events.constants.Routes;
 import com.mgnt.events.enums.VehicleStatus;
 import com.mgnt.events.enums.VehicleType;
 import com.mgnt.events.responses.vehicles.VehiclePersonnelSummary;
@@ -75,6 +81,16 @@ public class VehicleControllerTest {
     );
 
     when(_vehicleService.findAll(5, 0)).thenReturn(responses);
+
+    _mockMvc
+      .perform(
+        get(Routes.VEHICLES)
+          .param(Queries.LIMIT, Mocks.Vehicles.PAGINATION_LIMIT)
+          .param(Queries.PAGE, Mocks.Vehicles.PAGINATION_PAGE)
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(vehicleId.toString()))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Vehicles.NAME));
   }
 }
 
