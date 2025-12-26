@@ -72,4 +72,17 @@ public final class Mocks {
 
     private Users() {}
   }
+
+  public static final class Vehicles {
+    public static final String NAME = "Transport Van";
+    public static final String PLATE_NUMBER = "ABC-123";
+    public static final String CONTACT_NUMBER = "555-7890";
+    public static final String ASSIGNED_PERSONNEL_NAME = "Jamie Roe";
+    public static final String ASSIGNED_PERSONNEL_CONTACT = "555-2222";
+    public static final String ASSIGNED_PERSONNEL_FUNCTION = "Driver";
+    public static final String PAGINATION_LIMIT = "5";
+    public static final String PAGINATION_PAGE = "0";
+
+    private Vehicles() {}
+  }
 }
