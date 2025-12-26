@@ -86,5 +86,12 @@ public class CategoryControllerTest {
   void create_ShouldForwardRequestToService() throws Exception {
     CategoryRequest request = new CategoryRequest(Mocks.Categories.NAME, Mocks.Categories.DESCRIPTION);
     UUID categoryId = UUID.randomUUID();
+    CategoryResponse response = new CategoryResponse(
+      categoryId,
+      request.name(),
+      request.description(),
+      LocalDateTime.now(),
+      LocalDateTime.now()
+    );
   }
 }
