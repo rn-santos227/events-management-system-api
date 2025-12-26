@@ -96,5 +96,16 @@ public class PersonnelControllerTest {
       Mocks.Personnel.EMAIL,
       Mocks.Personnel.ROLE
     );
+
+    UUID personnelId = UUID.randomUUID();
+    PersonnelResponse response = new PersonnelResponse(
+      personnelId,
+      request.fullName(),
+      request.contactNumber(),
+      request.email(),
+      request.role(),
+      LocalDateTime.now(),
+      LocalDateTime.now()
+    );
   }
 }
