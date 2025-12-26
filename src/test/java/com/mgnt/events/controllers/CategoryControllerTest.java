@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mgnt.events.services.CategoryService;
 
 public class CategoryControllerTest {
@@ -20,8 +21,10 @@ public class CategoryControllerTest {
 
   @BeforeEach
   void setUp() {
-    
-  }
+    _objectMapper = new ObjectMapper();
+    _objectMapper.registerModule(new JavaTimeModule());
+
+ }
 }
 
 
