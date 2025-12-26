@@ -1,6 +1,7 @@
 package com.mgnt.events.controllers;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -33,7 +34,12 @@ public class CategoryControllerTest {
         RequestValidators.requireNonNull(_objectMapper, "Object Mapper")
       ))
       .build();
- }
+  }
+
+  @Test
+  void findAll_ShouldReturnCategoryResponses() throws Exception {
+
+  }
 }
 
 
