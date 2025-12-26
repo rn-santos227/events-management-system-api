@@ -112,6 +112,8 @@ public class CategoryControllerTest {
 
     ArgumentCaptor<CategoryRequest> captor = ArgumentCaptor.forClass(CategoryRequest.class);
     verify(_categoryService, times(1)).create(captor.capture());
-
+    CategoryRequest captured = captor.getValue();
+    assertThat(captured.name()).isEqualTo(Mocks.Categories.NAME);
+    assertThat(captured.description()).isEqualTo(Mocks.Categories.DESCRIPTION);
   }
 }
