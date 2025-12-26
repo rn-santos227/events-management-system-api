@@ -3,11 +3,14 @@ package com.mgnt.events.controllers;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.mgnt.events.services.CategoryService;
+import com.mgnt.events.util.RequestValidators;
 
 public class CategoryControllerTest {
   private MockMvc _mockMvc;
@@ -24,6 +27,12 @@ public class CategoryControllerTest {
     _objectMapper = new ObjectMapper();
     _objectMapper.registerModule(new JavaTimeModule());
 
+    _mockMvc = MockMvcBuilders
+      .standaloneSetup(_categoryController)
+      .setMessageConverters(new MappingJackson2HttpMessageConverter(
+        RequestValidators.requireNonNull(_objectMapper, "Object Mapper")
+      ))
+      .build();
  }
 }
 
