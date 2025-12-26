@@ -86,4 +86,9 @@ public class PersonnelControllerTest {
       .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(personnelId.toString()))
       .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Personnel.FULL_NAME));
   }
+
+  @Test
+  void create_ShouldForwardRequestToService() throws Exception {
+
+  }
 }
