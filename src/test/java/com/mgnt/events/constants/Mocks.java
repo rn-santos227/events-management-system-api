@@ -29,6 +29,17 @@ public final class Mocks {
     private Messages() {}
   }
 
+  public static final class Personnel {
+    public static final String FULL_NAME = "Jordan Lee";
+    public static final String CONTACT_NUMBER = "555-1234";
+    public static final String EMAIL = "jordan.lee@example.com";
+    public static final String ROLE = "Coordinator";
+    public static final String PAGINATION_LIMIT = "5";
+    public static final String PAGINATION_PAGE = "0";
+
+    private Personnel() {}
+  }
+
   public static final class Roles {
     public static final String ID_ADMIN = "11111111-1111-1111-1111-111111111111";
     public static final String NAME_ADMIN = "Admin";
