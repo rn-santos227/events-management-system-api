@@ -1,5 +1,16 @@
 package com.mgnt.events.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +25,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.JsonPaths;
 import com.mgnt.events.constants.Mocks;
+import com.mgnt.events.constants.Queries;
+import com.mgnt.events.constants.Routes;
 import com.mgnt.events.responses.categories.CategoryResponse;
 import com.mgnt.events.services.CategoryService;
 import com.mgnt.events.util.RequestValidators;
@@ -55,5 +69,15 @@ public class CategoryControllerTest {
       )
     );
 
+    when(_categoryService.findAll(5, 0)).thenReturn(responses);
+    _mockMvc
+      .perform(
+        get(Routes.CATEGORIES)
+          .param(Queries.LIMIT, Mocks.Categories.PAGINATION_LIMIT)
+          .param(Queries.PAGE, Mocks.Categories.PAGINATION_PAGE)
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(categoryId.toString()))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Categories.NAME));
   }
 }
