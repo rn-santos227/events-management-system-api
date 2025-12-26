@@ -31,6 +31,7 @@ import com.mgnt.events.constants.JsonPaths;
 import com.mgnt.events.constants.Mocks;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
+import com.mgnt.events.requests.personnel.PersonnelRequest;
 import com.mgnt.events.responses.personnel.PersonnelResponse;
 import com.mgnt.events.services.PersonnelService;
 import com.mgnt.events.util.RequestValidators;
@@ -89,6 +90,11 @@ public class PersonnelControllerTest {
 
   @Test
   void create_ShouldForwardRequestToService() throws Exception {
-
+    PersonnelRequest request = new PersonnelRequest(
+      Mocks.Personnel.FULL_NAME,
+      Mocks.Personnel.CONTACT_NUMBER,
+      Mocks.Personnel.EMAIL,
+      Mocks.Personnel.ROLE
+    );
   }
 }
