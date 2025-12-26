@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,4 +18,10 @@ public class CategoryControllerTest {
   @InjectMocks
   private CategoryController _categoryController;
 
+  @BeforeEach
+  void setUp() {
+    
+  }
 }
+
+
