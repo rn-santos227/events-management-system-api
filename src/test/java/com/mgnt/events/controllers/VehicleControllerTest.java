@@ -92,5 +92,10 @@ public class VehicleControllerTest {
       .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(vehicleId.toString()))
       .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Vehicles.NAME));
   }
+
+  @Test
+  void create_ShouldForwardRequestToService() throws Exception {
+
+  }
 }
 
