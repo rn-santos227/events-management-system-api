@@ -16,6 +16,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.Mocks;
+import com.mgnt.events.enums.VehicleStatus;
+import com.mgnt.events.enums.VehicleType;
+import com.mgnt.events.responses.vehicles.VehiclePersonnelSummary;
+import com.mgnt.events.responses.vehicles.VehicleResponse;
 import com.mgnt.events.services.VehicleService;
 import com.mgnt.events.util.RequestValidators;
 
@@ -48,7 +53,24 @@ public class VehicleControllerTest {
   void findAll_ShouldReturnVehicleResponses() throws Exception {
     UUID vehicleId = UUID.randomUUID();
     UUID personnelId = UUID.randomUUID();
-
+    List<VehicleResponse> responses = List.of(
+      new VehicleResponse(
+        vehicleId,
+        Mocks.Vehicles.NAME,
+        VehicleType.VAN,
+        VehicleStatus.AVAILABLE,
+        Mocks.Vehicles.PLATE_NUMBER,
+        Mocks.Vehicles.CONTACT_NUMBER,
+        new VehiclePersonnelSummary(
+          personnelId,
+          Mocks.Vehicles.ASSIGNED_PERSONNEL_NAME,
+          Mocks.Vehicles.ASSIGNED_PERSONNEL_CONTACT,
+          Mocks.Vehicles.ASSIGNED_PERSONNEL_FUNCTION
+        ),
+        LocalDateTime.now(),
+        LocalDateTime.now()
+      )
+    );
   }
 }
 
