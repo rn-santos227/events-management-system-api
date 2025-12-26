@@ -1,5 +1,16 @@
 package com.mgnt.events.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -59,5 +70,7 @@ public class PersonnelControllerTest {
         LocalDateTime.now()
       )
     );
+
+    when(_personnelService.findAll(5, 0)).thenReturn(responses);
   }
 }
