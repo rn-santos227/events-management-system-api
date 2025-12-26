@@ -85,4 +85,18 @@ public final class Mocks {
 
     private Vehicles() {}
   }
+
+  public static final class Venues {
+    public static final String NAME = "Grand Hall";
+    public static final String ADDRESS = "456 Center Ave";
+    public static final String CONTACT_PERSON = "Taylor Fox";
+    public static final String CONTACT_NUMBER = "555-3333";
+    public static final String EMAIL = "hall@example.com";
+    public static final String LATITUDE = "5.111";
+    public static final String LONGITUDE = "9.222";
+    public static final String PAGINATION_LIMIT = "5";
+    public static final String PAGINATION_PAGE = "1";
+
+    private Venues() {}
+  }
 }
