@@ -105,6 +105,24 @@ public class VehicleControllerTest {
       Mocks.Vehicles.CONTACT_NUMBER,
       assignedPersonnelId
     );
+
+    UUID vehicleId = UUID.randomUUID();
+    VehicleResponse response = new VehicleResponse(
+      vehicleId,
+      request.name(),
+      request.type(),
+      request.status(),
+      request.plateNumber(),
+      request.contactNumber(),
+      new VehiclePersonnelSummary(
+        assignedPersonnelId,
+        Mocks.Vehicles.ASSIGNED_PERSONNEL_NAME,
+        Mocks.Vehicles.ASSIGNED_PERSONNEL_CONTACT,
+        Mocks.Vehicles.ASSIGNED_PERSONNEL_FUNCTION
+      ),
+      LocalDateTime.now(),
+      LocalDateTime.now()
+    );
   }
 }
 
