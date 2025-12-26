@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -123,6 +124,8 @@ public class VehicleControllerTest {
       LocalDateTime.now(),
       LocalDateTime.now()
     );
+
+    when(_vehicleService.create(any(VehicleRequest.class))).thenReturn(response);
   }
 }
 
