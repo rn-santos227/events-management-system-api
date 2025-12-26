@@ -41,6 +41,6 @@ public class PersonnelControllerTest {
 
   @Test
   void findAll_ShouldReturnPersonnelResponses() throws Exception {
-
+    UUID personnelId = UUID.randomUUID();
   }
 }
