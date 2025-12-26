@@ -17,8 +17,12 @@ import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -93,5 +97,17 @@ public class CategoryControllerTest {
       LocalDateTime.now(),
       LocalDateTime.now()
     );
+
+   when(_categoryService.create(any(CategoryRequest.class))).thenReturn(response);
+
+    _mockMvc
+      .perform(
+        post(Routes.CATEGORIES)
+        .contentType(RequestValidators.requireNonNull(MediaType.APPLICATION_JSON, "Media Type"))
+        .content(RequestValidators.requireNonNull(_objectMapper.writeValueAsString(request), "Request"))
+      )
+      .andExpect(status().isCreated())
+      .andExpect(jsonPath(JsonPaths.ID).value(categoryId.toString()))
+      .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Categories.NAME));
   }
 }
