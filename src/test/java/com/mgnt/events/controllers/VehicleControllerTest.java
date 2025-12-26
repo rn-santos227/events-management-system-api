@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -151,6 +152,10 @@ public class VehicleControllerTest {
 
   @Test
   void delete_ShouldReturnNoContent() throws Exception {
-
+    UUID vehicleId = UUID.randomUUID();
+    _mockMvc
+      .perform(delete(Routes.VEHICLES + Routes.APPEND_ID, vehicleId))
+      .andExpect(status().isNoContent());
+    verify(_vehicleService).delete(RequestValidators.requireNonNull(vehicleId, "Vehicle ID"));
   }
 }
