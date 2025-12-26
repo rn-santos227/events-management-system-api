@@ -148,4 +148,9 @@ public class VehicleControllerTest {
     assertThat(captured.name()).isEqualTo(Mocks.Vehicles.NAME);
     assertThat(captured.assignedPersonnelId()).isEqualTo(assignedPersonnelId);
   }
+
+  @Test
+  void delete_ShouldReturnNoContent() throws Exception {
+
+  }
 }
