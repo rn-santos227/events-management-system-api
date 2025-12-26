@@ -29,6 +29,7 @@ import com.mgnt.events.constants.JsonPaths;
 import com.mgnt.events.constants.Mocks;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
+import com.mgnt.events.requests.categories.CategoryRequest;
 import com.mgnt.events.responses.categories.CategoryResponse;
 import com.mgnt.events.services.CategoryService;
 import com.mgnt.events.util.RequestValidators;
@@ -83,6 +84,7 @@ public class CategoryControllerTest {
 
   @Test
   void create_ShouldForwardRequestToService() throws Exception {
-
+    CategoryRequest request = new CategoryRequest(Mocks.Categories.NAME, Mocks.Categories.DESCRIPTION);
+    UUID categoryId = UUID.randomUUID();
   }
 }
