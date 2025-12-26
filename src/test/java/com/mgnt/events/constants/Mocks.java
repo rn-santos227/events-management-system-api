@@ -13,6 +13,15 @@ public final class Mocks {
     private Auth() {}
   }
 
+  public static final class Categories {
+    public static final String NAME = "Conference";
+    public static final String DESCRIPTION = "Conference category";
+    public static final String PAGINATION_LIMIT = "5";
+    public static final String PAGINATION_PAGE = "0";
+
+    private Categories() {}
+  }
+
   public static final class Messages {
     public static final String TEST = "this is a test";
     public static final String LOGOUT_SUCCESS = "Successfully logged out";

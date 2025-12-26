@@ -113,7 +113,7 @@ public class GraphQLGatewayController {
   }
 
   @QueryMapping
-  public RoleResponse role(@Argument UUID id) {
+  public RoleResponse role(@Argument @NonNull UUID id) {
     return _roleService.findById(id);
   }
 
