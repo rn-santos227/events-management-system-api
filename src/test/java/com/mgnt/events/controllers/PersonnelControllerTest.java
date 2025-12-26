@@ -107,5 +107,9 @@ public class PersonnelControllerTest {
       LocalDateTime.now(),
       LocalDateTime.now()
     );
+
+    when(_personnelService.create(any(PersonnelRequest.class))).thenReturn(response);
+
+    
   }
 }
