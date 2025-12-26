@@ -132,5 +132,9 @@ public class PersonnelControllerTest {
   @Test
   void delete_ShouldReturnNoContent() throws Exception {
     UUID personnelId = UUID.randomUUID();
+    _mockMvc
+      .perform(delete(Routes.PERSONNEL + Routes.APPEND_ID, personnelId))
+      .andExpect(status().isNoContent());
+    verify(_personnelService).delete(RequestValidators.requireNonNull(personnelId, "Personnel ID"));
   }
 }
