@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -143,6 +144,8 @@ public class VehicleControllerTest {
 
     ArgumentCaptor<VehicleRequest> captor = ArgumentCaptor.forClass(VehicleRequest.class);
     verify(_vehicleService, times(1)).create(captor.capture());
-
+    VehicleRequest captured = captor.getValue();
+    assertThat(captured.name()).isEqualTo(Mocks.Vehicles.NAME);
+    assertThat(captured.assignedPersonnelId()).isEqualTo(assignedPersonnelId);
   }
 }
