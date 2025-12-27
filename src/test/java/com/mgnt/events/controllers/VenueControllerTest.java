@@ -125,5 +125,8 @@ public class VenueControllerTest {
       LocalDateTime.now(),
       LocalDateTime.now()
     );
+
+    when(_venueService.create(any(VenueRequest.class))).thenReturn(response);
+
   }
 }
