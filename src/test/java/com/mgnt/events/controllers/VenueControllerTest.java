@@ -66,6 +66,6 @@ public class VenueControllerTest {
 
   @Test
   void findAll_ShouldReturnVenueResponses() throws Exception {
-
+    UUID venueId = UUID.randomUUID();
   }
 }
