@@ -138,5 +138,9 @@ public class VenueControllerTest {
       .andExpect(jsonPath(JsonPaths.ID).value(venueId.toString()))
       .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Venues.NAME));
 
+    ArgumentCaptor<VenueRequest> captor = ArgumentCaptor.forClass(VenueRequest.class);
+    verify(_venueService, times(1)).create(captor.capture());
+    VenueRequest captured = captor.getValue();
+
   }
 }
