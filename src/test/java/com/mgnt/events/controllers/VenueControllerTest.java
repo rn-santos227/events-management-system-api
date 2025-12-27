@@ -67,5 +67,21 @@ public class VenueControllerTest {
   @Test
   void findAll_ShouldReturnVenueResponses() throws Exception {
     UUID venueId = UUID.randomUUID();
+    List<VenueResponse> responses = List.of(
+      new VenueResponse(
+        venueId,
+        Mocks.Venues.NAME,
+        Mocks.Venues.ADDRESS,
+        Mocks.Venues.CONTACT_PERSON,
+        Mocks.Venues.CONTACT_NUMBER,
+        Mocks.Venues.EMAIL,
+        VenueType.CONFERENCE_HALL,
+        new BigDecimal(Mocks.Venues.LATITUDE),
+        new BigDecimal(Mocks.Venues.LONGITUDE),
+        null,
+        LocalDateTime.now(),
+        LocalDateTime.now()
+      )
+    );
   }
 }
