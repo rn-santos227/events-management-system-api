@@ -128,5 +128,15 @@ public class VenueControllerTest {
 
     when(_venueService.create(any(VenueRequest.class))).thenReturn(response);
 
+    _mockMvc
+      .perform(
+        post(Routes.VENUES)
+        .contentType(RequestValidators.requireNonNull(MediaType.APPLICATION_JSON, "Media Type"))
+        .content(RequestValidators.requireNonNull(_objectMapper.writeValueAsString(request), "Request"))
+      )
+      .andExpect(status().isCreated())
+      .andExpect(jsonPath(JsonPaths.ID).value(venueId.toString()))
+      .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Venues.NAME));
+
   }
 }
