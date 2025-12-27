@@ -56,6 +56,11 @@ public class VenueControllerTest {
     _objectMapper = new ObjectMapper();
     _objectMapper.registerModule(new JavaTimeModule());
 
-
+    _mockMvc = MockMvcBuilders
+      .standaloneSetup(_venueController)
+      .setMessageConverters(new MappingJackson2HttpMessageConverter(
+        RequestValidators.requireNonNull(_objectMapper, "Object Mapper")
+      ))
+      .build();
   }
 }
