@@ -147,6 +147,10 @@ public class VenueControllerTest {
 
   @Test
   void delete_ShouldReturnNoContent() throws Exception {
-
+    UUID venueId = UUID.randomUUID();
+    _mockMvc
+      .perform(delete(Routes.VENUES + Routes.APPEND_ID, venueId))
+      .andExpect(status().isNoContent());
+    verify(_venueService).delete(RequestValidators.requireNonNull(venueId, "Venue ID"));
   }
 }
