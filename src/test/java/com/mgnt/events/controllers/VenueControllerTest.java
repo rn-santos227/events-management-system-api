@@ -109,5 +109,21 @@ public class VenueControllerTest {
       new BigDecimal(Mocks.Venues.LONGITUDE),
       null
     );
+
+    UUID venueId = UUID.randomUUID();
+    VenueResponse response = new VenueResponse(
+      venueId,
+      request.name(),
+      request.address(),
+      request.contactPerson(),
+      request.contactNumber(),
+      request.email(),
+      request.type(),
+      request.latitude(),
+      request.longitude(),
+      null,
+      LocalDateTime.now(),
+      LocalDateTime.now()
+    );
   }
 }
