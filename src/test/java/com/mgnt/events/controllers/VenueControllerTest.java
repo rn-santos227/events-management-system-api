@@ -95,4 +95,9 @@ public class VenueControllerTest {
       .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(venueId.toString()))
       .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Venues.NAME));
   }
+
+  @Test
+  void create_ShouldForwardRequestToService() throws Exception {
+
+  }
 }
