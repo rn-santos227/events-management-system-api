@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -20,4 +21,8 @@ public class VenueControllerTest {
   @InjectMocks
   private VenueController _venueController;
 
+  @BeforeEach
+  void setUp() {
+
+  }
 }
