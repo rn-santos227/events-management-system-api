@@ -63,4 +63,9 @@ public class VenueControllerTest {
       ))
       .build();
   }
+
+  @Test
+  void findAll_ShouldReturnVenueResponses() throws Exception {
+
+  }
 }
