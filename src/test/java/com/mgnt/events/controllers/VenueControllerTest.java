@@ -83,5 +83,8 @@ public class VenueControllerTest {
         LocalDateTime.now()
       )
     );
+
+    when(_venueService.findAll(5, 1)).thenReturn(responses);
+
   }
 }
