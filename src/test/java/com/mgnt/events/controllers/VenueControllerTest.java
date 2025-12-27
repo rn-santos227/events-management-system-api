@@ -144,4 +144,9 @@ public class VenueControllerTest {
     assertThat(captured.name()).isEqualTo(Mocks.Venues.NAME);
     assertThat(captured.type()).isEqualTo(VenueType.CONFERENCE_HALL);
   }
+
+  @Test
+  void delete_ShouldReturnNoContent() throws Exception {
+
+  }
 }
