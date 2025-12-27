@@ -98,6 +98,16 @@ public class VenueControllerTest {
 
   @Test
   void create_ShouldForwardRequestToService() throws Exception {
-
+    VenueRequest request = new VenueRequest(
+      Mocks.Venues.NAME,
+      Mocks.Venues.ADDRESS,
+      Mocks.Venues.CONTACT_PERSON,
+      Mocks.Venues.CONTACT_NUMBER,
+      Mocks.Venues.EMAIL,
+      VenueType.CONFERENCE_HALL,
+      new BigDecimal(Mocks.Venues.LATITUDE),
+      new BigDecimal(Mocks.Venues.LONGITUDE),
+      null
+    );
   }
 }
