@@ -141,6 +141,7 @@ public class VenueControllerTest {
     ArgumentCaptor<VenueRequest> captor = ArgumentCaptor.forClass(VenueRequest.class);
     verify(_venueService, times(1)).create(captor.capture());
     VenueRequest captured = captor.getValue();
-
+    assertThat(captured.name()).isEqualTo(Mocks.Venues.NAME);
+    assertThat(captured.type()).isEqualTo(VenueType.CONFERENCE_HALL);
   }
 }
