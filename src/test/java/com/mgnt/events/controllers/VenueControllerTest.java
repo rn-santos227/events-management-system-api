@@ -85,6 +85,14 @@ public class VenueControllerTest {
     );
 
     when(_venueService.findAll(5, 1)).thenReturn(responses);
-
+    _mockMvc
+      .perform(
+        get(Routes.VENUES)
+          .param(Queries.LIMIT, Mocks.Venues.PAGINATION_LIMIT)
+          .param(Queries.PAGE, Mocks.Venues.PAGINATION_PAGE)
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(venueId.toString()))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Venues.NAME));
   }
 }
