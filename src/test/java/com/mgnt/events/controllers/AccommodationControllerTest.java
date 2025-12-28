@@ -1,5 +1,10 @@
 package com.mgnt.events.controllers;
 
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +22,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.mgnt.events.constants.JsonPaths;
 import com.mgnt.events.constants.Mocks;
+import com.mgnt.events.constants.Queries;
+import com.mgnt.events.constants.Routes;
 import com.mgnt.events.enums.AccommodationType;
 import com.mgnt.events.responses.accommodations.AccommodationResponse;
 import com.mgnt.events.services.AccommodationService;
@@ -67,5 +75,18 @@ public class AccommodationControllerTest {
         LocalDateTime.now()
       )
     );
+
+
+    when(_accommodationService.findAll(5, 1)).thenReturn(responses);
+
+    _mockMvc
+      .perform(
+        get(Routes.ACCOMMODATIONS)
+          .param(Queries.LIMIT, Mocks.Accommodations.PAGINATION_LIMIT)
+          .param(Queries.PAGE, Mocks.Accommodations.PAGINATION_PAGE)
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(accommodationId.toString()))
+      .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Accommodations.NAME));
   }
 }
