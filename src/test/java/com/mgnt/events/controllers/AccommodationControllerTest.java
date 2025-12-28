@@ -89,4 +89,9 @@ public class AccommodationControllerTest {
       .andExpect(jsonPath(JsonPaths.INDEX_0_ID).value(accommodationId.toString()))
       .andExpect(jsonPath(JsonPaths.INDEX_0_NAME).value(Mocks.Accommodations.NAME));
   }
+
+  @Test
+  void create_ShouldForwardRequestToService() throws Exception {
+
+  }
 }
