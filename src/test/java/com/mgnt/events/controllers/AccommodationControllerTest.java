@@ -140,5 +140,11 @@ public class AccommodationControllerTest {
       .andExpect(status().isCreated())
       .andExpect(jsonPath(JsonPaths.ID).value(accommodationId.toString()))
       .andExpect(jsonPath(JsonPaths.NAME).value(Mocks.Accommodations.NAME));
+
+    ArgumentCaptor<AccommodationRequest> captor = ArgumentCaptor.forClass(AccommodationRequest.class);
+    verify(_accommodationService, times(1)).create(captor.capture());
+    AccommodationRequest captured = captor.getValue();
+    assertThat(captured.name()).isEqualTo(Mocks.Accommodations.NAME);
+    assertThat(captured.type()).isEqualTo(AccommodationType.HOTEL);
   }
 }
