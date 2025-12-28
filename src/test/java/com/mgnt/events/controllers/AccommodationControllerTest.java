@@ -147,4 +147,13 @@ public class AccommodationControllerTest {
     assertThat(captured.name()).isEqualTo(Mocks.Accommodations.NAME);
     assertThat(captured.type()).isEqualTo(AccommodationType.HOTEL);
   }
+
+  @Test
+  void delete_ShouldReturnNoContent() throws Exception {
+    UUID accommodationId = UUID.randomUUID();
+    _mockMvc
+      .perform(delete(Routes.ACCOMMODATIONS + Routes.APPEND_ID, accommodationId))
+      .andExpect(status().isNoContent());
+    verify(_accommodationService).delete(RequestValidators.requireNonNull(accommodationId, "Accommodation ID"));
+  }
 }
