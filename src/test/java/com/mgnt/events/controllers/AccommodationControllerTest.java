@@ -27,6 +27,7 @@ import com.mgnt.events.constants.Mocks;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
 import com.mgnt.events.enums.AccommodationType;
+import com.mgnt.events.requests.accommodations.AccommodationRequest;
 import com.mgnt.events.responses.accommodations.AccommodationResponse;
 import com.mgnt.events.services.AccommodationService;
 import com.mgnt.events.util.RequestValidators;
@@ -92,6 +93,16 @@ public class AccommodationControllerTest {
 
   @Test
   void create_ShouldForwardRequestToService() throws Exception {
-
+    AccommodationRequest request = new AccommodationRequest(
+      Mocks.Accommodations.NAME,
+      Mocks.Accommodations.ADDRESS,
+      Mocks.Accommodations.CONTACT_PERSON,
+      Mocks.Accommodations.CONTACT_NUMBER,
+      Mocks.Accommodations.EMAIL,
+      AccommodationType.HOTEL,
+      new BigDecimal(Mocks.Accommodations.LATITUDE),
+      new BigDecimal(Mocks.Accommodations.LONGITUDE),
+      null
+    );
   }
 }
