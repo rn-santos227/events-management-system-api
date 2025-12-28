@@ -104,5 +104,21 @@ public class AccommodationControllerTest {
       new BigDecimal(Mocks.Accommodations.LONGITUDE),
       null
     );
+
+    UUID accommodationId = UUID.randomUUID();
+    AccommodationResponse response = new AccommodationResponse(
+      accommodationId,
+      request.name(),
+      request.address(),
+      request.contactPerson(),
+      request.contactNumber(),
+      request.email(),
+      request.type(),
+      request.latitude(),
+      request.longitude(),
+      null,
+      LocalDateTime.now(),
+      LocalDateTime.now()
+    );
   }
 }
