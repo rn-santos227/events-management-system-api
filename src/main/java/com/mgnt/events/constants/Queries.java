@@ -21,8 +21,13 @@ public class Queries {
     "UPDATE users SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?";
   public static final String DELETE_STORED_FILES =
     "UPDATE stored_files SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?";
+  
+  public static final String ACTION = "action";
+  public static final String ACTIONS = "actions";
+
   public static final String LIMIT = "limit";
   public static final String PAGE = "page";
   public static final String CREATED_AT = "createdAt";
+  
   public static final String TEXT = "TEXT";
 }
