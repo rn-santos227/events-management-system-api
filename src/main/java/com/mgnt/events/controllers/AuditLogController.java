@@ -61,6 +61,11 @@ public class AuditLogController {
   ) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
     return _auditLogService.search(
+      action,
+      actions,
+      activities,
+      method,
+      path,
 
     );
   }
