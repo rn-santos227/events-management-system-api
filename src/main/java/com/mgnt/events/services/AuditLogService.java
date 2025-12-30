@@ -164,6 +164,15 @@ public class AuditLogService {
         );
     }
 
+    if (userId != null) {
+      specification = specification.and((root, query, builder) -> builder.equal(root.get(Queries.USER).get(Queries.ID), userId));
+    }
+
+    if (startDate != null) {
+      specification =
+        specification.and((root, query, builder) -> builder.greaterThanOrEqualTo(root.get(Queries.CREATED_AT), startDate));
+    }
+
   }
 
   private AuditLogResponse toResponse(AuditLog auditLog) {
