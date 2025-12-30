@@ -28,10 +28,15 @@ public class Queries {
   public static final String METHOD = "method";
   public static final String PATH = "path";
   public static final String STATUS_CODE = "statusCode";
+  public static final String IP_ADDRESS = "ipAddress";
+  public static final String MESSAGE = "message";
+  public static final String USER_ID = "userId";
+  public static final String START_DATE = "startDate";
+  public static final String END_DATE = "endDate";
 
   public static final String LIMIT = "limit";
   public static final String PAGE = "page";
   public static final String CREATED_AT = "createdAt";
-  
+
   public static final String TEXT = "TEXT";
 }
