@@ -173,6 +173,11 @@ public class AuditLogService {
         specification.and((root, query, builder) -> builder.greaterThanOrEqualTo(root.get(Queries.CREATED_AT), startDate));
     }
 
+    if (endDate != null) {
+      specification =
+        specification.and((root, query, builder) -> builder.lessThanOrEqualTo(root.get(Queries.CREATED_AT), endDate));
+    }
+
   }
 
   private AuditLogResponse toResponse(AuditLog auditLog) {
