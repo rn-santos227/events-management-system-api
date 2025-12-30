@@ -1,5 +1,6 @@
 package com.mgnt.events.controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.mgnt.events.constants.PrivilegeActions;
 import com.mgnt.events.constants.Queries;
