@@ -185,6 +185,13 @@ public class AuditLogService {
         .map(this::toResponse)
         .toList();
     }
+
+    return _auditLogRepository
+      .findAll(specification, PageRequest.of(0, sanitizedLimit, DEFAULT_SORT))
+      .getContent()
+      .stream()
+      .map(this::toResponse)
+      .toList();
   }
 
   private AuditLogResponse toResponse(AuditLog auditLog) {
