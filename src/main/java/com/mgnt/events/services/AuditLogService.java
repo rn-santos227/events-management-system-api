@@ -146,6 +146,16 @@ public class AuditLogService {
         specification.and((root, query, builder) -> builder.equal(root.get(Queries.STATUS_CODE), statusCode));
     }
 
+    if (!RequestValidators.isBlank(ipAddress) && ipAddress != null) {
+      String sanitizedIp = ipAddress.trim().toLowerCase();
+      specification =
+        specification.and(
+          (root, query, builder) ->
+            builder.like(builder.lower(root.get("ipAddress")), "%" + sanitizedIp + "%")
+        );
+    }
+
+
   }
 
   private AuditLogResponse toResponse(AuditLog auditLog) {
