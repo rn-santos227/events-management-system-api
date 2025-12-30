@@ -123,6 +123,14 @@ public class AuditLogService {
       specification = specification.and((root, query, builder) -> root.get("action").in(actionTokens));
     }
 
+    if (!RequestValidators.isBlank(method) && method != null) {
+      String sanitizedMethod = method.trim().toLowerCase();
+      specification =
+        specification.and(
+          (root, query, builder) ->
+            builder.like(builder.lower(root.get("method")), "%" + sanitizedMethod + "%")
+        );
+    }
 
   }
 
