@@ -66,7 +66,13 @@ public class AuditLogController {
       activities,
       method,
       path,
-
+      statusCode,
+      ipAddress,
+      message,
+      userId,
+      startDate,
+      endDate,
+      sanitizedLimit
     );
   }
 
