@@ -132,6 +132,14 @@ public class AuditLogService {
         );
     }
 
+    if (!RequestValidators.isBlank(path) && path != null) {
+      String sanitizedPath = path.trim().toLowerCase();
+      specification =
+        specification.and(
+          (root, query, builder) ->
+            builder.like(builder.lower(root.get("path")), "%" + sanitizedPath + "%")
+        );
+    }
   }
 
   private AuditLogResponse toResponse(AuditLog auditLog) {
