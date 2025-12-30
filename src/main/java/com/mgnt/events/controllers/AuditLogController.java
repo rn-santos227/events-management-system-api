@@ -42,6 +42,8 @@ public class AuditLogController {
   @GetMapping(Routes.SEARCH)
   @RequiresPrivilege({ PrivilegeActions.AUDIT_LOGS_READ })
   public List<AuditLogResponse> search(
+    @RequestParam(name = Queries.ACTION, required = false) String action,
+    @RequestParam(name = Queries.ACTIONS, required = false) List<String> actions,
 
   ) {
     
