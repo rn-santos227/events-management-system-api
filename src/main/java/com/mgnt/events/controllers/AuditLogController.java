@@ -54,8 +54,10 @@ public class AuditLogController {
     @RequestParam(name = Queries.START_DATE, required = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     LocalDateTime startDate,
-
-
+    @RequestParam(name = Queries.END_DATE, required = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    LocalDateTime endDate,
+    @RequestParam(name = Queries.LIMIT, required = false) Integer limit
   ) {
     
   }
