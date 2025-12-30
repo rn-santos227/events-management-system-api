@@ -7,6 +7,8 @@ import static com.mgnt.events.constants.Cache.KEY_ALL;
 import static com.mgnt.events.constants.Cache.KEY_USER;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -22,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.data.jpa.domain.Specification;
 
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.AuditLog;
@@ -84,6 +87,25 @@ public class AuditLogService {
       .stream()
       .map(this::toResponse)
       .toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<AuditLogResponse> search(
+    @Nullable String action,
+    @Nullable List<String> actions,
+    @Nullable List<String> activities,
+    @Nullable String method,
+    @Nullable String path,
+    @Nullable Integer statusCode,
+    @Nullable String ipAddress,
+    @Nullable String message,
+    @Nullable UUID userId,
+    @Nullable LocalDateTime startDate,
+    @Nullable LocalDateTime endDate,
+    @Nullable Integer limit
+  ) {
+
+
   }
 
   private AuditLogResponse toResponse(AuditLog auditLog) {
