@@ -48,6 +48,10 @@ public class AuditLogController {
     @RequestParam(name = Queries.METHOD, required = false) String method,
     @RequestParam(name = Queries.PATH, required = false) String path,
     @RequestParam(name = Queries.STATUS_CODE, required = false) Integer statusCode,
+    @RequestParam(name = Queries.IP_ADDRESS, required = false) String ipAddress,
+    @RequestParam(name = Queries.MESSAGE, required = false) String message,
+    @RequestParam(name = Queries.USER_ID, required = false) UUID userId,
+
 
   ) {
     
