@@ -151,10 +151,18 @@ public class AuditLogService {
       specification =
         specification.and(
           (root, query, builder) ->
-            builder.like(builder.lower(root.get("ipAddress")), "%" + sanitizedIp + "%")
+            builder.like(builder.lower(root.get(Queries.IP_ADDRESS)), "%" + sanitizedIp + "%")
         );
     }
 
+    if (!RequestValidators.isBlank(message) && message != null) {
+      String sanitizedMessage = message.trim().toLowerCase();
+      specification =
+        specification.and(
+          (root, query, builder) ->
+            builder.like(builder.lower(root.get(Queries.MESSAGE)), "%" + sanitizedMessage + "%")
+        );
+    }
 
   }
 
