@@ -26,6 +26,8 @@ public class Queries {
   public static final String ACTIONS = "actions";
   public static final String ACTIVITIES = "activities";
   public static final String METHOD = "method";
+  public static final String PATH = "path";
+  public static final String STATUS_CODE = "statusCode";
 
   public static final String LIMIT = "limit";
   public static final String PAGE = "page";
