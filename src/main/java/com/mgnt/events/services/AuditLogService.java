@@ -6,16 +6,17 @@ import static com.mgnt.events.constants.Cache.KEY;
 import static com.mgnt.events.constants.Cache.KEY_ALL;
 import static com.mgnt.events.constants.Cache.KEY_USER;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -24,7 +25,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.data.jpa.domain.Specification;
 
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.AuditLog;
@@ -33,6 +33,8 @@ import com.mgnt.events.repositories.AuditLogRepository;
 import com.mgnt.events.responses.audit.AuditLogResponse;
 import com.mgnt.events.responses.audit.AuditLogUserResponse;
 import com.mgnt.events.util.RequestValidators;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class AuditLogService {
@@ -110,16 +112,17 @@ public class AuditLogService {
     }
 
     List<String> actionTokens = new ArrayList<>();
-    if (!RequestValidators.isBlank(action) && action != null ) {
+    if (!RequestValidators.isBlank(action) && action != null) {
       actionTokens.add(action.toString().trim());
     }
     actionTokens.addAll(sanitizeTokens(actions));
     actionTokens.addAll(sanitizeTokens(activities));
 
-    Specification<AuditLog> specification = Specification.where(null);
+    Specification<AuditLog> specification = (root, query, builder) -> builder.conjunction();
     if (!actionTokens.isEmpty()) {
       specification = specification.and((root, query, builder) -> root.get("action").in(actionTokens));
     }
+
 
   }
 
