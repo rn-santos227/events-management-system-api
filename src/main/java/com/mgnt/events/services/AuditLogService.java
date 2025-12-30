@@ -120,7 +120,7 @@ public class AuditLogService {
 
     Specification<AuditLog> specification = (root, query, builder) -> builder.conjunction();
     if (!actionTokens.isEmpty()) {
-      specification = specification.and((root, query, builder) -> root.get("action").in(actionTokens));
+      specification = specification.and((root, query, builder) -> root.get(Queries.ACTION).in(actionTokens));
     }
 
     if (!RequestValidators.isBlank(method) && method != null) {
@@ -128,7 +128,7 @@ public class AuditLogService {
       specification =
         specification.and(
           (root, query, builder) ->
-            builder.like(builder.lower(root.get("method")), "%" + sanitizedMethod + "%")
+            builder.like(builder.lower(root.get(Queries.METHOD)), "%" + sanitizedMethod + "%")
         );
     }
 
@@ -137,13 +137,13 @@ public class AuditLogService {
       specification =
         specification.and(
           (root, query, builder) ->
-            builder.like(builder.lower(root.get("path")), "%" + sanitizedPath + "%")
+            builder.like(builder.lower(root.get(Queries.PATH)), "%" + sanitizedPath + "%")
         );
     }
 
     if (statusCode != null) {
       specification =
-        specification.and((root, query, builder) -> builder.equal(root.get("statusCode"), statusCode));
+        specification.and((root, query, builder) -> builder.equal(root.get(Queries.STATUS_CODE), statusCode));
     }
 
   }
