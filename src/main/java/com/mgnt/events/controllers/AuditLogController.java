@@ -60,6 +60,9 @@ public class AuditLogController {
     @RequestParam(name = Queries.LIMIT, required = false) Integer limit
   ) {
     Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    return _auditLogService.search(
+
+    );
   }
 
   @GetMapping(Routes.APPEND_USER_ID)
