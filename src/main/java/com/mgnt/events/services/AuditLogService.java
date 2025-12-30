@@ -140,6 +140,12 @@ public class AuditLogService {
             builder.like(builder.lower(root.get("path")), "%" + sanitizedPath + "%")
         );
     }
+
+    if (statusCode != null) {
+      specification =
+        specification.and((root, query, builder) -> builder.equal(root.get("statusCode"), statusCode));
+    }
+
   }
 
   private AuditLogResponse toResponse(AuditLog auditLog) {
