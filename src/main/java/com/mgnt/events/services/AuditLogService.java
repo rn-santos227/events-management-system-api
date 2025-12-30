@@ -116,6 +116,10 @@ public class AuditLogService {
     actionTokens.addAll(sanitizeTokens(actions));
     actionTokens.addAll(sanitizeTokens(activities));
 
+    Specification<AuditLog> specification = Specification.where(null);
+    if (!actionTokens.isEmpty()) {
+      specification = specification.and((root, query, builder) -> root.get("action").in(actionTokens));
+    }
 
   }
 
