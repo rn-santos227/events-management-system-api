@@ -178,6 +178,13 @@ public class AuditLogService {
         specification.and((root, query, builder) -> builder.lessThanOrEqualTo(root.get(Queries.CREATED_AT), endDate));
     }
 
+    if (sanitizedLimit == null) {
+      return _auditLogRepository
+        .findAll(specification, DEFAULT_SORT)
+        .stream()
+        .map(this::toResponse)
+        .toList();
+    }
   }
 
   private AuditLogResponse toResponse(AuditLog auditLog) {
