@@ -143,4 +143,11 @@ public class AuditLogService {
     }
     return user;
   }
+
+  private List<String> sanitizeTokens(@Nullable List<String> tokens) {
+    if (tokens == null) {
+      return List.of();
+    }
+    return tokens.stream().filter(token -> !RequestValidators.isBlank(token)).map(token -> token.trim()).toList();
+  }
 }
