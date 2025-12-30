@@ -109,6 +109,12 @@ public class AuditLogService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "end date must be on or after start date");
     }
 
+    List<String> actionTokens = new ArrayList<>();
+    if (!RequestValidators.isBlank(action) && action != null ) {
+      actionTokens.add(action.toString().trim());
+    }
+    actionTokens.addAll(sanitizeTokens(actions));
+    actionTokens.addAll(sanitizeTokens(activities));
 
 
   }
