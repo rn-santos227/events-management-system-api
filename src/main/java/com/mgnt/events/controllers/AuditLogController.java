@@ -44,6 +44,10 @@ public class AuditLogController {
   public List<AuditLogResponse> search(
     @RequestParam(name = Queries.ACTION, required = false) String action,
     @RequestParam(name = Queries.ACTIONS, required = false) List<String> actions,
+    @RequestParam(name = Queries.ACTIVITIES, required = false) List<String> activities,
+    @RequestParam(name = Queries.METHOD, required = false) String method,
+    @RequestParam(name = Queries.PATH, required = false) String path,
+    @RequestParam(name = Queries.STATUS_CODE, required = false) Integer statusCode,
 
   ) {
     
