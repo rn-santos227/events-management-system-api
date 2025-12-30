@@ -104,6 +104,11 @@ public class AuditLogService {
     @Nullable LocalDateTime endDate,
     @Nullable Integer limit
   ) {
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
+    if (startDate != null && endDate != null && endDate.isBefore(startDate)) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "end date must be on or after start date");
+    }
+
 
 
   }
