@@ -51,6 +51,9 @@ public class AuditLogController {
     @RequestParam(name = Queries.IP_ADDRESS, required = false) String ipAddress,
     @RequestParam(name = Queries.MESSAGE, required = false) String message,
     @RequestParam(name = Queries.USER_ID, required = false) UUID userId,
+    @RequestParam(name = Queries.START_DATE, required = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    LocalDateTime startDate,
 
 
   ) {
