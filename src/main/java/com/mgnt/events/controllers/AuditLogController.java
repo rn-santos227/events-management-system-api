@@ -39,6 +39,14 @@ public class AuditLogController {
     return _auditLogService.findAll(sanitizedLimit);
   }
 
+  @GetMapping(Routes.SEARCH)
+  @RequiresPrivilege({ PrivilegeActions.AUDIT_LOGS_READ })
+  public List<AuditLogResponse> search(
+
+  ) {
+    
+  }
+
   @GetMapping(Routes.APPEND_USER_ID)
   @RequiresPrivilege({ PrivilegeActions.AUDIT_LOGS_READ, PrivilegeActions.AUDIT_LOGS_READ_OWN })
   public List<AuditLogResponse> findByUserId(
