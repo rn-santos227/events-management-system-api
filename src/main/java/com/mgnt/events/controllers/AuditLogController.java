@@ -59,7 +59,7 @@ public class AuditLogController {
     LocalDateTime endDate,
     @RequestParam(name = Queries.LIMIT, required = false) Integer limit
   ) {
-    
+    Integer sanitizedLimit = RequestValidators.requirePositiveOrNull(limit, Queries.LIMIT);
   }
 
   @GetMapping(Routes.APPEND_USER_ID)
