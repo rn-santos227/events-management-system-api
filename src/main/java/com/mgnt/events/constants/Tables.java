@@ -12,6 +12,7 @@ public class Tables {
   public static final String STORED_FILES = "stored_files";
   public static final String USERS = "users";
   public static final String USER_TOKENS = "user_tokens";
+  public static final String USER_SETTINGS = "user_settings";
   public static final String VEHICLES = "vehicles";
   public static final String VENUES = "venues";
 }

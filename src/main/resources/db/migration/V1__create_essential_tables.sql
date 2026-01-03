@@ -55,6 +55,20 @@ CREATE TABLE user_tokens (
   CONSTRAINT fk_user_tokens_user FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
+CREATE TABLE user_settings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL UNIQUE,
+  theme VARCHAR(50) NOT NULL DEFAULT 'SYSTEM',
+  density VARCHAR(50) NOT NULL DEFAULT 'NORMAL',
+  font_size VARCHAR(50) NOT NULL DEFAULT 'MD',
+  default_page_size INTEGER NOT NULL DEFAULT 25,
+  remember_state BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  deleted_at TIMESTAMP,
+  CONSTRAINT fk_user_settings_user FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
 CREATE TABLE stored_files (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   file_name VARCHAR(255) NOT NULL,
