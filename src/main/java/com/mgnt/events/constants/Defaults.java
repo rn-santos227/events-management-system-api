@@ -1,5 +1,9 @@
 package com.mgnt.events.constants;
 
+import com.mgnt.events.enums.DensityOption;
+import com.mgnt.events.enums.FontSizeOption;
+import com.mgnt.events.enums.ThemeOption;
+
 public class Defaults {
   Defaults() {}
 
@@ -17,6 +21,10 @@ public class Defaults {
   public static final int DEFAULT_TOKEN_LENGTH = 512;
   public static final int DEFAULT_TEXT_SIZE = 1024;
   public static final int DEFAULT_URL_LENGTH = 2048;
+
+  public static final ThemeOption DEFAULT_THEME = ThemeOption.SYSTEM;
+  public static final DensityOption DEFAULT_DENSITY = DensityOption.NORMAL;
+  public static final FontSizeOption DEFAULT_FONT_SIZE = FontSizeOption.MD;
 
   public static final String DEG_90_POSITIVE = "90.0";
   public static final String DEG_90_NEGATIVE = "-90.0";
