@@ -21,6 +21,7 @@ public class Defaults {
   public static final int DEFAULT_TOKEN_LENGTH = 512;
   public static final int DEFAULT_TEXT_SIZE = 1024;
   public static final int DEFAULT_URL_LENGTH = 2048;
+  public static final int DEFAULT_PAGE_SIZE = 25;
 
   public static final ThemeOption DEFAULT_THEME = ThemeOption.SYSTEM;
   public static final DensityOption DEFAULT_DENSITY = DensityOption.NORMAL;
