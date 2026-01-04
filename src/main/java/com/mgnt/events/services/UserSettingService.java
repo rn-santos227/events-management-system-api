@@ -50,6 +50,7 @@ public class UserSettingService {
         .findByUserId(userId)
         .orElseGet(() -> new UserSetting(user, null, null, null, null, true));
 
+    return toResponse(_userSettingRepository.save(userSetting));
   }
 
   private User getUser(@NonNull UUID id) {
