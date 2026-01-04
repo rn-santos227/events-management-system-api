@@ -66,6 +66,11 @@ public class UserSetting {
     Integer defaultPageSize,
     boolean rememberState
   ) {
-
+    this.user = user;
+    this.theme = theme;
+    this.density = density;
+    this.fontSize = fontSize;
+    this.defaultPageSize = defaultPageSize;
+    this.rememberState = rememberState;
   }
 }
