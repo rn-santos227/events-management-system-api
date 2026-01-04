@@ -49,4 +49,7 @@ public class UserSetting {
   @Column(name = Attributes.FONT_SIZE, nullable = false)
   @Convert(converter = FontSizeOptionConverter.class)
   private FontSizeOption fontSize;
+
+  @Column(name = Attributes.DEFAULT_PAGE_SIZE, nullable = false)
+  private Integer defaultPageSize;
 }
