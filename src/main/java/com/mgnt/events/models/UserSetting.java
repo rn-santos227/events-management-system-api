@@ -52,4 +52,7 @@ public class UserSetting {
 
   @Column(name = Attributes.DEFAULT_PAGE_SIZE, nullable = false)
   private Integer defaultPageSize;
+
+  @Column(name = Attributes.REMEMBER_STATE, nullable = false)
+  private boolean rememberState;
 }
