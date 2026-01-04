@@ -14,6 +14,7 @@ import com.mgnt.events.models.UserSetting;
 import com.mgnt.events.repositories.UserRepository;
 import com.mgnt.events.repositories.UserSettingRepository;
 import com.mgnt.events.responses.settings.UserSettingResponse;
+import com.mgnt.events.util.RequestValidators;
 
 @Service
 public class UserSettingService {
@@ -30,7 +31,14 @@ public class UserSettingService {
 
   @Transactional
   public UserSettingResponse getByUserId(@NonNull UUID userId) {
-
+    User user = getUser(userId);
+    UserSetting userSetting =
+      _userSettingRepository
+        .findByUserId(userId)
+        .orElseGet(() -> _userSettingRepository.save(
+          RequestValidators.requireNonNull(defaultSettings(user), "User must not be null") )
+        );
+    return toResponse(userSetting);
   }
   
   private User getUser(@NonNull UUID id) {
