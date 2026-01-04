@@ -13,6 +13,7 @@ import com.mgnt.events.models.User;
 import com.mgnt.events.models.UserSetting;
 import com.mgnt.events.repositories.UserRepository;
 import com.mgnt.events.repositories.UserSettingRepository;
+import com.mgnt.events.requests.settings.UserSettingRequest;
 import com.mgnt.events.responses.settings.UserSettingResponse;
 import com.mgnt.events.util.RequestValidators;
 
@@ -41,6 +42,11 @@ public class UserSettingService {
     return toResponse(userSetting);
   }
   
+  @Transactional
+  public UserSettingResponse update(@NonNull UUID userId, UserSettingRequest request) {
+
+  }
+
   private User getUser(@NonNull UUID id) {
     return Objects.requireNonNull(
       _userRepository
