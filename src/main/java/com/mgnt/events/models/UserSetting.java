@@ -17,7 +17,9 @@ import org.hibernate.annotations.SQLDelete;
 import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
+import com.mgnt.events.enums.DensityOption;
 import com.mgnt.events.enums.ThemeOption;
+import com.mgnt.events.models.converters.DensityOptionConverter;
 import com.mgnt.events.models.converters.ThemeOptionConverter;
 
 @Entity
@@ -37,4 +39,8 @@ public class UserSetting {
   @Column(name = Attributes.THEME, nullable = false)
   @Convert(converter = ThemeOptionConverter.class)
   private ThemeOption theme;
+
+  @Column(name = Attributes.DENSITY, nullable = false)
+  @Convert(converter = DensityOptionConverter.class)
+  private DensityOption density;
 }
