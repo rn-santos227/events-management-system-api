@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mgnt.events.constants.Defaults;
@@ -25,6 +26,11 @@ public class UserSettingService {
   ) {
     this._userRepository = userRepository;
     this._userSettingRepository = userSettingRepository;
+  }
+
+  @Transactional
+  public UserSettingResponse getByUserId(@NonNull UUID userId) {
+
   }
   
   private User getUser(@NonNull UUID id) {
