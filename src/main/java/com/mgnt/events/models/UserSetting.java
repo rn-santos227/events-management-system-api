@@ -18,8 +18,10 @@ import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Tables;
 import com.mgnt.events.enums.DensityOption;
+import com.mgnt.events.enums.FontSizeOption;
 import com.mgnt.events.enums.ThemeOption;
 import com.mgnt.events.models.converters.DensityOptionConverter;
+import com.mgnt.events.models.converters.FontSizeOptionConverter;
 import com.mgnt.events.models.converters.ThemeOptionConverter;
 
 @Entity
@@ -43,4 +45,8 @@ public class UserSetting {
   @Column(name = Attributes.DENSITY, nullable = false)
   @Convert(converter = DensityOptionConverter.class)
   private DensityOption density;
+
+  @Column(name = Attributes.FONT_SIZE, nullable = false)
+  @Convert(converter = FontSizeOptionConverter.class)
+  private FontSizeOption fontSize;
 }
