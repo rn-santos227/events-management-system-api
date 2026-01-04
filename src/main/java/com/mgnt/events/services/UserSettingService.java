@@ -50,6 +50,12 @@ public class UserSettingService {
         .findByUserId(userId)
         .orElseGet(() -> new UserSetting(user, null, null, null, null, true));
 
+    userSetting.setTheme(request.theme());
+    userSetting.setDensity(request.density());
+    userSetting.setFontSize(request.fontSize());
+    userSetting.setDefaultPageSize(request.defaultPageSize());
+    userSetting.setRememberState(request.rememberState());
+
     return toResponse(_userSettingRepository.save(userSetting));
   }
 
