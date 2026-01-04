@@ -55,4 +55,17 @@ public class UserSetting {
 
   @Column(name = Attributes.REMEMBER_STATE, nullable = false)
   private boolean rememberState;
+
+  public UserSetting() {}
+
+  public UserSetting(
+    User user,
+    ThemeOption theme,
+    DensityOption density,
+    FontSizeOption fontSize,
+    Integer defaultPageSize,
+    boolean rememberState
+  ) {
+
+  }
 }
