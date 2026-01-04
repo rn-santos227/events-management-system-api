@@ -44,6 +44,11 @@ public class UserSettingService {
   
   @Transactional
   public UserSettingResponse update(@NonNull UUID userId, UserSettingRequest request) {
+    User user = getUser(userId);
+    UserSetting userSetting =
+      _userSettingRepository
+        .findByUserId(userId)
+        .orElseGet(() -> new UserSetting(user, null, null, null, null, true));
 
   }
 
