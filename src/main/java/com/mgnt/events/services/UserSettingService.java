@@ -2,8 +2,10 @@ package com.mgnt.events.services;
 
 import org.springframework.stereotype.Service;
 
+import com.mgnt.events.models.UserSetting;
 import com.mgnt.events.repositories.UserRepository;
 import com.mgnt.events.repositories.UserSettingRepository;
+import com.mgnt.events.responses.settings.UserSettingResponse;
 
 @Service
 public class UserSettingService {
@@ -17,4 +19,10 @@ public class UserSettingService {
     this._userRepository = userRepository;
     this._userSettingRepository = userSettingRepository;
   }
+  
+
+  private UserSettingResponse toResponse(UserSetting userSetting) {
+    
+  }
 }
+
