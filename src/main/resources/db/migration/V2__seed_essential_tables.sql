@@ -1,9 +1,7 @@
 INSERT INTO privileges (name, action, resource)
 VALUES
-  ('Create Privilege', 'privileges:create', 'privileges'),
   ('Read Privilege', 'privileges:read', 'privileges'),
   ('Update Privilege', 'privileges:update', 'privileges'),
-  ('Delete Privilege', 'privileges:delete', 'privileges'),
   ('Create Role', 'roles:create', 'roles'),
   ('Read Role', 'roles:read', 'roles'),
   ('Update Role', 'roles:update', 'roles'),

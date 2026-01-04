@@ -6,12 +6,10 @@ import static com.mgnt.events.constants.Cache.PRIVILEGES;
 import static com.mgnt.events.constants.Cache.PRIVILEGE_BY_ID;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -61,15 +59,6 @@ public class PrivilegeService {
 
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { PRIVILEGES, PRIVILEGE_BY_ID }, allEntries = true)
-  public PrivilegeResponse create(PrivilegeRequest request) {
-    validateUniqueness(request.name(), request.action(), null);
-
-    Privilege privilege = new Privilege(request.name(), request.action(), request.resource());
-    return toResponse(_privilegeRepository.save(privilege));
-  }
-
-  @Transactional(rollbackFor = Throwable.class)
-  @CacheEvict(cacheNames = { PRIVILEGES, PRIVILEGE_BY_ID }, allEntries = true)
   public PrivilegeResponse update(@NonNull UUID id, PrivilegeRequest request) {
     Privilege privilege = getPrivilege(id);
     validateUniqueness(request.name(), request.action(), id);
@@ -79,27 +68,6 @@ public class PrivilegeService {
     privilege.setResource(request.resource());
 
     return toResponse(_privilegeRepository.save(privilege));
-  }
-
-  @Transactional(rollbackFor = Throwable.class)
-  @CacheEvict(cacheNames = { PRIVILEGES, PRIVILEGE_BY_ID }, allEntries = true)
-  public void delete(@NonNull UUID id) {
-    Privilege privilege = Objects.requireNonNull(getPrivilege(id));
-    try {
-      _privilegeRepository.delete(privilege);
-    } catch (IllegalStateException exception) {
-      throw new ResponseStatusException(
-        HttpStatus.CONFLICT,
-        exception.getMessage() != null ? exception.getMessage() : "Unable to delete privilege",
-        exception
-      );
-    } catch (DataIntegrityViolationException exception) {
-      throw new ResponseStatusException(
-        HttpStatus.CONFLICT,
-        "Unable to delete privilege while it is still in use",
-        exception
-      );
-    }
   }
 
   private Privilege getPrivilege(@NonNull UUID id) {
