@@ -29,7 +29,7 @@ import com.mgnt.events.models.converters.ThemeOptionConverter;
 @SQLDelete(sql = Queries.DELETE_USER_SETTINGS)
 @Getter
 @Setter
-public class UserSetting {
+public class UserSetting extends AuditableEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
