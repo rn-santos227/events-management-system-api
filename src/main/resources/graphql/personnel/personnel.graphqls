@@ -2,6 +2,10 @@ extend type Query {
   personnel(limit: Int, page: Int): [Personnel!]!
 }
 
+extend type Mutation {
+  updatePersonnel(id: ID!, input: PersonnelUpdateInput!): Personnel!
+}
+
 type Personnel {
   id: ID!
   name: String
@@ -10,4 +14,11 @@ type Personnel {
   role: String
   createdAt: String
   updatedAt: String
+}
+
+input PersonnelUpdateInput {
+  fullName: String
+  contactNumber: String
+  email: String
+  role: String
 }
