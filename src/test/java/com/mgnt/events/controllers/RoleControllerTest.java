@@ -73,7 +73,8 @@ public class RoleControllerTest {
         privilegeId,
         Mocks.Roles.PRIVILEGE_MANAGE_USERS,
         Mocks.Roles.PRIVILEGE_ACTION_WRITE,
-        Mocks.Roles.PRIVILEGE_SCOPE_USERS
+        Mocks.Roles.PRIVILEGE_SCOPE_USERS,
+        true
       ))
     );
 
