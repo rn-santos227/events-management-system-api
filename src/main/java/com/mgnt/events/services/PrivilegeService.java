@@ -24,6 +24,7 @@ import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Privilege;
 import com.mgnt.events.repositories.PrivilegeRepository;
 import com.mgnt.events.requests.privileges.PrivilegeRequest;
+import com.mgnt.events.requests.privileges.PrivilegeUpdateRequest;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
 import com.mgnt.events.util.RequestValidators;
 
@@ -66,6 +67,38 @@ public class PrivilegeService {
     privilege.setName(request.name());
     privilege.setAction(request.action());
     privilege.setResource(request.resource());
+;
+    if (request.active() != null) {
+      privilege.setActive(request.active());
+    }
+
+    return toResponse(_privilegeRepository.save(privilege));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { PRIVILEGES, PRIVILEGE_BY_ID }, allEntries = true)
+  public PrivilegeResponse updatePartial(@NonNull UUID id, PrivilegeUpdateRequest request) {
+    Privilege privilege = getPrivilege(id);
+    String resolvedName = request.name() != null ? request.name() : privilege.getName();
+    String resolvedAction = request.action() != null ? request.action() : privilege.getAction();
+
+    validateUniqueness(resolvedName, resolvedAction, id);
+
+    if (request.name() != null) {
+      privilege.setName(request.name());
+    }
+
+    if (request.action() != null) {
+      privilege.setAction(request.action());
+    }
+
+    if (request.resource() != null) {
+      privilege.setResource(request.resource());
+    }
+
+    if (request.active() != null) {
+      privilege.setActive(request.active());
+    }
 
     return toResponse(_privilegeRepository.save(privilege));
   }
@@ -98,6 +131,7 @@ public class PrivilegeService {
       privilege.getName(),
       privilege.getAction(),
       privilege.getResource(),
+      privilege.isActive(),
       privilege.getCreatedAt(),
       privilege.getUpdatedAt()
     );

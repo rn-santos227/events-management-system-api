@@ -26,8 +26,5 @@ type PrivilegeSummary {
 }
 
 input PrivilegeUpdateInput {
-  name: String
-  action: String
-  resource: String
   active: Boolean
 }
