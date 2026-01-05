@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mgnt.events.constants.Routes;
+import com.mgnt.events.requests.settings.UserSettingRequest;
 import com.mgnt.events.responses.settings.UserSettingResponse;
 import com.mgnt.events.services.UserSettingService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(Routes.USER_SETTINGS)
@@ -25,5 +28,13 @@ public class UserSettingController {
   @GetMapping
   public UserSettingResponse getByUserId(@PathVariable @NonNull UUID id) {
     return _userSettingService.getByUserId(id);
+  }
+
+  @PutMapping
+  public UserSettingResponse update(
+    @PathVariable @NonNull UUID id,
+    @Valid @RequestBody UserSettingRequest request
+  ) {
+    return _userSettingService.update(id, request);
   }
 }
