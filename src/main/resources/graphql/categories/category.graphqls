@@ -2,10 +2,19 @@ extend type Query {
   categories(limit: Int, page: Int): [Category!]!
 }
 
+extend type Mutation {
+  updateCategory(id: ID!, input: CategoryUpdateInput!): Category!
+}
+
 type Category {
   id: ID!
   name: String
   description: String
   createdAt: String
   updatedAt: String
+}
+
+input CategoryUpdateInput {
+  name: String
+  description: String
 }
