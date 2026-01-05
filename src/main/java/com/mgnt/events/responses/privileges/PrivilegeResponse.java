@@ -8,6 +8,7 @@ public record PrivilegeResponse(
   String name,
   String action,
   String resource,
+  boolean active,
   LocalDateTime createdAt,
   LocalDateTime updatedAt
 ) {}

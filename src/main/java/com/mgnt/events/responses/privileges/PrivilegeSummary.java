@@ -6,5 +6,6 @@ public record PrivilegeSummary(
   UUID id,
   String name,
   String action,
-  String resource
+  String resource,
+  boolean active
 ) {}
