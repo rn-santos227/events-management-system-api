@@ -12,6 +12,7 @@ type Privilege {
   name: String
   action: String
   resource: String
+  active: Boolean
   createdAt: String
   updatedAt: String
 }
@@ -21,11 +22,12 @@ type PrivilegeSummary {
   name: String
   action: String
   resource: String
+  active: Boolean
 }
 
-input PersonnelUpdateInput {
-  fullName: String
-  contactNumber: String
-  email: String
-  role: String
+input PrivilegeUpdateInput {
+  name: String
+  action: String
+  resource: String
+  active: Boolean
 }

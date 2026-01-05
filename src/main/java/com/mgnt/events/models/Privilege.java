@@ -41,6 +41,10 @@ public class Privilege extends AuditableEntity {
   @Column(nullable = false)
   private String resource;
 
+  @Setter
+  @Column(nullable = false)
+  private boolean active = true;
+
   @ManyToMany(mappedBy = Tables.PRIVILEGES)
   private Set<Role> roles = new LinkedHashSet<>();
 

@@ -137,7 +137,7 @@ public class User extends AuditableEntity implements UserDetails {
         role
           .getPrivileges()
           .stream()
-          .filter(privilege -> privilege.getAction() != null)
+          .filter(privilege -> privilege.getAction() != null && privilege.isActive())
           .map(privilege -> new SimpleGrantedAuthority(privilege.getAction()))
           .collect(Collectors.toSet())
       );
