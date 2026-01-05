@@ -23,7 +23,7 @@ import com.mgnt.events.constants.Attributes;
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Privilege;
 import com.mgnt.events.repositories.PrivilegeRepository;
-import com.mgnt.events.requests.privileges.PrivilegeRequest;
+import com.mgnt.events.requests.privileges.PrivilegeStatusRequest;
 import com.mgnt.events.requests.privileges.PrivilegeUpdateRequest;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
 import com.mgnt.events.util.RequestValidators;
@@ -60,17 +60,9 @@ public class PrivilegeService {
 
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { PRIVILEGES, PRIVILEGE_BY_ID }, allEntries = true)
-  public PrivilegeResponse update(@NonNull UUID id, PrivilegeRequest request) {
+  public PrivilegeResponse update(@NonNull UUID id, PrivilegeStatusRequest request) {
     Privilege privilege = getPrivilege(id);
-    validateUniqueness(request.name(), request.action(), id);
-
-    privilege.setName(request.name());
-    privilege.setAction(request.action());
-    privilege.setResource(request.resource());
-;
-    if (request.active() != null) {
-      privilege.setActive(request.active());
-    }
+    privilege.setActive(request.active());
 
     return toResponse(_privilegeRepository.save(privilege));
   }
@@ -79,28 +71,16 @@ public class PrivilegeService {
   @CacheEvict(cacheNames = { PRIVILEGES, PRIVILEGE_BY_ID }, allEntries = true)
   public PrivilegeResponse updatePartial(@NonNull UUID id, PrivilegeUpdateRequest request) {
     Privilege privilege = getPrivilege(id);
-    String resolvedName = request.name() != null ? request.name() : privilege.getName();
-    String resolvedAction = request.action() != null ? request.action() : privilege.getAction();
-
-    validateUniqueness(resolvedName, resolvedAction, id);
-
-    if (request.name() != null) {
-      privilege.setName(request.name());
-    }
-
-    if (request.action() != null) {
-      privilege.setAction(request.action());
-    }
-
-    if (request.resource() != null) {
-      privilege.setResource(request.resource());
-    }
 
     if (request.active() != null) {
-      privilege.setActive(request.active());
+      privilege.setActive(
+        RequestValidators.requireNonNull(request.active(), PRIVILEGE_BY_ID)
+      );
     }
 
-    return toResponse(_privilegeRepository.save(privilege));
+    return toResponse(_privilegeRepository.save(
+      RequestValidators.requireNonNull(privilege, PRIVILEGE_BY_ID)
+    ));
   }
 
   private Privilege getPrivilege(@NonNull UUID id) {
@@ -109,21 +89,6 @@ public class PrivilegeService {
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Privilege not found"));
   }
 
-  private void validateUniqueness(String name, String action, UUID excludeId) {
-    _privilegeRepository
-      .findByNameIgnoreCase(name)
-      .filter(existing -> !existing.getId().equals(excludeId))
-      .ifPresent(existing -> {
-        throw new ResponseStatusException(HttpStatus.CONFLICT, "Privilege name already exists");
-      });
-
-    _privilegeRepository
-      .findByActionIgnoreCase(action)
-      .filter(existing -> !existing.getId().equals(excludeId))
-      .ifPresent(existing -> {
-        throw new ResponseStatusException(HttpStatus.CONFLICT, "Privilege action already exists");
-      });
-  }
 
   private PrivilegeResponse toResponse(Privilege privilege) {
     return new PrivilegeResponse(
