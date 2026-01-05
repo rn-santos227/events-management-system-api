@@ -2,6 +2,10 @@ extend type Query {
   accommodations(limit: Int, page: Int): [Accommodation!]!
 }
 
+extend type Mutation {
+  updateAccommodation(id: ID!, input: AccommodationUpdateInput!): Accommodation!
+}
+
 type Accommodation {
   id: ID!
   name: String
@@ -25,4 +29,16 @@ enum AccommodationType {
   LODGE
   MOTEL
   OTHER
+}
+
+input AccommodationUpdateInput {
+  name: String
+  address: String
+  contactPerson: String
+  contactNumber: String
+  email: String
+  type: AccommodationType
+  latitude: Float
+  longitude: Float
+  imageId: ID
 }
