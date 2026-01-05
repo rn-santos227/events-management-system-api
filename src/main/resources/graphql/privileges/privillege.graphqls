@@ -3,6 +3,10 @@ extend type Query {
   privilege(id: ID!): Privilege
 }
 
+extend type Mutation {
+  updatePrivilege(id: ID!, input: PrivilegeUpdateInput!): Privilege!
+}
+
 type Privilege {
   id: ID!
   name: String
@@ -17,4 +21,11 @@ type PrivilegeSummary {
   name: String
   action: String
   resource: String
+}
+
+input PersonnelUpdateInput {
+  fullName: String
+  contactNumber: String
+  email: String
+  role: String
 }
