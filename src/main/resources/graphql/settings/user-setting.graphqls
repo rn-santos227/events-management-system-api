@@ -2,4 +2,39 @@ extend type Mutation {
   updateUserSetting(userId: ID!, input: UserSettingUpdateInput!): UserSetting!
 }
 
+type UserSetting {
+  userId: ID!
+  theme: ThemeOption
+  density: DensityOption
+  fontSize: FontSizeOption
+  defaultPageSize: Int
+  rememberState: Boolean
+  createdAt: String
+  updatedAt: String
+}
 
+input UserSettingUpdateInput {
+  theme: ThemeOption
+  density: DensityOption
+  fontSize: FontSizeOption
+  defaultPageSize: Int
+  rememberState: Boolean
+}
+
+enum ThemeOption {
+  LIGHT
+  DARK
+  SYSTEM
+}
+
+enum DensityOption {
+  COMPACT
+  STANDARD
+  COMFORTABLE
+}
+
+enum FontSizeOption {
+  SMALL
+  MEDIUM
+  LARGE
+}
