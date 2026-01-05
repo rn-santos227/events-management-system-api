@@ -2,6 +2,10 @@ extend type Query {
   venues(limit: Int, page: Int): [Venue!]!
 }
 
+extend type Mutation {
+  updateVenue(id: ID!, input: VenueUpdateInput!): Venue!
+}
+
 type Venue {
   id: ID!
   name: String
@@ -25,4 +29,16 @@ enum VenueType {
   HOTEL
   VIRTUAL
   OTHER
+}
+
+input VenueUpdateInput {
+  name: String
+  address: String
+  contactPerson: String
+  contactNumber: String
+  email: String
+  type: VenueType
+  latitude: Float
+  longitude: Float
+  imageId: ID
 }
