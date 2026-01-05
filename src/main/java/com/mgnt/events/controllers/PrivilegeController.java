@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mgnt.events.constants.Queries;
 import com.mgnt.events.constants.Routes;
-import com.mgnt.events.requests.privileges.PrivilegeRequest;
+import com.mgnt.events.requests.privileges.PrivilegeStatusRequest;
 import com.mgnt.events.responses.privileges.PrivilegeResponse;
 import com.mgnt.events.services.PrivilegeService;
 import com.mgnt.events.util.RequestValidators;
@@ -42,7 +42,7 @@ public class PrivilegeController {
   @PutMapping(Routes.APPEND_ID)
   public PrivilegeResponse update(
     @PathVariable @NonNull UUID id,
-    @Valid @RequestBody PrivilegeRequest request
+    @Valid @RequestBody PrivilegeStatusRequest request
   ) {
     return _privilegeService.update(id, request);
   }

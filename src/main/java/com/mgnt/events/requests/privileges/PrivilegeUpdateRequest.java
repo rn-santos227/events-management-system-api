@@ -1,7 +1,7 @@
 package com.mgnt.events.requests.privileges;
 
-import org.springframework.lang.Nullable;
+import jakarta.validation.constraints.NotNull;
 
 public record PrivilegeUpdateRequest(
-  @Nullable Boolean active
+  @NotNull Boolean active
 ) {}

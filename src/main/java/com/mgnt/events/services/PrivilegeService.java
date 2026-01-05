@@ -73,9 +73,7 @@ public class PrivilegeService {
     Privilege privilege = getPrivilege(id);
 
     if (request.active() != null) {
-      privilege.setActive(
-        RequestValidators.requireNonNull(request.active(), PRIVILEGE_BY_ID)
-      );
+      privilege.setActive(request.active());
     }
 
     return toResponse(_privilegeRepository.save(
