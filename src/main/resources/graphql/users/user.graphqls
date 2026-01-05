@@ -3,6 +3,10 @@ extend type Query {
   user(id: ID!): User
 }
 
+extend type Mutation {
+  updateUser(id: ID!, input: UserUpdateInput!): User!
+}
+
 type User {
   id: ID!
   email: String!
@@ -14,4 +18,14 @@ type User {
   createdAt: String
   updatedAt: String
   deletedAt: String
+}
+
+input UserUpdateInput {
+  email: String
+  password: String
+  firstName: String
+  lastName: String
+  contactNumber: String
+  roleId: ID
+  active: Boolean
 }
