@@ -2,6 +2,10 @@ extend type Query {
   vehicles(limit: Int, page: Int): [Vehicle!]!
 }
 
+extend type Mutation {
+  updateVehicle(id: ID!, input: VehicleUpdateInput!): Vehicle!
+}
+
 type Vehicle {
   id: ID!
   name: String
@@ -30,4 +34,13 @@ enum VehicleStatus {
   IN_USE
   MAINTENANCE
   OUT_OF_SERVICE
+}
+
+input VehicleUpdateInput {
+  name: String
+  type: VehicleType
+  status: VehicleStatus
+  plateNumber: String
+  contactNumber: String
+  assignedPersonnelId: ID
 }
