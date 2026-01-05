@@ -152,6 +152,19 @@ public class RoleService {
       .map(privilege -> Objects.requireNonNull(privilege, "Privilege must not be null"))
       .toList();
 
+    List<UUID> inactive = privileges
+      .stream()
+      .filter(privilege -> !privilege.isActive())
+      .map(privilege -> Objects.requireNonNull(privilege.getId(), "Privilege identifier must not be null"))
+      .toList();
+
+    if (!inactive.isEmpty()) {
+      throw new ResponseStatusException(
+        HttpStatus.BAD_REQUEST,
+        "Inactive privilege identifiers: " + inactive
+      );
+    }
+
     Set<UUID> foundIds = privileges
       .stream()
       .map(privilege -> Objects.requireNonNull(privilege.getId(), "Privilege identifier must not be null"))
@@ -206,7 +219,8 @@ public class RoleService {
       Objects.requireNonNull(ensuredPrivilege.getId(), "Privilege identifier must not be null"),
       ensuredPrivilege.getName(),
       ensuredPrivilege.getAction(),
-      ensuredPrivilege.getResource()
+      ensuredPrivilege.getResource(),
+      ensuredPrivilege.isActive()
     );
   }
 }
