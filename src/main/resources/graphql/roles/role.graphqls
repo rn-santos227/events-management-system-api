@@ -3,6 +3,10 @@ extend type Query {
   role(id: ID!): Role
 }
 
+extend type Mutation {
+  updateRole(id: ID!, input: RoleUpdateInput!): Role!
+}
+
 type Role {
   id: ID!
   name: String
@@ -14,4 +18,9 @@ type Role {
 type RoleSummary {
   id: ID!
   name: String
+}
+
+input RoleUpdateInput {
+  name: String
+  privilegeIds: [ID!]
 }
