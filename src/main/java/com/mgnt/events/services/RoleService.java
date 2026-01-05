@@ -31,6 +31,7 @@ import com.mgnt.events.models.Role;
 import com.mgnt.events.repositories.PrivilegeRepository;
 import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.requests.roles.RoleRequest;
+import com.mgnt.events.requests.roles.RoleUpdateRequest;
 import com.mgnt.events.responses.privileges.PrivilegeSummary;
 import com.mgnt.events.responses.roles.RoleResponse;
 import com.mgnt.events.util.RequestValidators;
@@ -85,6 +86,23 @@ public class RoleService {
 
     role.setName(request.name());
     role.setPrivileges(resolvePrivileges(request.privilegeIds()));
+
+    return toResponse(_roleRepository.save(role));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { ROLES, ROLE_BY_ID }, allEntries = true)
+  public RoleResponse updatePartial(@NonNull UUID id, RoleUpdateRequest request) {
+    Role role = Objects.requireNonNull(getRole(id));
+
+    if (request.name() != null) {
+      validateNameUniqueness(request.name(), id);
+      role.setName(request.name());
+    }
+
+    if (request.privilegeIds() != null) {
+      role.setPrivileges(resolvePrivileges(request.privilegeIds()));
+    }
 
     return toResponse(_roleRepository.save(role));
   }
