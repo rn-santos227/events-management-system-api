@@ -151,6 +151,10 @@ public class VenueService {
       venue.setLongitude(request.longitude());
     }
 
+    if (request.imageId() != null) {
+      venue.setImage(resolveImage(request.imageId()));
+    }
+
     return toResponse(_venueRepository.save(venue));
   }
 
