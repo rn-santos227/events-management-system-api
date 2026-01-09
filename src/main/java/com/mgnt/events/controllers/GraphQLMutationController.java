@@ -91,4 +91,12 @@ public class GraphQLMutationController {
   ) {
     return _privilegeService.updatePartial(id, input);
   }
+
+  @MutationMapping
+  public RoleResponse updateRole(
+    @Argument @NonNull UUID id,
+    @Argument RoleUpdateRequest input
+  ) {
+    return _roleService.updatePartial(id, input);
+  }
 }
