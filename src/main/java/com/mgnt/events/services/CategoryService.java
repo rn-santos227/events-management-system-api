@@ -24,6 +24,7 @@ import com.mgnt.events.constants.Queries;
 import com.mgnt.events.models.Category;
 import com.mgnt.events.repositories.CategoryRepository;
 import com.mgnt.events.requests.categories.CategoryRequest;
+import com.mgnt.events.requests.categories.CategoryUpdateRequest;
 import com.mgnt.events.responses.categories.CategoryResponse;
 import com.mgnt.events.util.RequestValidators;
 
@@ -85,6 +86,12 @@ public class CategoryService {
     category.setDescription(request.description());
 
     return toResponse(_categoryRepository.save(category));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { CATEGORIES, CATEGORY_BY_ID }, allEntries = true)
+  public CategoryResponse updatePartial(UUID id, CategoryUpdateRequest request) {
+
   }
 
   @Transactional(rollbackFor = Throwable.class)
