@@ -102,7 +102,7 @@ public class UserService {
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { USERS, USER_BY_ID }, allEntries = true)
   public UserResponse updatePartial(@NonNull UUID id, UserPatchRequest request) {
-    User user = getUser(id);
+    User user =  Objects.requireNonNull(getUser(id));
 
     if (request.email() != null) {
       String normalizedEmail = normalizeEmail(request.email());
