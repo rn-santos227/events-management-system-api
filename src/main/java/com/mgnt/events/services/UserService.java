@@ -104,6 +104,15 @@ public class UserService {
   public UserResponse updatePartial(@NonNull UUID id, UserPatchRequest request) {
     User user = getUser(id);
 
+    if (request.email() != null) {
+      String normalizedEmail = normalizeEmail(request.email());
+      if (_userRepository.existsByEmailAndIdNot(normalizedEmail, id)) {
+        throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
+      }
+      user.setEmail(normalizedEmail);
+    }
+
+    return toResponse(_userRepository.save(user));
   }
 
   @Transactional(rollbackFor = Throwable.class)
