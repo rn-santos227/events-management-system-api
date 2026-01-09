@@ -131,6 +131,10 @@ public class VenueService {
       venue.setContactPerson(request.contactPerson());
     }
 
+    if (request.contactNumber() != null) {
+      venue.setContactNumber(request.contactNumber());
+    }
+
     return toResponse(_venueRepository.save(venue));
   }
 
