@@ -91,7 +91,11 @@ public class CategoryService {
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { CATEGORIES, CATEGORY_BY_ID }, allEntries = true)
   public CategoryResponse updatePartial(UUID id, CategoryUpdateRequest request) {
+    Category category = _categoryRepository
+      .findById(RequestValidators.requireNonNull(id, "ID must no be null"))
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
 
+    return toResponse(_categoryRepository.save(category));
   }
 
   @Transactional(rollbackFor = Throwable.class)
