@@ -113,7 +113,25 @@ public class PersonnelService {
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"));
 
-    return toResponse(_personnelRepository.save(personnel));
+    if (request.fullName() != null) {
+      personnel.setFullName(request.fullName());
+    }
+
+    if (request.contactNumber() != null) {
+      personnel.setContactNumber(request.contactNumber());
+    }
+
+    if (request.email() != null) {
+      personnel.setEmail(request.email());
+    }
+
+    if (request.role() != null) {
+      personnel.setRole(request.role());
+    }
+
+    return toResponse(_personnelRepository.save(
+        RequestValidators.requireNonNull(personnel, "Personnel must not be null")
+    ));
   }
 
   @Transactional(rollbackFor = Throwable.class)
