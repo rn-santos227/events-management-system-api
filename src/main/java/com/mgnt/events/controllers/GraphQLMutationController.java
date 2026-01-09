@@ -83,4 +83,12 @@ public class GraphQLMutationController {
   ) {
     return _categoryService.updatePartial(id, input);
   }
+
+  @MutationMapping
+  public PrivilegeResponse updatePrivilege(
+    @Argument @NonNull UUID id,
+    @Argument PrivilegeUpdateRequest input
+  ) {
+    return _privilegeService.updatePartial(id, input);
+  }
 }
