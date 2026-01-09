@@ -107,4 +107,12 @@ public class GraphQLMutationController {
   ) {
     return _userService.updatePartial(id, input);
   }
+
+  @MutationMapping
+  public UserSettingResponse updateUserSetting(
+    @Argument @NonNull UUID userId,
+    @Argument UserSettingUpdateRequest input
+  ) {
+    return _userSettingService.updatePartial(userId, input);
+  }
 }
