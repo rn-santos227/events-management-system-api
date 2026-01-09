@@ -143,6 +143,10 @@ public class VenueService {
       venue.setType(request.type());
     }
 
+    if (request.latitude() != null) {
+      venue.setLatitude(request.latitude());
+    }
+
     return toResponse(_venueRepository.save(venue));
   }
 
