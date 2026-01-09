@@ -75,4 +75,12 @@ public class GraphQLMutationController {
   ) {
     return _accommodationService.updatePartial(id, input);
   }
+
+  @MutationMapping
+  public CategoryResponse updateCategory(
+    @Argument @NonNull UUID id,
+    @Argument CategoryUpdateRequest input
+  ) {
+    return _categoryService.updatePartial(id, input);
+  }
 }
