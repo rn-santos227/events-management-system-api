@@ -1,7 +1,29 @@
 package com.mgnt.events.controllers;
 
+import java.util.UUID;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 
+import com.mgnt.events.requests.accommodations.AccommodationUpdateRequest;
+import com.mgnt.events.requests.categories.CategoryUpdateRequest;
+import com.mgnt.events.requests.personnel.PersonnelUpdateRequest;
+import com.mgnt.events.requests.privileges.PrivilegeUpdateRequest;
+import com.mgnt.events.requests.roles.RoleUpdateRequest;
+import com.mgnt.events.requests.settings.UserSettingUpdateRequest;
+import com.mgnt.events.requests.users.UserPatchRequest;
+import com.mgnt.events.requests.vehicles.VehicleUpdateRequest;
+import com.mgnt.events.requests.venues.VenueUpdateRequest;
+import com.mgnt.events.responses.accommodations.AccommodationResponse;
+import com.mgnt.events.responses.categories.CategoryResponse;
+import com.mgnt.events.responses.personnel.PersonnelResponse;
+import com.mgnt.events.responses.privileges.PrivilegeResponse;
+import com.mgnt.events.responses.roles.RoleResponse;
+import com.mgnt.events.responses.settings.UserSettingResponse;
+import com.mgnt.events.responses.users.UserResponse;
+import com.mgnt.events.responses.vehicles.VehicleResponse;
+import com.mgnt.events.responses.venues.VenueResponse;
 import com.mgnt.events.services.AccommodationService;
 import com.mgnt.events.services.CategoryService;
 import com.mgnt.events.services.PersonnelService;
@@ -44,5 +66,13 @@ public class GraphQLMutationController {
     this._userService = userService;
     this._vehicleService = vehicleService;
     this._venueService = venueService;
+  }
+
+  @MutationMapping
+  public AccommodationResponse updateAccommodation(
+    @Argument @NonNull UUID id,
+    @Argument AccommodationUpdateRequest input
+  ) {
+    return _accommodationService.updatePartial(id, input);
   }
 }
