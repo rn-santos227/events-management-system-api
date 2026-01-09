@@ -124,6 +124,18 @@ public class UserService {
       user.setContactNumber(request.contactNumber());
     }
 
+    if (request.roleId() != null) {
+      UUID roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
+      user.setRole(getRole(roleId));
+    }
+
+    if (!RequestValidators.isBlank(request.password())) {
+      user.setPassword(_passwordEncoder.encode(request.password()));
+    }
+
+    if (request.active() != null) {
+      user.setActive(request.active());
+    }
 
     return toResponse(_userRepository.save(user));
   }

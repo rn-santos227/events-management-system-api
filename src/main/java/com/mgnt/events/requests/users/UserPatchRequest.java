@@ -1,6 +1,8 @@
 package com.mgnt.events.requests.users;
 
 import java.util.UUID;
+
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 public record UserPatchRequest(
@@ -10,5 +12,5 @@ public record UserPatchRequest(
   @Nullable String lastName,
   @Nullable String contactNumber,
   @Nullable UUID roleId,
-  @Nullable Boolean active
+  @NonNull Boolean active
 ) {}
