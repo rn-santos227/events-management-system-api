@@ -28,6 +28,7 @@ import com.mgnt.events.models.User;
 import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.repositories.UserRepository;
 import com.mgnt.events.requests.users.UserCreateRequest;
+import com.mgnt.events.requests.users.UserPatchRequest;
 import com.mgnt.events.requests.users.UserUpdateRequest;
 import com.mgnt.events.responses.roles.RoleSummary;
 import com.mgnt.events.responses.users.UserResponse;
@@ -96,6 +97,13 @@ public class UserService {
     }
 
     return toResponse(_userRepository.save(user));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { USERS, USER_BY_ID }, allEntries = true)
+  public UserResponse updatePartial(@NonNull UUID id, UserPatchRequest request) {
+    User user = getUser(id);
+
   }
 
   @Transactional(rollbackFor = Throwable.class)
