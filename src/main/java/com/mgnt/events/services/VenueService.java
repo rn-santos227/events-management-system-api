@@ -135,6 +135,10 @@ public class VenueService {
       venue.setContactNumber(request.contactNumber());
     }
 
+    if (request.email() != null) {
+      venue.setEmail(request.email());
+    }
+
     return toResponse(_venueRepository.save(venue));
   }
 
