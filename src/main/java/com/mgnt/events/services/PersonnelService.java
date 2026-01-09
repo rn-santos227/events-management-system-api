@@ -25,6 +25,7 @@ import com.mgnt.events.models.Personnel;
 import com.mgnt.events.repositories.PersonnelRepository;
 import com.mgnt.events.repositories.VehicleRepository;
 import com.mgnt.events.requests.personnel.PersonnelRequest;
+import com.mgnt.events.requests.personnel.PersonnelUpdateRequest;
 import com.mgnt.events.responses.personnel.PersonnelResponse;
 import com.mgnt.events.util.RequestValidators;
 
@@ -86,7 +87,6 @@ public class PersonnelService {
     return toResponse(_personnelRepository.save(personnel));
   }
 
-
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { PERSONNEL, PERSONNEL_BY_ID }, allEntries = true)
   public PersonnelResponse update(UUID id, PersonnelRequest request) {
@@ -102,6 +102,12 @@ public class PersonnelService {
     personnel.setRole(request.role());
 
     return toResponse(_personnelRepository.save(personnel));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { PERSONNEL, PERSONNEL_BY_ID }, allEntries = true)
+  public PersonnelResponse updatePartial(UUID id, PersonnelUpdateRequest request) {
+
   }
 
   @Transactional(rollbackFor = Throwable.class)
