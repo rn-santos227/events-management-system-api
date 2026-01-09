@@ -62,7 +62,13 @@ public class UserSettingService {
 
   @Transactional
   public UserSettingResponse updatePartial(@NonNull UUID userId, UserSettingUpdateRequest request) {
+    User user = getUser(userId);
+    UserSetting userSetting =
+      Objects.requireNonNull(_userSettingRepository
+        .findByUserId(userId)
+        .orElseGet(() -> defaultSettings(user)));
 
+    return toResponse(_userSettingRepository.save(userSetting));
   }
 
   private User getUser(@NonNull UUID id) {
