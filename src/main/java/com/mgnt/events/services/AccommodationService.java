@@ -117,6 +117,10 @@ public class AccommodationService {
       accommodation.setContactPerson(request.contactPerson());
     }
 
+    if (request.contactNumber() != null) {
+      accommodation.setContactNumber(request.contactNumber());
+    }
+
     return toResponse(_accommodationRepository.save(accommodation));
   }
 
