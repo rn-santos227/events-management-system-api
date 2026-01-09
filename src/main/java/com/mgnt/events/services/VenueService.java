@@ -112,7 +112,15 @@ public class VenueService {
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { VENUES, VENUE_BY_ID }, allEntries = true)
   public VenueResponse updatePartial(UUID id, VenueUpdateRequest request) {
+    Venue venue = Objects.requireNonNull(_venueRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"))
+    );
 
+
+    return toResponse(_venueRepository.save(venue));
   }
 
   @Transactional(rollbackFor = Throwable.class)
