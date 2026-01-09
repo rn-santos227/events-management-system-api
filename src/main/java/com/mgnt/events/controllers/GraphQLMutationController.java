@@ -85,6 +85,14 @@ public class GraphQLMutationController {
   }
 
   @MutationMapping
+  public PersonnelResponse updatePersonnel(
+    @Argument @NonNull UUID id,
+    @Argument PersonnelUpdateRequest input
+  ) {
+    return _personnelService.updatePartial(id, input);
+  }
+
+  @MutationMapping
   public PrivilegeResponse updatePrivilege(
     @Argument @NonNull UUID id,
     @Argument PrivilegeUpdateRequest input
