@@ -147,6 +147,10 @@ public class VenueService {
       venue.setLatitude(request.latitude());
     }
 
+    if (request.longitude() != null) {
+      venue.setLongitude(request.longitude());
+    }
+
     return toResponse(_venueRepository.save(venue));
   }
 
