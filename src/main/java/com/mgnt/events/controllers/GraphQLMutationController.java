@@ -99,4 +99,12 @@ public class GraphQLMutationController {
   ) {
     return _roleService.updatePartial(id, input);
   }
+
+  @MutationMapping
+  public UserResponse updateUser(
+    @Argument @NonNull UUID id,
+    @Argument UserPatchRequest input
+  ) {
+    return _userService.updatePartial(id, input);
+  }
 }
