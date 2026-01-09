@@ -103,6 +103,11 @@ public class AccommodationService {
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { ACCOMMODATIONS, ACCOMMODATION_BY_ID }, allEntries = true)
   public AccommodationResponse updatePartial(UUID id, AccommodationUpdateRequest request) {
+    Accommodation accommodation = _accommodationRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accommodation not found"));
 
   }
 
