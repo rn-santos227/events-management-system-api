@@ -113,7 +113,9 @@ public class AccommodationService {
       accommodation.setName(request.name());
     }
 
-
+    if (request.contactPerson() != null) {
+      accommodation.setContactPerson(request.contactPerson());
+    }
 
     return toResponse(_accommodationRepository.save(accommodation));
   }
