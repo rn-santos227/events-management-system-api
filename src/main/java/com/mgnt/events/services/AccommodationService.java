@@ -125,7 +125,26 @@ public class AccommodationService {
       accommodation.setEmail(request.email());
     }
 
-    return toResponse(_accommodationRepository.save(accommodation));
+
+    if (request.type() != null) {
+      accommodation.setType(request.type());
+    }
+
+    if (request.latitude() != null) {
+      accommodation.setLatitude(request.latitude());
+    }
+
+    if (request.longitude() != null) {
+      accommodation.setLongitude(request.longitude());
+    }
+
+    if (request.imageId() != null) {
+      accommodation.setImage(resolveImage(request.imageId()));
+    }
+
+    return toResponse(_accommodationRepository.save(
+      RequestValidators.requireNonNull(accommodation, "Accommodation must not be null")
+    ));
   }
 
   @Transactional(rollbackFor = Throwable.class)
