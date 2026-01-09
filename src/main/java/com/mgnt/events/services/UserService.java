@@ -112,6 +112,19 @@ public class UserService {
       user.setEmail(normalizedEmail);
     }
 
+    if (request.firstName() != null) {
+      user.setFirstName(request.firstName());
+    }
+
+    if (request.lastName() != null) {
+      user.setLastName(request.lastName());
+    }
+
+    if (request.contactNumber() != null) {
+      user.setContactNumber(request.contactNumber());
+    }
+
+
     return toResponse(_userRepository.save(user));
   }
 
