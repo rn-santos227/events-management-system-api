@@ -101,6 +101,34 @@ public class UserService {
 
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { USERS, USER_BY_ID }, allEntries = true)
+  public UserResponse update(@NonNull UUID id, UserUpdateRequest request) {
+    User user = getUser(id);
+
+    if (_userRepository.existsByEmailAndIdNot(request.email(), id)) {
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
+    }
+
+    user.setEmail(request.email());
+    user.setFirstName(request.firstName());
+    user.setLastName(request.lastName());
+    user.setContactNumber(request.contactNumber());
+
+    UUID roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
+    user.setRole(getRole(roleId));
+
+    if (!RequestValidators.isBlank(request.password())) {
+      user.setPassword(_passwordEncoder.encode(request.password()));
+    }
+
+    if (request.active() != null) {
+      user.setActive(request.active());
+    }
+
+    return toResponse(_userRepository.save(user));
+  }
+
+ @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { USERS, USER_BY_ID }, allEntries = true)
   public UserResponse updatePartial(@NonNull UUID id, UserPatchRequest request) {
     User user =  Objects.requireNonNull(getUser(id));
 
@@ -128,34 +156,6 @@ public class UserService {
       UUID roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
       user.setRole(getRole(roleId));
     }
-
-    if (!RequestValidators.isBlank(request.password())) {
-      user.setPassword(_passwordEncoder.encode(request.password()));
-    }
-
-    if (request.active() != null) {
-      user.setActive(request.active());
-    }
-
-    return toResponse(_userRepository.save(user));
-  }
-
-  @Transactional(rollbackFor = Throwable.class)
-  @CacheEvict(cacheNames = { USERS, USER_BY_ID }, allEntries = true)
-  public UserResponse update(@NonNull UUID id, UserUpdateRequest request) {
-    User user = getUser(id);
-
-    if (_userRepository.existsByEmailAndIdNot(request.email(), id)) {
-      throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
-    }
-
-    user.setEmail(request.email());
-    user.setFirstName(request.firstName());
-    user.setLastName(request.lastName());
-    user.setContactNumber(request.contactNumber());
-
-    UUID roleId = RequestValidators.requireNonNull(request.roleId(), "Role ID");
-    user.setRole(getRole(roleId));
 
     if (!RequestValidators.isBlank(request.password())) {
       user.setPassword(_passwordEncoder.encode(request.password()));

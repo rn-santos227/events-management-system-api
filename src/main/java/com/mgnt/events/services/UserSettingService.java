@@ -66,7 +66,8 @@ public class UserSettingService {
     UserSetting userSetting =
       Objects.requireNonNull(_userSettingRepository
         .findByUserId(userId)
-        .orElseGet(() -> defaultSettings(user)));
+        .orElseGet(() -> defaultSettings(user))
+      );
 
     if (request.theme() != null) {
       userSetting.setTheme(request.theme());

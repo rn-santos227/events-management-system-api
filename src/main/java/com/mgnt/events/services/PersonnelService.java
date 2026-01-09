@@ -107,11 +107,12 @@ public class PersonnelService {
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { PERSONNEL, PERSONNEL_BY_ID }, allEntries = true)
   public PersonnelResponse updatePartial(UUID id, PersonnelUpdateRequest request) {
-    Personnel personnel = _personnelRepository
+    Personnel personnel = Objects.requireNonNull(_personnelRepository
       .findById(
         RequestValidators.requireNonNull(id, "ID must not be null")
       )
-      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"));
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"))
+    );
 
     if (request.fullName() != null) {
       personnel.setFullName(request.fullName());
@@ -129,9 +130,7 @@ public class PersonnelService {
       personnel.setRole(request.role());
     }
 
-    return toResponse(_personnelRepository.save(
-        RequestValidators.requireNonNull(personnel, "Personnel must not be null")
-    ));
+    return toResponse(_personnelRepository.save(personnel));
   }
 
   @Transactional(rollbackFor = Throwable.class)

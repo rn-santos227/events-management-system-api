@@ -103,11 +103,12 @@ public class AccommodationService {
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { ACCOMMODATIONS, ACCOMMODATION_BY_ID }, allEntries = true)
   public AccommodationResponse updatePartial(UUID id, AccommodationUpdateRequest request) {
-    Accommodation accommodation = _accommodationRepository
+    Accommodation accommodation = Objects.requireNonNull(_accommodationRepository
       .findById(
         RequestValidators.requireNonNull(id, "ID must not be null")
       )
-      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accommodation not found"));
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accommodation not found"))
+    );
 
     if (request.name() != null) {
       accommodation.setName(request.name());
@@ -142,9 +143,7 @@ public class AccommodationService {
       accommodation.setImage(resolveImage(request.imageId()));
     }
 
-    return toResponse(_accommodationRepository.save(
-      RequestValidators.requireNonNull(accommodation, "Accommodation must not be null")
-    ));
+    return toResponse(_accommodationRepository.save(accommodation));
   }
 
   @Transactional(rollbackFor = Throwable.class)

@@ -27,6 +27,7 @@ import com.mgnt.events.models.Vehicle;
 import com.mgnt.events.repositories.PersonnelRepository;
 import com.mgnt.events.repositories.VehicleRepository;
 import com.mgnt.events.requests.vehicles.VehicleRequest;
+import com.mgnt.events.requests.vehicles.VehicleUpdateRequest;
 import com.mgnt.events.responses.vehicles.VehiclePersonnelSummary;
 import com.mgnt.events.responses.vehicles.VehicleResponse;
 import com.mgnt.events.util.RequestValidators;
@@ -104,6 +105,43 @@ public class VehicleService {
     vehicle.setPlateNumber(request.plateNumber());
     vehicle.setContactNumber(request.contactNumber());
     vehicle.setAssignedPersonnel(resolvePersonnel(request.assignedPersonnelId()));
+
+    return toResponse(_vehicleRepository.save(vehicle));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { VEHICLES, VEHICLE_BY_ID }, allEntries = true)
+  public VehicleResponse updatePartial(UUID id, VehicleUpdateRequest request) {
+    Vehicle vehicle = Objects.requireNonNull(_vehicleRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"))
+    );
+
+    if (request.name() != null) {
+      vehicle.setName(request.name());
+    }
+
+    if (request.type() != null) {
+      vehicle.setType(request.type());
+    }
+
+    if (request.status() != null) {
+      vehicle.setStatus(request.status());
+    }
+
+    if (request.plateNumber() != null) {
+      vehicle.setPlateNumber(request.plateNumber());
+    }
+
+    if (request.contactNumber() != null) {
+      vehicle.setContactNumber(request.contactNumber());
+    }
+
+    if (request.assignedPersonnelId() != null) {
+      vehicle.setAssignedPersonnel(resolvePersonnel(request.assignedPersonnelId()));
+    }
 
     return toResponse(_vehicleRepository.save(vehicle));
   }
