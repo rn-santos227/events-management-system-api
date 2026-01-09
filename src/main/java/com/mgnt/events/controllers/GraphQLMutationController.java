@@ -115,4 +115,12 @@ public class GraphQLMutationController {
   ) {
     return _userSettingService.updatePartial(userId, input);
   }
+
+  @MutationMapping
+  public VehicleResponse updateVehicle(
+    @Argument @NonNull UUID id,
+    @Argument VehicleUpdateRequest input
+  ) {
+    return _vehicleService.updatePartial(id, input);
+  }
 }
