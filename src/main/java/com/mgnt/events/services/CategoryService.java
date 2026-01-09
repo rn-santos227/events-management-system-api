@@ -95,7 +95,9 @@ public class CategoryService {
       .findById(RequestValidators.requireNonNull(id, "ID must no be null"))
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
 
-    return toResponse(_categoryRepository.save(category));
+    return toResponse(_categoryRepository.save(
+      RequestValidators.requireNonNull(category, "Category must no be null")
+    ));
   }
 
   @Transactional(rollbackFor = Throwable.class)
