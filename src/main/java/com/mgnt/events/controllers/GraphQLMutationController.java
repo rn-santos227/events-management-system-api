@@ -131,4 +131,12 @@ public class GraphQLMutationController {
   ) {
     return _vehicleService.updatePartial(id, input);
   }
+
+  @MutationMapping
+  public VenueResponse updateVenue(
+    @Argument @NonNull UUID id,
+    @Argument VenueUpdateRequest input
+  ) {
+    return _venueService.updatePartial(id, input);
+  }
 }
