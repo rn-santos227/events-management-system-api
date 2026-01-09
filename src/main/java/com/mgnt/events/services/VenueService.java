@@ -119,6 +119,9 @@ public class VenueService {
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Venue not found"))
     );
 
+    if (request.name() != null) {
+      venue.setName(request.name());
+    }
 
     return toResponse(_venueRepository.save(venue));
   }
