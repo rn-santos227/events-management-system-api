@@ -139,6 +139,10 @@ public class VenueService {
       venue.setEmail(request.email());
     }
 
+    if (request.type() != null) {
+      venue.setType(request.type());
+    }
+
     return toResponse(_venueRepository.save(venue));
   }
 
