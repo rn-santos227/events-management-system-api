@@ -107,7 +107,13 @@ public class PersonnelService {
   @Transactional(rollbackFor = Throwable.class)
   @CacheEvict(cacheNames = { PERSONNEL, PERSONNEL_BY_ID }, allEntries = true)
   public PersonnelResponse updatePartial(UUID id, PersonnelUpdateRequest request) {
+    Personnel personnel = _personnelRepository
+      .findById(
+        RequestValidators.requireNonNull(id, "ID must not be null")
+      )
+      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Personnel not found"));
 
+    return toResponse(_personnelRepository.save(personnel));
   }
 
   @Transactional(rollbackFor = Throwable.class)
