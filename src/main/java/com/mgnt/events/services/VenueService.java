@@ -127,6 +127,10 @@ public class VenueService {
       venue.setAddress(request.address());
     }
 
+    if (request.contactPerson() != null) {
+      venue.setContactPerson(request.contactPerson());
+    }
+
     return toResponse(_venueRepository.save(venue));
   }
 
