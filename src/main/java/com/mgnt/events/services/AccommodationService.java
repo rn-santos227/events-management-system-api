@@ -27,6 +27,7 @@ import com.mgnt.events.models.StoredFile;
 import com.mgnt.events.repositories.AccommodationRepository;
 import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.requests.accommodations.AccommodationRequest;
+import com.mgnt.events.requests.accommodations.AccommodationUpdateRequest;
 import com.mgnt.events.responses.accommodations.AccommodationResponse;
 import com.mgnt.events.responses.files.StoredFileSummary;
 import com.mgnt.events.util.RequestValidators;
@@ -97,6 +98,12 @@ public class AccommodationService {
     accommodation.setLongitude(request.longitude());
     accommodation.setImage(resolveImage(request.imageId()));
     return toResponse(_accommodationRepository.save(accommodation));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { ACCOMMODATIONS, ACCOMMODATION_BY_ID }, allEntries = true)
+  public AccommodationResponse updatePartial(UUID id, AccommodationUpdateRequest request) {
+
   }
 
   @Transactional(rollbackFor = Throwable.class)
