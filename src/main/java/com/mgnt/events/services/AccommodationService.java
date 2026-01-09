@@ -121,6 +121,10 @@ public class AccommodationService {
       accommodation.setContactNumber(request.contactNumber());
     }
 
+    if (request.email() != null) {
+      accommodation.setEmail(request.email());
+    }
+
     return toResponse(_accommodationRepository.save(accommodation));
   }
 
