@@ -123,6 +123,10 @@ public class VenueService {
       venue.setName(request.name());
     }
 
+    if (request.address() != null) {
+      venue.setAddress(request.address());
+    }
+
     return toResponse(_venueRepository.save(venue));
   }
 
