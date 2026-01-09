@@ -109,6 +109,11 @@ public class AccommodationService {
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accommodation not found"));
 
+    if (request.name() != null) {
+      accommodation.setName(request.name());
+    }
+
+
 
     return toResponse(_accommodationRepository.save(accommodation));
   }

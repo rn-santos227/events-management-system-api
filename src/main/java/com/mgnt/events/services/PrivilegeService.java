@@ -87,7 +87,6 @@ public class PrivilegeService {
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Privilege not found"));
   }
 
-
   private PrivilegeResponse toResponse(Privilege privilege) {
     return new PrivilegeResponse(
       privilege.getId(),
