@@ -109,6 +109,8 @@ public class AccommodationService {
       )
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accommodation not found"));
 
+
+    return toResponse(_accommodationRepository.save(accommodation));
   }
 
   @Transactional(rollbackFor = Throwable.class)
