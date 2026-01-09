@@ -26,6 +26,7 @@ import com.mgnt.events.models.Venue;
 import com.mgnt.events.repositories.StoredFileRepository;
 import com.mgnt.events.repositories.VenueRepository;
 import com.mgnt.events.requests.venues.VenueRequest;
+import com.mgnt.events.requests.venues.VenueUpdateRequest;
 import com.mgnt.events.responses.files.StoredFileSummary;
 import com.mgnt.events.responses.venues.VenueResponse;
 import com.mgnt.events.util.RequestValidators;
@@ -106,6 +107,12 @@ public class VenueService {
     venue.setImage(resolveImage(request.imageId()));
 
     return toResponse(_venueRepository.save(venue));
+  }
+
+  @Transactional(rollbackFor = Throwable.class)
+  @CacheEvict(cacheNames = { VENUES, VENUE_BY_ID }, allEntries = true)
+  public VenueResponse updatePartial(UUID id, VenueUpdateRequest request) {
+
   }
 
   @Transactional(rollbackFor = Throwable.class)
