@@ -95,6 +95,15 @@ public class CategoryService {
       .findById(RequestValidators.requireNonNull(id, "ID must no be null"))
       .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
 
+      if (request.name() != null) {
+      validateNameUniqueness(request.name(), id);
+      category.setName(request.name());
+    }
+
+    if (request.description() != null) {
+      category.setDescription(request.description());
+    }
+
     return toResponse(_categoryRepository.save(
       RequestValidators.requireNonNull(category, "Category must no be null")
     ));
