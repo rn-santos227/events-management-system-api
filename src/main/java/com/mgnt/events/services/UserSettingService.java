@@ -68,6 +68,30 @@ public class UserSettingService {
         .findByUserId(userId)
         .orElseGet(() -> defaultSettings(user)));
 
+    if (request.theme() != null) {
+      userSetting.setTheme(request.theme());
+    }
+
+    if (request.density() != null) {
+      userSetting.setDensity(request.density());
+    }
+
+    if (request.fontSize() != null) {
+      userSetting.setFontSize(request.fontSize());
+    }
+
+    if (request.defaultPageSize() != null) {
+      userSetting.setDefaultPageSize(
+        RequestValidators.requirePositive(request.defaultPageSize(), "Default page size")
+      );
+    }
+
+    if (request.rememberState() != null) {
+      userSetting.setRememberState(
+        RequestValidators.requireNonNull(request.rememberState(), "Remember State must not be null")
+      );
+    }
+
     return toResponse(_userSettingRepository.save(userSetting));
   }
 
