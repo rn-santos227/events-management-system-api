@@ -14,6 +14,7 @@ import com.mgnt.events.models.UserSetting;
 import com.mgnt.events.repositories.UserRepository;
 import com.mgnt.events.repositories.UserSettingRepository;
 import com.mgnt.events.requests.settings.UserSettingRequest;
+import com.mgnt.events.requests.settings.UserSettingUpdateRequest;
 import com.mgnt.events.responses.settings.UserSettingResponse;
 import com.mgnt.events.util.RequestValidators;
 
@@ -57,6 +58,11 @@ public class UserSettingService {
     userSetting.setRememberState(request.rememberState());
 
     return toResponse(_userSettingRepository.save(userSetting));
+  }
+
+  @Transactional
+  public UserSettingResponse updatePartial(@NonNull UUID userId, UserSettingUpdateRequest request) {
+
   }
 
   private User getUser(@NonNull UUID id) {
