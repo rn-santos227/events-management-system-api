@@ -74,6 +74,18 @@ public class UserSeeder {
     if (_userSettingRepository.findByUserId(user.getId()).isPresent()) {
       return;
     }
+
+    _userSettingRepository.save(
+      new UserSetting(
+        user,
+        Defaults.DEFAULT_THEME,
+        Defaults.DEFAULT_DENSITY,
+        Defaults.DEFAULT_FONT_SIZE,
+        Defaults.DEFAULT_PAGE_SIZE,
+        true
+      )
+    );
+    System.out.printf("Created default settings for user %s.%n", user.getEmail());
   }
 
   private Role initializeRole(String roleName) {
