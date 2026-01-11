@@ -71,8 +71,9 @@ public class UserSeeder {
   }
 
   private void ensureUserSettings(User user) {
-
-
+    if (_userSettingRepository.findByUserId(user.getId()).isPresent()) {
+      return;
+    }
   }
 
   private Role initializeRole(String roleName) {
