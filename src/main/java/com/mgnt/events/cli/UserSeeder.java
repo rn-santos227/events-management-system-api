@@ -70,6 +70,11 @@ public class UserSeeder {
     }
   }
 
+  private void ensureUserSettings(User user) {
+
+
+  }
+
   private Role initializeRole(String roleName) {
     Role _role = new Role(roleName.toUpperCase());
 
