@@ -7,13 +7,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mgnt.events.models.User;
 import com.mgnt.events.constants.Seeds;
+import com.mgnt.events.constants.Defaults;
 import com.mgnt.events.models.Privilege;
 import com.mgnt.events.models.Role;
+import com.mgnt.events.models.User;
+import com.mgnt.events.models.UserSetting;
 import com.mgnt.events.repositories.PrivilegeRepository;
 import com.mgnt.events.repositories.RoleRepository;
 import com.mgnt.events.repositories.UserRepository;
+import com.mgnt.events.repositories.UserSettingRepository;
 
 @Component
 public class UserSeeder {
