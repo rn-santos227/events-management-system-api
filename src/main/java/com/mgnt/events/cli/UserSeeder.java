@@ -63,6 +63,8 @@ public class UserSeeder {
     user.setPassword(_passwordEncoder.encode(options.password()));
 
     _userRepository.save(user);
+    ensureUserSettings(user);
+
     if (_existingUser.isPresent()) {
       System.out.printf("Updated user %s with role %s.%n", normalizedEmail, _role.getName());
     } else {
