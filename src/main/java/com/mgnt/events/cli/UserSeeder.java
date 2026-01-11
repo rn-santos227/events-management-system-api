@@ -23,17 +23,20 @@ public class UserSeeder {
   private final UserRepository _userRepository;
   private final RoleRepository _roleRepository;
   private final PrivilegeRepository _privilegeRepository;
+  private final UserSettingRepository _userSettingRepository;
   private final PasswordEncoder _passwordEncoder;
 
   public UserSeeder(
     UserRepository userRepository,
     RoleRepository roleRepository,
     PrivilegeRepository privilegeRepository,
+    UserSettingRepository userSettingRepository,
     PasswordEncoder passwordEncoder
   ) {
     this._userRepository = userRepository;
     this._roleRepository = roleRepository;
     this._privilegeRepository = privilegeRepository;
+    this._userSettingRepository = userSettingRepository;
     this._passwordEncoder = passwordEncoder;
   }
 
